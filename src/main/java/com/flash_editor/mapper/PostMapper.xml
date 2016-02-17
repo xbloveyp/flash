@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace必须是接口的全类名  -->
+<mapper namespace="com.flash_editor.mapper.PostMapper">
+	
+	<resultMap type="com.flash_editor.domain.Post" id="postResult">
+		<result column="username" property="username"/>
+		<result column="id" property="id"/>
+		<result column="addTime" property="addTime"/>
+		<result column="updateTime" property="updateTime"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="followNum" property="followNum"/>
+	</resultMap>
+
+
+	
+	<select id="findAllPosts" resultMap="postResult">
+		select username,id,date_format(addTime,'%Y-%m-%d %h:%i:%s') addTime,date_format(updateTime,'%Y-%m-%d %H:%i:%s') updateTime,title,content,followNum
+		from Posts
+	</select>
+
+	<insert id="addPost">
+		INSERT into Posts(username,addTime,updateTime,title,content,followNum)
+		VALUES (#{username},str_to_date(#{addTime},'%Y-%m-%d %H:%i:%s'),str_to_date(#{updateTime},'%Y-%m-%d %H:%i:%s'),#{title},#{content},#{followNum})
+	</insert>
+</mapper>

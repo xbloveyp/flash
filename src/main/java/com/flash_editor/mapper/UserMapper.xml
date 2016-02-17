@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace必须是接口的全类名  -->
+<mapper namespace="com.flash_editor.mapper.UserMapper">
+	
+	<resultMap type="com.flash_editor.domain.User" id="userResult">
+		<result column="uid" property="uid"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="email" property="email"/>
+	</resultMap>
+
+	<!-- 取得插入数据后的id -->
+	<insert id="save">
+		insert into User(username,password,email)
+		values(#{username},#{password},#{email})
+	</insert>
+
+	<update id="update">
+		update User
+		set username = #{username},
+			password = #{password},
+			email = #{email}
+		where uid = #{uid}
+	</update>
+	
+	<delete id="delete">
+		delete from User
+		where uid = #{uid}
+	</delete>
+
+	<select id="findById" resultMap="userResult">
+		select *
+		from User
+		where uid = #{uid}
+	</select>
+	
+	<select id="findByName" resultMap="userResult" >
+		select *
+		from User
+		where username = #{username}
+	</select>
+	
+	<select id="findByUser" resultMap="userResult">
+		select *
+		from User
+		where username = #{username} and password = #{password}
+	</select>
+	
+	<select id="findAll" resultMap="userResult">
+		select * 
+		from User
+	</select>
+</mapper>
