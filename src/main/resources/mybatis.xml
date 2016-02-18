@@ -42,7 +42,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!-- 配置扫描Domain的包路径 -->
-        <property name="typeAliasesPackage" value="com.flash_editor.*.domain"/>
+        <property name="typeAliasesPackage" value="com.flash_editor.domain"/>
         <!-- 配置mybatis配置文件的位置 -->
         <property name="configLocation" value="classpath:mybatis-base.xml"/>
         <!-- 配置扫描Mapper XML的位置 -->
@@ -52,7 +52,7 @@
 
     <!-- 配置扫描Mapper接口的包路径 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.flash_editor.*.mapper"/>
+        <property name="basePackage" value="com.flash_editor.mapper"/>
     </bean>
 
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
