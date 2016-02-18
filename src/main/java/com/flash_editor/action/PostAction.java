@@ -2,7 +2,6 @@ package com.flash_editor.action;
 
 import com.flash_editor.domain.Post;
 import com.flash_editor.domain.User;
-import com.flash_editor.service.PostService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;

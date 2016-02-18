@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+   <!-- 配置文件改了以后不用重新启动 -->
+   <constant name="struts.devMode" value="true"/>
+   
+   <!-- 把action扩展名改为.do -->
+    <constant name="struts.action.extension" value="do" />
+    
+   <!-- 把主题设为simple -->
+    <constant name="struts.ui.theme" value="simple" />
+    
+   <package name="user" namespace="/" extends="json-default">
+		<action name="user_*" method="{1}"  class="userAction">
+			<result type="json">
+                <param name="root">model</param>
+            </result>
+			<result name="registsuccess">/index.html</result>
+		</action>
+	</package>
+
+    <package name="post" namespace="/" extends="json-default">
+        <action name="post_*" method="{1}"  class="postAction">
+            <result type="json">
+                <param name="root">model</param>
+            </result>
+            <result name="success">/discuss.jsp</result>
+        </action>
+    </package>
+	
+</struts>	

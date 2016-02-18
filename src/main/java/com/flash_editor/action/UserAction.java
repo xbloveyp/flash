@@ -7,13 +7,9 @@ import org.springframework.stereotype.Controller;
 
 
 import com.flash_editor.domain.User;
-import com.flash_editor.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @Scope("prototype")

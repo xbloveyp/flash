@@ -22,7 +22,7 @@
 		<!--<property name="driverClass" value="${driverClass}"></property>-->
 		<!--<property name="user" value="${username}"></property>-->
 		<!--<property name="password" value="${password}"></property>-->
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/flash_editor"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3307/flash_editor"></property>
         <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
         <property name="user" value="root"></property>
         <property name="password" value="131421"></property>
