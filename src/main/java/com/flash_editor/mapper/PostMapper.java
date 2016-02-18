@@ -1,17 +1,31 @@
 package com.flash_editor.mapper;
 
 import com.flash_editor.domain.Post;
+import com.flash_editor.domain.PostExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface PostMapper {
+    int countByExample(PostExample example);
 
-//	 public User findByName(@Param(value = "username") String username);
-//	 public void save(User user);
-//	 public User findById(@Param(value = "uid") long uid);
-//	 public User findByUser(User user);
-	public List<Post> findAllPosts();
-	public void addPost(Post post);
+    int deleteByExample(PostExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(Post record);
+
+    int insertSelective(Post record);
+
+    List<Post> selectByExample(PostExample example);
+
+    Post selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") Post record, @Param("example") PostExample example);
+
+    int updateByExample(@Param("record") Post record, @Param("example") PostExample example);
+
+    int updateByPrimaryKeySelective(Post record);
+
+    int updateByPrimaryKey(Post record);
 }

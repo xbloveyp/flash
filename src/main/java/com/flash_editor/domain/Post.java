@@ -1,68 +1,28 @@
 package com.flash_editor.domain;
 
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Post implements Serializable {
-    private int id;
-    private String addTime;
-    private String updateTime;
+public class Post {
+    private Integer id;
+
     private String username;
+
+    private Date addtime;
+
+    private Date updatetime;
+
     private String title;
+
     private String content;
-    private int followNum;
 
-    public Post() {
-    }
+    private Integer follownum;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getAddTime() {
-        return addTime;
-    }
-
-    public void setAddTime(String addTime) {
-        this.addTime = addTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getFollowNum() {
-        return followNum;
-    }
-
-    public void setFollowNum(int followNum) {
-        this.followNum = followNum;
     }
 
     public String getUsername() {
@@ -70,8 +30,46 @@ public class Post implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
     }
 
+    public Date getAddtime() {
+        return addtime;
+    }
 
+    public void setAddtime(Date addtime) {
+        this.addtime = addtime;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
+    public Integer getFollownum() {
+        return follownum;
+    }
+
+    public void setFollownum(Integer follownum) {
+        this.follownum = follownum;
+    }
 }

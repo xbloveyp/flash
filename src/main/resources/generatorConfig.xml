@@ -15,33 +15,33 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://10.1.77.106:3306/zhaopin" userId="zhaopin"
-                        password="dp!@UoVXbSIrG"/>
+                        connectionURL="jdbc:mysql://localhost:3307/flash_editor" userId="root"
+                        password="131421"/>
 
-        <javaModelGenerator targetPackage="com.sankuai.meituan.zhaopin.portal.domain"
+        <javaModelGenerator targetPackage="com.flash_editor.domain"
                             targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.sankuai.meituan.zhaopin.dao"
+        <sqlMapGenerator targetPackage="com.flash_editor.dao"
                          targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator targetPackage="com.sankuai.meituan.zhaopin.portal.mapper"
+        <javaClientGenerator targetPackage="com.flash_editor.mapper"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
 
-        <!--<table tableName="user" domainObjectName="User"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--</table>-->
-        <table tableName="user_account" domainObjectName="UserAccount"
+        <table tableName="user" domainObjectName="User"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="posts" domainObjectName="Post"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
