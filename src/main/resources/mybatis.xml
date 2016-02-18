@@ -47,7 +47,7 @@
         <property name="configLocation" value="classpath:mybatis-base.xml"/>
         <!-- 配置扫描Mapper XML的位置 -->
         <property name="mapperLocations"
-                  value="classpath*:com.flash_editor.dao/*.xml"/>
+                  value="classpath*:com/flash_editor/dao/*.xml"/>
     </bean>
 
     <!-- 配置扫描Mapper接口的包路径 -->

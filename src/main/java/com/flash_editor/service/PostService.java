@@ -19,8 +19,6 @@ public class PostService {
         this.postMapper = postMapper;
     }
 
-
-
 	public List<Post> findAllPosts() {
         PostExample example = new PostExample();
         example.createCriteria().andIdIsNotNull();
