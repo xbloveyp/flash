@@ -31,7 +31,7 @@
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="post_excute.do">讨论区</a></li>
+                <li role="presentation"><a href="/findAllPosts">讨论区</a></li>
                 <li role="presentation"><a href="edtior.jsp">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
@@ -91,7 +91,7 @@
             var username = $(this).val();
             var divtip = document.getElementById("usernametip");
 
-            var url = "user_exists.do";
+            var url = "/getUser";
             $.post(url,{username:username},function(data){
                 if(data!=null) {
                     $("#usernametip").html(null);
@@ -128,7 +128,7 @@
             if(flag) {
                 var username = $("#username").val();
                 var password = $("#password").val();
-                var url = "user_login.do";
+                var url = "/login";
                 $.post(url, {username: username, password: password}, function (data) {
                     if(data!=null) {
                         window.location.href = "index.jsp";

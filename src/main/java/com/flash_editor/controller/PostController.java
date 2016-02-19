@@ -22,11 +22,11 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @RequestMapping(value = "/findAllPosts")
-    public Result findAllPosts(HttpSession httpSession) {
+    @RequestMapping(value = "/findAllPosts", method = RequestMethod.POST)
+    public String findAllPosts(HttpSession httpSession) {
         List<Post> posts = postService.findAllPosts();
         httpSession.setAttribute("posts",posts);
-        return Result.build(200, posts);
+        return "/discuss.jsp";
     }
 
     @RequestMapping(value = "/addPost", method =RequestMethod.POST)

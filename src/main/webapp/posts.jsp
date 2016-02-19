@@ -31,7 +31,7 @@
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="post_excute.do">讨论区</a></li>
+                <li role="presentation"><a href="/findAllPosts">讨论区</a></li>
                 <li role="presentation"><a href="edtior.jsp">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
@@ -124,8 +124,9 @@
 </html>
 <script>
     $(document).ready(function(){
+
         $("#send").click(function(){
-            var url = "post_add.do";
+            var url = "/addPost";
             var content = $("#content").val();
             if(content==null || ""==content.trim()){
                 window.alert("请输入内容");
