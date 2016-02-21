@@ -92,13 +92,21 @@
             var divtip = document.getElementById("usernametip");
 
             var url = "/getUser";
-            $.post(url,{username:username},function(data){
-                if(data!=null) {
-                    $("#usernametip").html(null);
-                    divtip.className = "";
-                }else{
-                    $("#usernametip").html("用户名不存在");
-                    divtip.className="alert alert-danger text-center";
+            $.ajax({
+                type: 'POST',
+                url:url,
+                contentType : 'application/json',
+                data:{username:username},
+                dataType:"json",
+                success:function(result){
+                    alert(result);
+//                    if(result.data) {
+//                        $("#usernametip").html(null);
+//                        divtip.className = "";
+//                    }else{
+//                        $("#usernametip").html("用户名不存在");
+//                        divtip.className="alert alert-danger text-center";
+//                    }
                 }
             });
         });
