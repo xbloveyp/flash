@@ -67,8 +67,8 @@
                     <a href="#" class="" style="margin-left: 10px">
                         <small>${po.username}</small>
                     </a>
-                    <small style="color: #adadad;margin-left: 40px">${po.updateTime}</small>
-                    <span class="badge" style="margin-left: 10px">${po.followNum}</span>
+                    <small style="color: #adadad;margin-left: 40px">${po.updatetime}</small>
+                    <span class="badge" style="margin-left: 10px">${po.follownum}</span>
                 </div>
             </div>
         </div>
@@ -118,8 +118,14 @@
                 window.alert("请输入内容");
                 return;
             }
-            $.post(url, {title: title, content: content}, function (data) {
-                window.location.href="discuss.jsp";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                contentType: "application/json",
+                data:JSON.stringify({title: title, content: content}),
+                success: function (result) {
+                    window.location.href="discuss.jsp";
+                }
             });
         });
     });

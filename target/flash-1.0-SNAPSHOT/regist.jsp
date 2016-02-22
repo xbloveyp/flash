@@ -114,17 +114,22 @@
              var divtip = document.getElementById("usernametip");
 
              var url = "/getUser";
-             $.post(url,{username:username},function(data){
-                 if(data!=null) {
-                     $("#usernametip").html("用户名已经存在");
-                     divtip.className="alert alert-danger text-center";
-                 }else{
-                     if((username.length>=0 && username.length<3)||(username.length)>14){
-                         $("#usernametip").html("用户名长度不符合");
+             $.ajax({
+                 type: 'POST',
+                 url:url,
+                 data:{username:username},
+                 success:function(result){
+                     if(result.code==200) {
+                         $("#usernametip").html("用户名已经存在");
                          divtip.className="alert alert-danger text-center";
-                     }else {
-                         $("#usernametip").html(null);
-                         divtip.className = "";
+                     }else{
+                         if((username.length>=0 && username.length<3)||(username.length)>14){
+                             $("#usernametip").html("用户名长度不符合");
+                             divtip.className="alert alert-danger text-center";
+                         }else {
+                             $("#usernametip").html(null);
+                             divtip.className = "";
+                         }
                      }
                  }
              });
@@ -185,8 +190,14 @@
                  var password = $("#password").val();
                  var email = $("#email").val();
                  var url = "/addUser";
-                 $.post(url, {username: username, password: password, email: email}, function (data) {
-                     window.location.href="index.jsp";
+                 $.ajax({
+                     type: 'POST',
+                     url: url,
+                     contentType: "application/json",
+                     data:JSON.stringify({username: username, password: password, email: email}),
+                     success: function (result) {
+                         window.location.href="index.jsp";
+                     }
                  });
              }
          });

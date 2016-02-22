@@ -29,8 +29,15 @@ public class UserService {
 
 
 	public User login(User user) {
-		User u = userMapper.selectByPrimaryKey(user.getUid());
-		return u;
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUsernameEqualTo(user.getUsername())
+                    .andPasswordEqualTo(user.getPassword());
+		List<User> users = userMapper.selectByExample(userExample);
+        if (CollectionUtils.isEmpty(users)){
+            return null;
+        }else {
+            return users.get(0);
+        }
 	}
 
 

@@ -95,18 +95,15 @@
             $.ajax({
                 type: 'POST',
                 url:url,
-                contentType : 'application/json',
                 data:{username:username},
-                dataType:"json",
                 success:function(result){
-                    alert(result);
-//                    if(result.data) {
-//                        $("#usernametip").html(null);
-//                        divtip.className = "";
-//                    }else{
-//                        $("#usernametip").html("用户名不存在");
-//                        divtip.className="alert alert-danger text-center";
-//                    }
+                    if(result.code==200) {
+                        $("#usernametip").html(null);
+                        divtip.className = "";
+                    }else{
+                        $("#usernametip").html("用户名不存在");
+                        divtip.className="alert alert-danger text-center";
+                    }
                 }
             });
         });
@@ -137,12 +134,18 @@
                 var username = $("#username").val();
                 var password = $("#password").val();
                 var url = "/login";
-                $.post(url, {username: username, password: password}, function (data) {
-                    if(data!=null) {
-                        window.location.href = "index.jsp";
-                    }else{
-                        $("#passwordtip").html("用户名或密码错误");
-                        document.getElementById("passwordtip").className="alert alert-danger text-center";
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    contentType: "application/json",
+                    data:JSON.stringify({username: username, password: password}),
+                    success: function (result) {
+                        if (result.code == 200) {
+                            window.location.href = "index.jsp";
+                        } else {
+                            $("#passwordtip").html("用户名或密码错误");
+                            document.getElementById("passwordtip").className = "alert alert-danger text-center";
+                        }
                     }
                 });
             }
