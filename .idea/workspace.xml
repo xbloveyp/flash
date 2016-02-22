@@ -2,7 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8300aacd-656a-4d04-9380-c11778dd816e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/lib/commons-collections-3.2.1.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/lib/commons-lang3-3.3.2.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_3_2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/flash_editor/service/PostService.class" afterPath="$PROJECT_DIR$/target/classes/com/flash_editor/service/PostService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/com/flash_editor/service/PostService.class" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/com/flash_editor/service/PostService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/flash_editor/controller/UserController.class" afterPath="$PROJECT_DIR$/target/classes/com/flash_editor/controller/UserController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/com/flash_editor/controller/UserController.class" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/com/flash_editor/controller/UserController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/flash_editor/service/UserService.class" afterPath="$PROJECT_DIR$/target/classes/com/flash_editor/service/UserService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/com/flash_editor/service/UserService.class" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/com/flash_editor/service/UserService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/flash_editor/service/PostService.java" afterPath="$PROJECT_DIR$/src/main/java/com/flash_editor/service/PostService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/flash_editor/controller/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/flash_editor/controller/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/flash_editor/service/UserService.java" afterPath="$PROJECT_DIR$/src/main/java/com/flash_editor/service/UserService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flash.iml" afterPath="$PROJECT_DIR$/flash.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/flash_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/flash_war_exploded.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/login.jsp" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/login.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mybatis.xml" afterPath="$PROJECT_DIR$/src/main/resources/mybatis.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/mybatis.xml" afterPath="$PROJECT_DIR$/target/classes/mybatis.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/mybatis.xml" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/mybatis.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/webmvc-config.xml" afterPath="$PROJECT_DIR$/src/main/resources/webmvc-config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/webmvc-config.xml" afterPath="$PROJECT_DIR$/target/classes/webmvc-config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/webmvc-config.xml" afterPath="$PROJECT_DIR$/target/flash-1.0-SNAPSHOT/WEB-INF/classes/webmvc-config.xml" />
     </list>
     <ignored path="flash.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,7 +73,7 @@
       <file leaf-file-name="UserService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/flash_editor/service/UserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2101911">
+            <state vertical-scroll-proportion="0.9639066">
               <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding />
             </state>
@@ -80,7 +104,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/resources/webmvc-config.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="50" selection-start-line="24" selection-start-column="47" selection-end-line="24" selection-end-column="50" />
+              <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -258,9 +282,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -489,6 +510,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -915,11 +939,12 @@
       <workItem from="1455801277528" duration="1712000" />
       <workItem from="1455871991661" duration="4866000" />
       <workItem from="1456107899447" duration="11000" />
+      <workItem from="1456108210146" duration="8000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19373000" />
+    <option name="totallyTimeSpent" value="19381000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="0" />
@@ -932,10 +957,10 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885906" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32969153" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32885906" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32885906" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885906" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21208227" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21208227" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1317,7 +1342,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources/webmvc-config.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="50" selection-start-line="24" selection-start-column="47" selection-end-line="24" selection-end-column="50" />
+          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -1355,7 +1380,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/flash_editor/service/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2101911">
+        <state vertical-scroll-proportion="0.9639066">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding />
         </state>

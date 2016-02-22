@@ -4,10 +4,8 @@ import com.flash_editor.domain.User;
 import com.flash_editor.dto.Result;
 import com.flash_editor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,13 +13,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by xiaobo.cao on 2016/2/18.
  */
-@RestController
+@Controller
 public class UserController {
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/getUser", method = RequestMethod.POST)
-    public Result getUser(@RequestBody String username) {
+    @ResponseBody
+    public Result getUser(@RequestParam(value="username", required=true)  String username) {
         User user = userService.exists(username);
         return Result.build(200, user);
     }
