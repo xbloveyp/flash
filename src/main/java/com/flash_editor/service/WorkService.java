@@ -5,12 +5,14 @@ import com.flash_editor.domain.FlashContentExample;
 import com.flash_editor.mapper.FlashContentMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/2/23.
  */
+@Service
 public class WorkService {
     @Autowired
     private FlashContentMapper flashContentMapper;

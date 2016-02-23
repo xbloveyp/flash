@@ -42,7 +42,7 @@
             </c:if>
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
-                    <h5 style="color: #888888">欢迎您：${sessionScope.user.username==""?sessionScope.user.username:sessionScope.user.username}&nbsp;&nbsp;
+                    <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
                         <a href="/logout" role="presentation">注销</a>
                     </h5>
                 </form>
@@ -131,14 +131,14 @@
                 }
             }
             if(flag) {
-                var username = $("#username").val();
+                var userName = $("#username").val();
                 var password = $("#password").val();
                 var url = "/login";
                 $.ajax({
                     type: 'POST',
                     url: url,
                     contentType: "application/json",
-                    data:JSON.stringify({username: username, password: password}),
+                    data:JSON.stringify({userName: userName, password: password}),
                     success: function (result) {
                         if (result.code == 200) {
                             if(result.data["loginRefererUrl"]!=null){

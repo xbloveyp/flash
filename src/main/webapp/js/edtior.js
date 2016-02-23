@@ -15,7 +15,7 @@ window.onload=function(){
     var attrForm = document.getElementById('shape-attrs');
     var createForm = document.getElementById('pan');
 
-    init();
+    //init();
 
     $("#mouse").click(function(){
         isdraw = false;
@@ -226,17 +226,17 @@ window.onload=function(){
         });
     })
 
-    var init = function(){
-        var url = "/work/load"
-        $.ajax({
-            type: 'POST',
-            url: url,
-            contentType: "application/json",
-            success: function (result) {
-                if (result.code == 200) {
-                    canvas.loadFromJSON(result.data.
-                }
-            }
-        });
-    }
+    //var init = function(){
+    //    var url = "/work/load"
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: url,
+    //        contentType: "application/json",
+    //        success: function (result) {
+    //            if (result.code == 200) {
+    //                canvas.loadFromJSON(result.data.content);
+    //            }
+    //        }
+    //    });
+    //}
 };

@@ -42,7 +42,7 @@
             </c:if>
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
-                    <h5 style="color: #888888">欢迎您：${sessionScope.user.username==""?sessionScope.user.username:sessionScope.user.username}&nbsp;&nbsp;
+                    <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
                         <a href="/logout" role="presentation">注销</a>
                     </h5>
                 </form>
@@ -65,7 +65,7 @@
                 <div class="" style="margin-left: 50px">
                     <h3 class=""><a href="">${po.title}</a></h3>
                     <a href="#" class="" style="margin-left: 10px">
-                        <small>${po.username}</small>
+                        <small>${po.userName}</small>
                     </a>
                     <small style="color: #adadad;margin-left: 40px">${po.updatetime}</small>
                     <span class="badge" style="margin-left: 10px">${po.follownum}</span>
