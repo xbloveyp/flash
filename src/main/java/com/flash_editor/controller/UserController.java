@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -46,8 +48,13 @@ public class UserController {
     public Result login(@RequestBody User user, HttpSession httpSession) {
         User u =  userService.login(user);
         if(u!=null){
+            Map<String,String> map = new HashMap<String, String>();
+            String loginRefererUrl = (String)httpSession.getAttribute("loginRefererUrl");
+            if (loginRefererUrl!=null){
+                map.put("loginRefererUrl",loginRefererUrl);
+            }
             httpSession.setAttribute("user", u);
-            return Result.build(200, null);
+            return Result.build(200, map);
         }
         else {
             return Result.build(500, null);
@@ -58,6 +65,7 @@ public class UserController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession httpSession) {
         httpSession.setAttribute("user", null);
-        return "forward:/index.jsp";
+        String logoutRefererUrl = (String)httpSession.getAttribute("logoutRefererUrl");
+        return logoutRefererUrl;
     }
 }

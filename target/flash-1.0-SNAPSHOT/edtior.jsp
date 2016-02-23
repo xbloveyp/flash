@@ -62,7 +62,7 @@
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.username==""?sessionScope.user.username:sessionScope.user.username}&nbsp;&nbsp;
-                        <a href="user_logout.do" role="presentation">注销</a>
+                        <a href="/logout" role="presentation">注销</a>
                         <a id ="save1" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">保存</a>
                     </h5>
                 </form>

@@ -43,7 +43,7 @@
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.username==""?sessionScope.user.username:sessionScope.user.username}&nbsp;&nbsp;
-                        <a href="user_logout.do" role="presentation">注销</a>
+                        <a href="/logout" role="presentation">注销</a>
                     </h5>
                 </form>
             </c:if>
@@ -141,7 +141,12 @@
                     data:JSON.stringify({username: username, password: password}),
                     success: function (result) {
                         if (result.code == 200) {
-                            window.location.href = "index.jsp";
+                            if(result.data["refererUrl"]!=null){
+                                var refererUrl = result.data["refererUrl"];
+                                window.location.href = refererUrl;
+                            }else {
+                                window.location.href = "index.jsp";
+                            }
                         } else {
                             $("#passwordtip").html("用户名或密码错误");
                             document.getElementById("passwordtip").className = "alert alert-danger text-center";
