@@ -56,12 +56,14 @@
                 <form class="navbar-form navbar-right">
                     <a  class=" btn btn-normal btn-primary" href="login.jsp" style="padding-left: 30px;padding-right: 30px">登录</a>
                     <a  class=" btn btn-normal btn-success" href="regist.jsp" style="padding-left: 30px;padding-right: 30px;margin-left: 15px">注册</a>
+                    <a id ="save" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">保存</a>
                 </form>
             </c:if>
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.username==""?sessionScope.user.username:sessionScope.user.username}&nbsp;&nbsp;
                         <a href="user_logout.do" role="presentation">注销</a>
+                        <a id ="save1" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">保存</a>
                     </h5>
                 </form>
             </c:if>

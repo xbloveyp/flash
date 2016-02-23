@@ -170,11 +170,11 @@ window.onload=function(){
         top.value = selected ? selected.top : 0;
         rotate.value = selected ? selected.rotate : 0;
     }
-    //½ûÖ¹±íµ¥»Ø³µ¼ü
+    //ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½Ø³ï¿½ï¿½ï¿½
     document.onkeydown = function(event) {
         var target, code, tag;
         if (!event) {
-            event = window.event; //Õë¶Ôieä¯ÀÀÆ÷
+            event = window.event; //ï¿½ï¿½ï¿½ieï¿½ï¿½ï¿½ï¿½ï¿½
             target = event.srcElement;
             code = event.keyCode;
             if (code == 13) {
@@ -184,7 +184,7 @@ window.onload=function(){
             }
         }
         else {
-            target = event.target; //Õë¶Ô×ñÑ­w3c±ê×¼µÄä¯ÀÀÆ÷£¬ÈçFirefox
+            target = event.target; //ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­w3cï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Firefox
             code = event.keyCode;
             if (code == 13) {
                 tag = target.tagName;
@@ -193,4 +193,12 @@ window.onload=function(){
             }
         }
     };
+    $("#save").click(function(){
+        var canvasJson = JSON.stringify(canvas);
+        canvas.loadFromJSON('{"objects":[{"type":"rect","left":50,"top":50,"width":20,"height":20,"fill":"green","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"rx":0,"ry":0},{"type":"circle","left":100,"top":100,"width":100,"height":100,"fill":"red","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"radius":50}],"background":"rgba(0, 0, 0, 0)"}');
+    })
+    $("#save1").click(function(){
+        var canvasJson = JSON.stringify(canvas);
+        canvas.loadFromJSON('{"objects":[{"type":"rect","left":50,"top":50,"width":20,"height":20,"fill":"green","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"rx":0,"ry":0},{"type":"circle","left":100,"top":100,"width":100,"height":100,"fill":"red","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"radius":50}],"background":"rgba(0, 0, 0, 0)"}');
+    })
 };
