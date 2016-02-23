@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -22,14 +23,15 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @RequestMapping(value = "/findAllPosts", method = RequestMethod.POST)
+    @RequestMapping(value = "/findAllPosts", method = RequestMethod.GET)
     public String findAllPosts(HttpSession httpSession) {
         List<Post> posts = postService.findAllPosts();
         httpSession.setAttribute("posts",posts);
-        return "/discuss.jsp";
+        return "forward:/discuss.jsp";
     }
 
     @RequestMapping(value = "/addPost", method =RequestMethod.POST)
+    @ResponseBody
     public Result addPost(@RequestBody Post post,HttpSession httpSession) {
         post.setAddtime(new Date());
         post.setUpdatetime(new Date());
@@ -38,6 +40,7 @@ public class PostController {
         post.setUsername(u.getUsername());
         postService.addPost(post);
         List<Post> posts = postService.findAllPosts();
+        httpSession.setAttribute("posts",posts);
         return Result.build(200, posts);
     }
 

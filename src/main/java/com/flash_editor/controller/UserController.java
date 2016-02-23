@@ -5,9 +5,14 @@ import com.flash_editor.dto.Result;
 import com.flash_editor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -20,23 +25,36 @@ public class UserController {
 
     @RequestMapping(value = "/getUser", method = RequestMethod.POST)
     @ResponseBody
-    public Result getUser(@RequestParam(value="username", required=true)  String username) {
+    public Result getUser(String username) {
         User user = userService.exists(username);
-        return Result.build(200, user);
+        if (user!=null){
+            return Result.build(200, null);
+        }else {
+            return Result.build(500, null);
+        }
+
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public Result addUser(@RequestBody User user) {
+    @ResponseBody
+    public Result addUser(@RequestBody User user, HttpSession httpSession) {
         userService.add(user);
+        httpSession.setAttribute("user", user);
         return Result.build(200, null);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result login(@RequestBody User user,HttpSession httpSession) {
+    @ResponseBody
+    public Result login(@RequestBody User user, HttpSession httpSession) {
         User u =  userService.login(user);
         if(u!=null){
+            Map<String,String> map = new HashMap<String, String>();
+            String loginRefererUrl = (String)httpSession.getAttribute("loginRefererUrl");
+            if (loginRefererUrl!=null){
+                map.put("loginRefererUrl",loginRefererUrl);
+            }
             httpSession.setAttribute("user", u);
-            return Result.build(200, u);
+            return Result.build(200, map);
         }
         else {
             return Result.build(500, null);
@@ -44,9 +62,10 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public Result logout(HttpSession httpSession) {
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession httpSession) {
         httpSession.setAttribute("user", null);
-        return Result.build(200, null);
+        String logoutRefererUrl = (String)httpSession.getAttribute("logoutRefererUrl");
+        return logoutRefererUrl;
     }
 }
