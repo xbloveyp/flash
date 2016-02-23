@@ -30,7 +30,7 @@ public class UserService {
 
 	public User login(User user) {
         UserExample userExample = new UserExample();
-        userExample.createCriteria().andUsernameEqualTo(user.getUsername())
+        userExample.createCriteria().andUserNameEqualTo(user.getUserName())
                     .andPasswordEqualTo(user.getPassword());
 		List<User> users = userMapper.selectByExample(userExample);
         if (CollectionUtils.isEmpty(users)){
@@ -43,7 +43,7 @@ public class UserService {
 
 	public User exists(String username) {
         UserExample userExample = new UserExample();
-        userExample.createCriteria().andUsernameEqualTo(username);
+        userExample.createCriteria().andUserNameEqualTo(username);
 		List<User> users = userMapper.selectByExample(userExample);
 		if (CollectionUtils.isEmpty(users)){
 			return null;

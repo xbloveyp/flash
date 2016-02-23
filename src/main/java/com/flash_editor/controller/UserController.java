@@ -39,7 +39,8 @@ public class UserController {
     @ResponseBody
     public Result addUser(@RequestBody User user, HttpSession httpSession) {
         userService.add(user);
-        httpSession.setAttribute("user", user);
+        User u =  userService.login(user);
+        httpSession.setAttribute("user", u);
         return Result.build(200, null);
     }
 

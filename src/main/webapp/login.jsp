@@ -141,7 +141,7 @@
                     data:JSON.stringify({username: username, password: password}),
                     success: function (result) {
                         if (result.code == 200) {
-                            if(result.data["refererUrl"]!=null){
+                            if(result.data["loginRefererUrl"]!=null){
                                 var refererUrl = result.data["loginRefererUrl"];
                                 window.location.href = refererUrl;
                             }else {

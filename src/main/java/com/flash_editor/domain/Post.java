@@ -5,17 +5,19 @@ import java.util.Date;
 public class Post {
     private Integer id;
 
-    private String username;
+    private Date addTime;
 
-    private Date addtime;
-
-    private Date updatetime;
-
-    private String title;
+    private Date updateTime;
 
     private String content;
 
-    private Integer follownum;
+    private String title;
+
+    private String userName;
+
+    private Integer followNum;
+
+    private Integer uid;
 
     public Integer getId() {
         return id;
@@ -25,36 +27,20 @@ public class Post {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public Date getAddTime() {
+        return addTime;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 
-    public Date getAddtime() {
-        return addtime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setAddtime(Date addtime) {
-        this.addtime = addtime;
-    }
-
-    public Date getUpdatetime() {
-        return updatetime;
-    }
-
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getContent() {
@@ -65,11 +51,35 @@ public class Post {
         this.content = content == null ? null : content.trim();
     }
 
-    public Integer getFollownum() {
-        return follownum;
+    public String getTitle() {
+        return title;
     }
 
-    public void setFollownum(Integer follownum) {
-        this.follownum = follownum;
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    public Integer getFollowNum() {
+        return followNum;
+    }
+
+    public void setFollowNum(Integer followNum) {
+        this.followNum = followNum;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 }

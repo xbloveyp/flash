@@ -15,7 +15,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3307/flash_editor" userId="root"
+                        connectionURL="jdbc:mysql://localhost:3306/flash_editor" userId="root"
                         password="131421"/>
 
         <javaModelGenerator targetPackage="com.flash_editor.domain"
