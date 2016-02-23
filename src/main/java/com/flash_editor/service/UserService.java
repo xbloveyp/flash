@@ -14,15 +14,6 @@ public class UserService {
 	@Autowired
 	private UserMapper userMapper;
 
-    public UserMapper getUserMapper() {
-        return userMapper;
-    }
-
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
-
-
 	public void add(User user) {
 			this.userMapper.insert(user);
 	}

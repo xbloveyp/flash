@@ -13,14 +13,6 @@ public class PostService {
     @Autowired
 	private PostMapper postMapper;
 
-    public PostMapper getPostMapper() {
-        return postMapper;
-    }
-
-    public void setPostMapper(PostMapper postMapper) {
-        this.postMapper = postMapper;
-    }
-
 	public List<Post> findAllPosts() {
         PostExample example = new PostExample();
         example.createCriteria().andIdIsNotNull();
