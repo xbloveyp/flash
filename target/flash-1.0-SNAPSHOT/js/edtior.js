@@ -15,6 +15,8 @@ window.onload=function(){
     var attrForm = document.getElementById('shape-attrs');
     var createForm = document.getElementById('pan');
 
+    //init();
+
     $("#mouse").click(function(){
         isdraw = false;
         selected = null;
@@ -195,10 +197,46 @@ window.onload=function(){
     };
     $("#save").click(function(){
         var canvasJson = JSON.stringify(canvas);
-        canvas.loadFromJSON('{"objects":[{"type":"rect","left":50,"top":50,"width":20,"height":20,"fill":"green","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"rx":0,"ry":0},{"type":"circle","left":100,"top":100,"width":100,"height":100,"fill":"red","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"radius":50}],"background":"rgba(0, 0, 0, 0)"}');
+        var url = "/work/save";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            contentType: "application/json",
+            data:canvasJson,
+            success: function (result) {
+                if (result.code == 200) {
+                    alert("保存成功")
+                }
+            }
+        });
     })
     $("#save1").click(function(){
         var canvasJson = JSON.stringify(canvas);
-        alert(canvasJson);
+        var url = "/work/save";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            contentType: "application/json",
+            data:canvasJson,
+            success: function (result) {
+                if (result.code == 200) {
+                    alert("保存成功")
+                }
+            }
+        });
     })
+
+    //var init = function(){
+    //    var url = "/work/load"
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: url,
+    //        contentType: "application/json",
+    //        success: function (result) {
+    //            if (result.code == 200) {
+    //                canvas.loadFromJSON(result.data.content);
+    //            }
+    //        }
+    //    });
+    //}
 };

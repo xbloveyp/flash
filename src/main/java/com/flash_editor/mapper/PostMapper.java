@@ -2,9 +2,8 @@ package com.flash_editor.mapper;
 
 import com.flash_editor.domain.Post;
 import com.flash_editor.domain.PostExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface PostMapper {
     int countByExample(PostExample example);

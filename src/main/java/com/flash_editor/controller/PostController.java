@@ -33,11 +33,12 @@ public class PostController {
     @RequestMapping(value = "/addPost", method =RequestMethod.POST)
     @ResponseBody
     public Result addPost(@RequestBody Post post,HttpSession httpSession) {
-        post.setAddtime(new Date());
-        post.setUpdatetime(new Date());
-        post.setFollownum(0);
+        post.setAddTime(new Date());
+        post.setUpdateTime(new Date());
+        post.setFollowNum(0);
         User u = (User) httpSession.getAttribute("user");
-        post.setUsername(u.getUsername());
+        post.setUserName(u.getUserName());
+        post.setUid(u.getId());
         postService.addPost(post);
         List<Post> posts = postService.findAllPosts();
         httpSession.setAttribute("posts",posts);
