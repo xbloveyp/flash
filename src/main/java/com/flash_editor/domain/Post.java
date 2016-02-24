@@ -5,19 +5,19 @@ import java.util.Date;
 public class Post {
     private Integer id;
 
+    private Integer uid;
+
+    private String userName;
+
     private Date addTime;
 
     private Date updateTime;
 
-    private String content;
-
     private String title;
 
-    private String userName;
+    private String content;
 
     private Integer followNum;
-
-    private Integer uid;
 
     public Integer getId() {
         return id;
@@ -25,6 +25,22 @@ public class Post {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public Date getAddTime() {
@@ -43,14 +59,6 @@ public class Post {
         this.updateTime = updateTime;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
     public String getTitle() {
         return title;
     }
@@ -59,12 +67,12 @@ public class Post {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getUserName() {
-        return userName;
+    public String getContent() {
+        return content;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
     public Integer getFollowNum() {
@@ -73,13 +81,5 @@ public class Post {
 
     public void setFollowNum(Integer followNum) {
         this.followNum = followNum;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
     }
 }

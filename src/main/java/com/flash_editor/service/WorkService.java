@@ -1,8 +1,8 @@
 package com.flash_editor.service;
 
-import com.flash_editor.domain.FlashContent;
-import com.flash_editor.domain.FlashContentExample;
-import com.flash_editor.mapper.FlashContentMapper;
+import com.flash_editor.domain.FlashProject;
+import com.flash_editor.domain.FlashProjectExample;
+import com.flash_editor.mapper.FlashProjectMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +15,23 @@ import java.util.List;
 @Service
 public class WorkService {
     @Autowired
-    private FlashContentMapper flashContentMapper;
+    private FlashProjectMapper flashProjectMapper;
 
-    public void addContent(FlashContent flashContent){
-        flashContentMapper.insert(flashContent);
+    public void saveContent(FlashProject flashProject){
+        FlashProject flashProjectOld = findByUid(flashProject.getUid());
+        if (flashProjectOld==null) {
+            flashProjectMapper.insert(flashProject);
+        }else {
+            flashProjectMapper.updateByPrimaryKeySelective(flashProject);
+        }
     }
 
-    public FlashContent findByUid(int uid){
-        FlashContentExample flashContentExample = new FlashContentExample();
-        flashContentExample.createCriteria().andUidEqualTo(uid);
-        List<FlashContent> flashContentList = flashContentMapper.selectByExample(flashContentExample);
-        if (CollectionUtils.isNotEmpty(flashContentList)){
-            return flashContentList.get(0);
+    public FlashProject findByUid(int uid){
+        FlashProjectExample flashProjectExample = new FlashProjectExample();
+        flashProjectExample.createCriteria().andUidEqualTo(uid);
+        List<FlashProject> flashProjectList = flashProjectMapper.selectByExampleWithBLOBs(flashProjectExample);
+        if (CollectionUtils.isNotEmpty(flashProjectList)){
+            return flashProjectList.get(0);
         }
         else {
             return null;

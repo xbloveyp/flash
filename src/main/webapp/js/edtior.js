@@ -15,7 +15,19 @@ window.onload=function(){
     var attrForm = document.getElementById('shape-attrs');
     var createForm = document.getElementById('pan');
 
-    //init();
+    var init = function(){
+        var url = "/work/load"
+        $.ajax({
+            type: 'POST',
+            url: url,
+            success: function (result) {
+                if (result.code == 200) {
+                    canvas.loadFromJSON(result.data.content);
+                }
+            }
+        });
+    }
+    init();
 
     $("#mouse").click(function(){
         isdraw = false;
@@ -201,8 +213,7 @@ window.onload=function(){
         $.ajax({
             type: 'POST',
             url: url,
-            contentType: "application/json",
-            data:canvasJson,
+            data:{canvasJson:canvasJson},
             success: function (result) {
                 if (result.code == 200) {
                     alert("保存成功")
@@ -216,8 +227,7 @@ window.onload=function(){
         $.ajax({
             type: 'POST',
             url: url,
-            contentType: "application/json",
-            data:canvasJson,
+            data:{canvasJson:canvasJson},
             success: function (result) {
                 if (result.code == 200) {
                     alert("保存成功")
@@ -225,18 +235,4 @@ window.onload=function(){
             }
         });
     })
-
-    //var init = function(){
-    //    var url = "/work/load"
-    //    $.ajax({
-    //        type: 'POST',
-    //        url: url,
-    //        contentType: "application/json",
-    //        success: function (result) {
-    //            if (result.code == 200) {
-    //                canvas.loadFromJSON(result.data.content);
-    //            }
-    //        }
-    //    });
-    //}
 };
