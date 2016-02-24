@@ -109,6 +109,7 @@ window.onload=function(){
         if (e.target.tagName.toLowerCase() != 'input') return;
         if (!selected) return;
         selected.set('fill', fill.value);
+        defaultAttrs.fill = fill.value;
         selected.set('stroke', stroke.value);
         selected.set('stroke-width', strokeWidth.value);
         canvas.renderAll();
