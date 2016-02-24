@@ -15,7 +15,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/flash_editor" userId="root"
+                        connectionURL="jdbc:mysql://localhost:3307/flash_editor" userId="root"
                         password="131421"/>
 
         <javaModelGenerator targetPackage="com.flash_editor.domain"
@@ -41,16 +41,16 @@
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
         <!--</table>-->
-        <!--<table tableName="posts" domainObjectName="Post"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-        <!--</table>-->
-        <table tableName="flash_content" domainObjectName="FlashContent"
+        <table tableName="posts" domainObjectName="Post"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
         </table>
+        <!--<table tableName="flash_content" domainObjectName="FlashContent"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+        <!--</table>-->
 
     </context>
 </generatorConfiguration>

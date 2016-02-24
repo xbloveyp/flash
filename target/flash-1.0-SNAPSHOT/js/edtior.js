@@ -201,8 +201,7 @@ window.onload=function(){
         $.ajax({
             type: 'POST',
             url: url,
-            contentType: "application/json",
-            data:canvasJson,
+            data:{canvasJson:canvasJson},
             success: function (result) {
                 if (result.code == 200) {
                     alert("保存成功")
@@ -216,8 +215,7 @@ window.onload=function(){
         $.ajax({
             type: 'POST',
             url: url,
-            contentType: "application/json",
-            data:canvasJson,
+            data:{canvasJson:canvasJson},
             success: function (result) {
                 if (result.code == 200) {
                     alert("保存成功")

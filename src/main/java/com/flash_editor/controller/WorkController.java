@@ -1,6 +1,6 @@
 package com.flash_editor.controller;
 
-import com.flash_editor.domain.FlashContent;
+import com.flash_editor.domain.FlashProject;
 import com.flash_editor.domain.User;
 import com.flash_editor.dto.Result;
 import com.flash_editor.service.WorkService;
@@ -20,21 +20,21 @@ public class WorkController {
     private WorkService workService;
 
     @RequestMapping(value = "/work/save", method = RequestMethod.POST)
-    public Result logout(String content, HttpSession httpSession) {
-        FlashContent flashContent = new FlashContent();
+    public Result logout(String canvasJson, HttpSession httpSession) {
+        FlashProject flashProject = new FlashProject();
         User user = (User)httpSession.getAttribute("user");
-        flashContent.setUid(user.getId());
-        flashContent.setContent(content);
-        workService.addContent(flashContent);
+        flashProject.setUid(user.getId());
+        flashProject.setContent(canvasJson);
+        workService.addContent(flashProject);
         return Result.build(200,null);
     }
 
     @RequestMapping(value = "/work/load", method = RequestMethod.POST)
     public Result logout( HttpSession httpSession) {
         User user = (User)httpSession.getAttribute("user");
-        FlashContent flashContent = workService.findByUid(user.getId());
-        if (flashContent!=null){
-            return Result.build(200,flashContent);
+        FlashProject flashProject = workService.findByUid(user.getId());
+        if (flashProject!=null){
+            return Result.build(200,flashProject);
         }
         return Result.build(200,null);
     }

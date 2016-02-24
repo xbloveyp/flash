@@ -1,5 +1,7 @@
 package com.flash_editor.domain;
 
+import java.util.Date;
+
 public class User {
     private Integer id;
 
@@ -8,6 +10,12 @@ public class User {
     private String password;
 
     private String email;
+
+    private Date addTime;
+
+    private Date updateTime;
+
+    private String avatarurl;
 
     public Integer getId() {
         return id;
@@ -39,5 +47,29 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getAvatarurl() {
+        return avatarurl;
+    }
+
+    public void setAvatarurl(String avatarurl) {
+        this.avatarurl = avatarurl == null ? null : avatarurl.trim();
     }
 }
