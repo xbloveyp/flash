@@ -17,16 +17,21 @@ public class WorkService {
     @Autowired
     private FlashProjectMapper flashProjectMapper;
 
-    public void addContent(FlashProject flashProject){
-        flashProjectMapper.insert(flashProject);
+    public void saveContent(FlashProject flashProject){
+        FlashProject flashProjectOld = findByUid(flashProject.getUid());
+        if (flashProjectOld==null) {
+            flashProjectMapper.insert(flashProject);
+        }else {
+            flashProjectMapper.updateByPrimaryKeySelective(flashProject);
+        }
     }
 
     public FlashProject findByUid(int uid){
         FlashProjectExample flashProjectExample = new FlashProjectExample();
         flashProjectExample.createCriteria().andUidEqualTo(uid);
-        List<FlashProject> flashContentList = flashProjectMapper.selectByExample(flashProjectExample);
-        if (CollectionUtils.isNotEmpty(flashContentList)){
-            return flashContentList.get(0);
+        List<FlashProject> flashProjectList = flashProjectMapper.selectByExampleWithBLOBs(flashProjectExample);
+        if (CollectionUtils.isNotEmpty(flashProjectList)){
+            return flashProjectList.get(0);
         }
         else {
             return null;
