@@ -15,6 +15,7 @@ window.onload=function(){
     var attrForm = document.getElementById('shape-attrs');
     var createForm = document.getElementById('pan');
 
+    //加载用户保存的flash
     var init = function(){
         var url = "/work/load"
         $.ajax({
@@ -33,6 +34,7 @@ window.onload=function(){
         isdraw = false;
         selected = null;
     })
+    //记录图形个数
     var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line=0;
     var moduleList = new Array();
     function addToModule(_shape,name){
@@ -75,6 +77,7 @@ window.onload=function(){
 
     }
 
+    //默认图形参数
     var shapeInfo = {
         rect: {left:10,top:10,width:200,height:100,rx:0,ry:0},
         circle: {left:20,top:20,radius:50},
@@ -82,6 +85,7 @@ window.onload=function(){
         line: {x1:10,y1:10,x2:100,y2:100},
         text:{left:20,top:50,fontSize:20,text:'hello'}
     };
+    //默认图形参数
     var shapeAttribute = {
         rect: "left:10,top:10,width:200,height:100",
         circle: "left:20,top:20,radius:50",
@@ -89,22 +93,26 @@ window.onload=function(){
         line: "x1:10,y1:10,x2:100,y2:100",
         text:"left:20,top:50,fontSize:20,text:hello"
     };
+    //默认属性参数
     var defaultAttrs = {
         fill: '#00D5FF',
         stroke: '#FFFFFF',
         strokeWidth: 0
     };
+    //点击图形面板，创建图形
     createForm.addEventListener('click', function(e) {
         if (e.target.tagName.toLowerCase() == 'button') {
             create(e.target.getAttribute('create'));
         }
     });
+    //点击属性面板，更改属性
     attrForm.addEventListener('input', function(e) {
         if (e.target.tagName.toLowerCase() != 'input') return;
         var handle = e.target;
         selected.set(handle.name,handle.value);
         canvas.renderAll();
     });
+    //点击属性面板，更改属性
     lookForm.addEventListener('input', function(e) {
         if (e.target.tagName.toLowerCase() != 'input') return;
         if (!selected) return;
@@ -114,7 +122,7 @@ window.onload=function(){
         selected.set('stroke-width', strokeWidth.value);
         canvas.renderAll();
     });
-
+    //创建图形
     function create(name) {
         if(name=="rect"){
             shape = new fabric.Rect();
@@ -144,20 +152,26 @@ window.onload=function(){
         canvas.add(shape).setActiveObject(shape);
         select(shape);
     }
+    //选中图形，用于属性栏更改属性用的
     function select(shape) {
-        var attrs = shapeAttribute[shape.name].split(',');
-        var attr, _name, value;
-        attrForm.innerHTML = "";
-        while(attrs.length) {
-            attr = attrs.shift().split(':');
-            _name = attr[0];
-            value = shape._name || attr[1];
-            createHandle(shape, _name, value);
+        if (shape.name) {
+            var attrs = shapeAttribute[shape.name].split(',');
+            var attr, _name, value;
+            attrForm.innerHTML = "";
+            while (attrs.length) {
+                attr = attrs.shift().split(':');
+                _name = attr[0];
+                value = shape._name || attr[1];
+                createHandle(shape, _name, value);
+            }
+            selected = shape;
+            updateLookHandle();
+        }else {
+            selected = shape;
         }
-        selected = shape;
-        updateLookHandle();
     }
 
+    //将属性加到图形上
     function createHandle(shape, name, value) {
         var label = document.createElement('label');
         label.textContent = name;
@@ -178,18 +192,19 @@ window.onload=function(){
         attrForm.appendChild(handle);
     }
 
+    //更新属性参数 颜色，线条粗细，位置，旋转角度
     function updateLookHandle() {
         fill.value = selected.fill;
         stroke.value = selected.stroke;
-        left.value = selected ? selected.left : 0;
-        top.value = selected ? selected.top : 0;
-        rotate.value = selected ? selected.rotate : 0;
+        //left.value = selected ? selected.left : 0;
+        //top.value = selected ? selected.top : 0;
+        //rotate.value = selected ? selected.rotate : 0;
     }
-    //��ֹ���س���
+    //禁止表单回车键
     document.onkeydown = function(event) {
         var target, code, tag;
         if (!event) {
-            event = window.event; //���ie�����
+            event = window.event; //针对ie浏览器
             target = event.srcElement;
             code = event.keyCode;
             if (code == 13) {
@@ -199,7 +214,7 @@ window.onload=function(){
             }
         }
         else {
-            target = event.target; //�����ѭw3c��׼�����������Firefox
+            target = event.target; //针对遵循w3c标准的浏览器，如Firefox
             code = event.keyCode;
             if (code == 13) {
                 tag = target.tagName;
@@ -208,6 +223,7 @@ window.onload=function(){
             }
         }
     };
+    //保存用户的flash
     $("#save").click(function(){
         var canvasJson = JSON.stringify(canvas);
         var url = "/work/save";
@@ -222,6 +238,7 @@ window.onload=function(){
             }
         });
     })
+    //保存用户的flash
     $("#save1").click(function(){
         var canvasJson = JSON.stringify(canvas);
         var url = "/work/save";
@@ -236,4 +253,15 @@ window.onload=function(){
             }
         });
     })
+    $("#delete").click(function(){
+        canvas.remove(selected);
+        canvas.renderAll();
+    })
+    canvas.on('mouse:down', function(options) {
+        activeObject = canvas.getActiveObject();
+        if (activeObject){
+            selected = activeObject;
+            updateLookHandle();
+        }
+    });
 };

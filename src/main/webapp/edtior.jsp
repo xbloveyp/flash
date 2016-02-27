@@ -111,6 +111,7 @@
 
             <!--&lt;!&ndash;</p>&ndash;&gt;-->
         </form>
+        <button id="delete">删除</button>
     </div>
 
     <div id="canvas" class="col-lg-7 container col-lg-offset-3" style="padding: 0;border: 1px solid #333333;bottom: 0;position: absolute;top: 51px" >
