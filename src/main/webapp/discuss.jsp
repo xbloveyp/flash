@@ -32,7 +32,7 @@
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
                 <li role="presentation"><a href="/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="edtior.jsp">创作空间</a></li>
+                <li role="presentation"><a href="/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
@@ -51,11 +51,11 @@
     </div>
 </nav>
 <div class="container " style="border-radius: 10px;margin-top: 70px;background-color: #e7e7e7;width: 80%;height: auto;margin-left: auto;margin-right: auto;padding: 1%">
-    <div class="list-group " style="margin-bottom: 5%;margin-left: 1%">
-        <a  class="active  text-center list-group-item " href="#" style="float: left ;width: 20%"><span class="badge">4</span>精选</a>
-        <a  class="  text-center list-group-item " href="#" style="float: left;width: 20%">最新</a>
-        <a  class="  text-center list-group-item " href="#" style="float: left;width: 20%">我的</a>
-    </div>
+        <div class="list-group " style="margin-bottom: 5%;margin-left: 1%">
+            <a id="essence" class="active  text-center list-group-item " href="#" style="float: left ;width: 20%"><span class="badge"></span>精选</a>
+            <a  class="  text-center list-group-item " href="#" style="float: left;width: 20%">最新</a>
+            <a  class="  text-center list-group-item " href="#" style="float: left;width: 20%">我的</a>
+        </div>
     <c:forEach items="${posts}" var="po" varStatus="vs">
         <div class="" style="margin-top: 10px ;background-color: white;border-radius: 10px">
             <div class=" container" style="margin-top: 20px ;padding: 10px">
@@ -67,8 +67,8 @@
                     <a href="#" class="" style="margin-left: 10px">
                         <small>${po.userName}</small>
                     </a>
-                    <small style="color: #adadad;margin-left: 40px">${po.updatetime}</small>
-                    <span class="badge" style="margin-left: 10px">${po.follownum}</span>
+                    <small style="color: #adadad;margin-left: 40px">${po.updateTime}</small>
+                    <span class="badge" style="margin-left: 10px">${po.followNum}</span>
                 </div>
             </div>
         </div>

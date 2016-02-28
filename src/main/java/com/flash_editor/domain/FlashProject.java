@@ -7,6 +7,8 @@ public class FlashProject {
 
     private Integer uid;
 
+    private String title;
+
     private Date addTime;
 
     private Date updateTime;
@@ -29,16 +31,24 @@ public class FlashProject {
         return uid;
     }
 
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
     public void setUid(Integer uid) {
         this.uid = uid;
     }
 
-    public Date getAddTime() {
-        return addTime;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
+
+    public Date getAddTime() {
+        return addTime;
     }
 
     public Date getUpdateTime() {

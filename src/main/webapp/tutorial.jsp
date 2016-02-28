@@ -32,7 +32,7 @@
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
                 <li role="presentation"><a href="/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="edtior.jsp">创作空间</a></li>
+                <li role="presentation"><a href="/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">

@@ -18,11 +18,11 @@
     <style>
         @font-face {
             font-family: 'iconfont';
-            src: url('//at.alicdn.com/t/font_1448771104_489405.eot'); /* IE9*/
-            src: url('//at.alicdn.com/t/font_1448771104_489405.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('//at.alicdn.com/t/font_1448771104_489405.woff') format('woff'), /* chrome、firefox */
-            url('//at.alicdn.com/t/font_1448771104_489405.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-            url('//at.alicdn.com/t/font_1448771104_489405.svg#iconfont') format('svg'); /* iOS 4.1- */
+            src: url('//at.alicdn.com/t/font_1456563258_2788763.eot'); /* IE9*/
+            src: url('//at.alicdn.com/t/font_1456563258_2788763.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('//at.alicdn.com/t/font_1456563258_2788763.woff') format('woff'), /* chrome、firefox */
+            url('//at.alicdn.com/t/font_1456563258_2788763.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('//at.alicdn.com/t/font_1456563258_2788763.svg#iconfont') format('svg'); /* iOS 4.1- */
         }
         .iconfont{
             font-family:"iconfont";
@@ -50,7 +50,7 @@
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
                 <li role="presentation"><a href="/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="edtior.jsp">创作空间</a></li>
+                <li role="presentation"><a href="/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">

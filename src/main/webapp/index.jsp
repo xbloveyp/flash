@@ -48,7 +48,7 @@
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
                 <li role="presentation"><a href="/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="edtior.jsp">创作空间</a></li>
+                <li role="presentation"><a href="/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
@@ -90,7 +90,7 @@
             <div class="carousel-caption" style="top: 5%">
                 <h3 style="color: #262626">在线绘画</h3>
                 <p style="color: #262626">人人都可以做设计师，设计从未如此简单！</p>
-                <p><a class="btn btn-primary" href="edtior.jsp">创建动画</a></p>
+                <p><a class="btn btn-primary" href="/loadProject">创建动画</a></p>
             </div>
         </div>
         <div class="item" style="height: 600px;width: 100%" >
@@ -98,7 +98,7 @@
             <div class="carousel-caption" style="top: 5%;left: 10%;">
                 <h3 style="color: #262626;margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px">创建属于你的动画</h3>
                 <p style="color: #262626;margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px">还不赶紧尝试一下！</p>
-                <p style="margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px"><a class="btn btn-primary" href="edtior.jsp">创建动画</a></p>
+                <p style="margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px"><a class="btn btn-primary" href="/loadProject">创建动画</a></p>
             </div>
         </div>
         <div class="item" style="height: 600px;width: 100%" >
@@ -106,7 +106,7 @@
             <div class="carousel-caption" style="top: 15%;left: 20%">
                 <h3 style="color: #262626;margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px">团队合作</h3>
                 <p style="color: #262626;margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px">共同为项目献一份力</p>
-                <p style="margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px"><a class="btn btn-primary" href="edtior.jsp">创建动画</a></p>
+                <p style="margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px"><a class="btn btn-primary" href="/loadProject">创建动画</a></p>
             </div>
         </div>
     </div>
