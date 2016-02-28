@@ -118,7 +118,7 @@
                             <h3>${pj.title}</h3>
                             <p>${pj.description}</p>
                             <p>${pj.updateTime}</p>
-                            <p><a href="#" class="btn btn-primary" role="button">开始制作</a> </p>
+                            <p><a href="#" class="btn btn-primary" role="button" name="editor" id="${pj.id}">开始制作</a> </p>
                         </div>
                     </div>
                 </div>
@@ -169,6 +169,19 @@
                 data:JSON.stringify({title: projectName, description: projectDescription}),
                 success: function (result) {
                     window.location.href="workSpace.jsp";
+                }
+            });
+        });
+
+        $("a[name = 'editor']").click(function(){
+            var url = "/setProjectId";
+            var projectId = $("a[name = 'editor']").attr("id");
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data:{id: projectId},
+                success: function (result) {
+                    window.location.href="edtior.jsp";
                 }
             });
         });

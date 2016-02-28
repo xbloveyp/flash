@@ -17,7 +17,7 @@ window.onload=function(){
 
     //加载用户保存的flash
     var init = function(){
-        var url = "/work/load"
+        var url = "/loadCanvas"
         $.ajax({
             type: 'POST',
             url: url,
@@ -226,7 +226,7 @@ window.onload=function(){
     //保存用户的flash
     $("#save").click(function(){
         var canvasJson = JSON.stringify(canvas);
-        var url = "/work/save";
+        var url = "/saveCanvas";
         $.ajax({
             type: 'POST',
             url: url,
@@ -238,25 +238,12 @@ window.onload=function(){
             }
         });
     })
-    //保存用户的flash
-    $("#save1").click(function(){
-        var canvasJson = JSON.stringify(canvas);
-        var url = "/work/save";
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data:{canvasJson:canvasJson},
-            success: function (result) {
-                if (result.code == 200) {
-                    alert("保存成功")
-                }
-            }
-        });
-    })
+    //删除图形
     $("#delete").click(function(){
         canvas.remove(selected);
         canvas.renderAll();
     })
+    //吧选中图形赋值给selected
     canvas.on('mouse:down', function(options) {
         activeObject = canvas.getActiveObject();
         if (activeObject){

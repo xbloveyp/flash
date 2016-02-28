@@ -2,11 +2,16 @@ package com.flash_editor.controller;
 
 import com.flash_editor.domain.FlashProject;
 import com.flash_editor.domain.User;
+import com.flash_editor.dto.ProjectDto;
 import com.flash_editor.dto.Result;
 import com.flash_editor.service.WorkService;
 import com.flash_editor.util.DateUtil;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,22 +31,25 @@ public class WorkController {
     @Autowired
     private WorkService workService;
 
-    @RequestMapping(value = "/canvas/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveCanvas", method = RequestMethod.POST)
     @ResponseBody
     public Result save(String canvasJson, HttpSession httpSession) {
         FlashProject flashProject = new FlashProject();
         User user = (User)httpSession.getAttribute("user");
         flashProject.setUid(user.getId());
         flashProject.setContent(canvasJson);
+        int id = Integer.valueOf(httpSession.getAttribute("projectId").toString());
+        flashProject.setId(id);
         workService.saveContent(flashProject);
         return Result.build(200,null);
     }
 
-    @RequestMapping(value = "/canvas/load", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadCanvas", method = RequestMethod.POST)
     @ResponseBody
-    public Result load(int id) {
+    public Result load(HttpSession httpSession) {
+        int id = Integer.valueOf(httpSession.getAttribute("projectId").toString());
         FlashProject flashProject = workService.findById(id);
-        if (flashProject!=null){
+        if (flashProject!=null && StringUtils.isNoneBlank(flashProject.getContent())){
             return Result.build(200,flashProject);
         }
         return Result.build(500,null);
@@ -55,13 +63,21 @@ public class WorkController {
             httpSession.setAttribute("projects",null);
         }else {
             flashProjects = workService.findByUid(user.getId());
-            for (FlashProject flashProject:flashProjects) {
-                flashProject.setUpdateTime(DateUtil.format(flashProject.getUpdateTime()));
-            }
+            List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
+            projectDtos = Lists.transform(flashProjects, new Function<FlashProject, ProjectDto>() {
+                public ProjectDto apply(FlashProject flashProject) {
+                    ProjectDto projectDto = new ProjectDto();
+                    projectDto.setDescription("项目描述："+flashProject.getDescription());
+                    projectDto.setId(flashProject.getId());
+                    projectDto.setTitle("项目名称："+flashProject.getTitle());
+                    projectDto.setUpdateTime("更新时间："+DateFormatUtils.format(flashProject.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
+                    return projectDto;
+                }
+            });
             if (CollectionUtils.isEmpty(flashProjects)){
                 httpSession.setAttribute("projects", null);
             }else {
-                httpSession.setAttribute("projects", flashProjects);
+                httpSession.setAttribute("projects", projectDtos);
             }
         }
         return "forward:/workSpace.jsp";
@@ -73,7 +89,29 @@ public class WorkController {
         flashProject.setUid(user.getId());
         workService.addProject(flashProject);
         List<FlashProject> flashProjects = workService.findByUid(user.getId());
-        httpSession.setAttribute("projects", flashProjects);
+        List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
+        projectDtos = Lists.transform(flashProjects, new Function<FlashProject, ProjectDto>() {
+            public ProjectDto apply(FlashProject flashProject) {
+                ProjectDto projectDto = new ProjectDto();
+                projectDto.setDescription("项目描述："+flashProject.getDescription());
+                projectDto.setId(flashProject.getId());
+                projectDto.setTitle("项目名称："+flashProject.getTitle());
+                projectDto.setUpdateTime("更新时间："+DateFormatUtils.format(flashProject.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
+                return projectDto;
+            }
+        });
+        if (CollectionUtils.isEmpty(flashProjects)){
+            httpSession.setAttribute("projects", null);
+        }else {
+            httpSession.setAttribute("projects", projectDtos);
+        }
         return "forward:/workSpace.jsp";
+    }
+
+    @RequestMapping(value = "/setProjectId", method = RequestMethod.POST)
+    @ResponseBody
+    public Result setProjectId(int id, HttpSession httpSession) {
+        httpSession.setAttribute("projectId",id);
+        return Result.build(200,null);
     }
 }

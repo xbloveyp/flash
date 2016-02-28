@@ -26,7 +26,7 @@ public class WorkService {
             flashProjectOld.setAddTime(new Date());
             flashProjectMapper.insert(flashProject);
         }else {
-            flashProjectOld.setUpdateTime(new Date());
+            flashProject.setUpdateTime(new Date());
             flashProjectMapper.updateByPrimaryKeySelective(flashProject);
         }
     }
