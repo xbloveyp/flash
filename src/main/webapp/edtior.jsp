@@ -78,6 +78,7 @@
             <button class="iconfont " type="button" id="triangle" create="triangle" style="margin-top: 2px;border-radius: 10px">&#xe608;</button>
             <button class="iconfont " type="button" id="line" create="line" style="margin-top: 2px;border-radius: 10px">&#xe60b;</button>
             <button class="iconfont " type="button" id="text" create="text" style="margin-top: 2px;border-radius: 10px">&#xe604;</button>
+            <button class="iconfont " type="button" id="polygon" create="polygon" style="margin-top: 2px;border-radius: 10px">&#xe613;</button>
         </form>
     </div>
 

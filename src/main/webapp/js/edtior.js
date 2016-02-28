@@ -35,7 +35,7 @@ window.onload=function(){
         selected = null;
     })
     //记录图形个数
-    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line=0;
+    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw=0;
     var moduleList = new Array();
     function addToModule(_shape,name){
         if(name=="rect"){
@@ -73,7 +73,22 @@ window.onload=function(){
             document.getElementById("module").innerHTML = innerhtml;
             _shape.name = "Line"+num_Line;
             moduleList.push(_shape);
+        }else if(name=="polygon"){
+            num_Polygon++;
+            var innerhtml  = document.getElementById("module").innerHTML;
+            innerhtml+="<p><a>Polygon"+num_Polygon+"</a></p>"
+            document.getElementById("module").innerHTML = innerhtml;
+            _shape.name = "Polygon"+num_Polygon;
+            moduleList.push(_shape);
+        }else if (name = "freedraw"){
+            num_Freedraw++;
+            var innerhtml  = document.getElementById("module").innerHTML;
+            innerhtml+="<p><a>Freedraw"+num_Freedraw+"</a></p>"
+            document.getElementById("module").innerHTML = innerhtml;
+            _shape.name = "Freedraw"+num_Freedraw;
+            moduleList.push(_shape);
         }
+
 
     }
 
@@ -125,20 +140,49 @@ window.onload=function(){
     //创建图形
     function create(name) {
         if(name=="rect"){
+            canvas.isDrawingMode = false;
             shape = new fabric.Rect();
             addToModule(shape,"rect");
         }else if(name=="circle"){
+            canvas.isDrawingMode = false;
             shape = new fabric.Circle();
             addToModule(shape,"circle");
         }else if(name=="triangle"){
+            canvas.isDrawingMode = false;
             shape = new fabric.Triangle();
             addToModule(shape,"triangle");
         } else if(name=="line"){
+            canvas.isDrawingMode = false;
             shape = new fabric.Line();
             addToModule(shape,"line");
         }else if(name=="text"){
+            canvas.isDrawingMode = false;
             shape = new fabric.Text("hello");
             addToModule(shape,"text");
+        }else if (name=="mouse"){
+            canvas.isDrawingMode = true;
+            addToModule(shape,"freedraw");
+        }else if (name=="polygon"){
+            canvas.isDrawingMode = false;
+            shape = new fabric.Polygon([
+                {x: 170, y: 210},
+                {x: 217.023, y: 234.721},
+                {x: 208.042, y: 182.361},
+                {x: 246.085, y: 145.279},
+                {x: 193.511, y: 137.639},
+                {x: 170, y: 90},
+                {x: 146.489, y: 137.639},
+                {x: 93.915, y: 145.279},
+                {x: 131.958, y: 182.361},
+                {x: 122.977, y: 234.721},
+                {x: 170, y: 210}], {
+                left: 250,
+                top: 160,
+                width: 200,
+                height: 200,
+                fill: 'green'
+            });
+            addToModule(shape,"polygon");
         }
         shape.name = name;
         shape.set(shapeInfo[shape.name]);
@@ -146,6 +190,18 @@ window.onload=function(){
             shape.set({fill: '#00D5FF',
                 stroke: '#00D5FF',
                 strokeWidth: 1})
+        }else if (name="polygon"){
+            //shape.set([
+            //    {x: 200, y: 0},
+            //    {x: 250, y: 50},
+            //    {x: 250, y: 100},
+            //    {x: 150, y: 100},
+            //    {x: 150, y: 50} ], {
+            //    left: 250,
+            //    top: 150,
+            //    fill: 'yellow',
+            //    strokeLineJoin : 'round'
+            //})
         }else {
             shape.set(defaultAttrs);
         }

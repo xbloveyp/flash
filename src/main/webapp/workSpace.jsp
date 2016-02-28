@@ -65,7 +65,7 @@
         </div><!--/.navbar-collapse -->
     </div>
 </nav>
-<div class="container col-lg-8 col-lg-offset-2" style="margin-top: 10%;" >
+<div class="container col-lg-6 col-lg-offset-2" style="margin-top: 10%;" >
     <div class="modal fade" id="creatProject" tabindex="-1" role="dialog" aria-labelledby="creatProject">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -110,7 +110,7 @@
             <c:if test="${(vs.index+1)%3==0}">
                 <tr>
             </c:if>
-            <td >
+            <td class="col-lg-1">
                 <div class="row" style="border-radius: 15px">
                     <div class="thumbnail">
                         <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class=" img-responsive" style="margin-top: 10%">
