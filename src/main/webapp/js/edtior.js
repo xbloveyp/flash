@@ -98,15 +98,19 @@ window.onload=function(){
         circle: {left:20,top:20,radius:50},
         triangle: {left:50,top:50,width:80,height:100,rx:0,ry:0},
         line: {x1:10,y1:10,x2:100,y2:100},
-        text:{left:20,top:50,fontSize:20,text:'hello'}
+        text:{left:20,top:50,fontSize:20,text:'hello'},
+        //polygon:[{x: 170, y: 210},{x: 217.023, y: 234.721},{x: 208.042, y: 182.361},{x: 246.085, y: 145.279},{x: 193.511, y: 137.639},{x: 170, y: 90},{x: 146.489, y: 137.639},{x: 93.915, y: 145.279},{x: 131.958, y: 182.361},{x: 122.977, y: 234.721},{x: 170, y: 210}],{left: 250,top: 160,width: 200,height: 200}
     };
+    //var pp = [{x: 170, y: 210},{x: 217.023, y: 234.721},{x: 208.042, y: 182.361},{x: 246.085, y: 145.279},{x: 193.511, y: 137.639},{x: 170, y: 90},{x: 146.489, y: 137.639},{x: 93.915, y: 145.279},{x: 131.958, y: 182.361},{x: 122.977, y: 234.721},{x: 170, y: 210}],{left: 250,top: 160,width: 200,height: 200};
+
     //默认图形参数
     var shapeAttribute = {
         rect: "left:10,top:10,width:200,height:100",
         circle: "left:20,top:20,radius:50",
         triangle: "left:50,top:50,width:80,height:100",
         line: "x1:10,y1:10,x2:100,y2:100",
-        text:"left:20,top:50,fontSize:20,text:hello"
+        text:"left:20,top:50,fontSize:20,text:hello",
+        polygon:"left: 250,top: 160,width: 200,height: 200"
     };
     //默认属性参数
     var defaultAttrs = {
@@ -164,6 +168,7 @@ window.onload=function(){
             addToModule(shape,"freedraw");
         }else if (name=="polygon"){
             canvas.isDrawingMode = false;
+            //shape = new fabric.Polygon(pp);
             shape = new fabric.Polygon([
                 {x: 170, y: 210},
                 {x: 217.023, y: 234.721},
@@ -190,19 +195,10 @@ window.onload=function(){
             shape.set({fill: '#00D5FF',
                 stroke: '#00D5FF',
                 strokeWidth: 1})
-        }else if (name="polygon"){
-            //shape.set([
-            //    {x: 200, y: 0},
-            //    {x: 250, y: 50},
-            //    {x: 250, y: 100},
-            //    {x: 150, y: 100},
-            //    {x: 150, y: 50} ], {
-            //    left: 250,
-            //    top: 150,
-            //    fill: 'yellow',
-            //    strokeLineJoin : 'round'
-            //})
-        }else {
+        }
+        else if (name="polygon"){
+        }
+        else {
             shape.set(defaultAttrs);
         }
         canvas.add(shape).setActiveObject(shape);
@@ -297,6 +293,7 @@ window.onload=function(){
     //删除图形
     $("#delete").click(function(){
         canvas.remove(selected);
+        console.log(selected);
         canvas.renderAll();
     })
     //吧选中图形赋值给selected
@@ -307,4 +304,29 @@ window.onload=function(){
             updateLookHandle();
         }
     });
+    $("#load").click(function(){
+        var json = JSON.parse(JSON.stringify(canvas));
+        var ob = json.objects;
+        var aa = {"type":"rect","left":50,"top":50,"width":20,"height":20,"fill":"green","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"rx":0,"ry":0};
+        ob.push(aa);
+        json.objects=ob;
+        canvas.loadFromJSON(JSON.stringify(json));
+    })
+    //组合图形
+    $("#groups").click(function(){
+        var activeGroup = canvas.getActiveGroup()._objects;
+        var group = new fabric.Group(activeGroup,{left:200,top:100});
+        for (var i= 0;i<activeGroup.length;i++){
+            console.log(activeGroup[i])
+            canvas.remove(activeGroup[i]);
+            //canvas.renderAll();
+        }
+        group.selectable = true;
+        canvas.add(group);
+        canvas.renderAll();
+        //console.log(activeGroup);
+        //canvas.remove(activeGroup);
+        //console.log(group);
+        //canvas.add(group);
+    })
 };

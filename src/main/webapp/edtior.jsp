@@ -63,6 +63,7 @@
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
                         <a href="/logout" role="presentation">注销</a>
                         <a id ="save" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">保存</a>
+                        <a id ="load" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">加载</a>
                     </h5>
                 </form>
             </c:if>
@@ -112,6 +113,7 @@
             <!--&lt;!&ndash;</p>&ndash;&gt;-->
         </form>
         <button id="delete">删除</button>
+        <button id="groups">组合</button>
     </div>
 
     <div id="canvas" class="col-lg-7 container col-lg-offset-3" style="padding: 0;border: 1px solid #333333;bottom: 0;position: absolute;top: 51px" >
