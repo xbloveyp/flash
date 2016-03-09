@@ -315,9 +315,12 @@ window.onload=function(){
     //组合图形
     $("#groups").click(function(){
         var activeGroup = canvas.getActiveGroup()._objects;
-        var group = new fabric.Group(activeGroup,{left:200,top:100});
+        //var fristObject = activeGroup[0];
+        //var group = new fabric.Group([fristObject],{left:fristObject.left,top:fristObject.top,originX:fristObject.originX,originY:fristObject.originY});
+        //canvas.remove(fristObject);
         for (var i= 0;i<activeGroup.length;i++){
             console.log(activeGroup[i])
+            group.add(activeGroup[i]);
             canvas.remove(activeGroup[i]);
             //canvas.renderAll();
         }

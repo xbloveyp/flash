@@ -106,6 +106,7 @@
                 </td>
             </tr>
         </c:if>
+        <c:if test="${sessionScope.projects!=null}">
         <c:forEach items="${projects}" var="pj" varStatus="vs">
             <c:if test="${(vs.index+1)%3==0}">
                 <tr>
@@ -132,6 +133,7 @@
                 </tr>
             </c:if>
         </c:forEach>
+        </c:if>
     </table>
     </c:if>
     <c:if test="${sessionScope.user==null}">
