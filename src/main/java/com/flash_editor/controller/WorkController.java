@@ -1,9 +1,12 @@
 package com.flash_editor.controller;
 
 import com.flash_editor.domain.FlashProject;
+import com.flash_editor.domain.Library;
+import com.flash_editor.domain.LibraryWithBLOBs;
 import com.flash_editor.domain.User;
 import com.flash_editor.dto.ProjectDto;
 import com.flash_editor.dto.Result;
+import com.flash_editor.service.LibraryService;
 import com.flash_editor.service.WorkService;
 import com.flash_editor.util.DateUtil;
 import com.google.common.base.Function;
@@ -30,6 +33,8 @@ import java.util.List;
 public class WorkController {
     @Autowired
     private WorkService workService;
+    @Autowired
+    private LibraryService libraryService;
 
     @RequestMapping(value = "/saveCanvas", method = RequestMethod.POST)
     @ResponseBody
@@ -64,16 +69,7 @@ public class WorkController {
         }else {
             flashProjects = workService.findByUid(user.getId());
             List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
-            projectDtos = Lists.transform(flashProjects, new Function<FlashProject, ProjectDto>() {
-                public ProjectDto apply(FlashProject flashProject) {
-                    ProjectDto projectDto = new ProjectDto();
-                    projectDto.setDescription("项目描述："+flashProject.getDescription());
-                    projectDto.setId(flashProject.getId());
-                    projectDto.setTitle("项目名称："+flashProject.getTitle());
-                    projectDto.setUpdateTime("更新时间："+DateFormatUtils.format(flashProject.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
-                    return projectDto;
-                }
-            });
+            projectDtos = toTransformProject(flashProjects);
             if (CollectionUtils.isEmpty(flashProjects)){
                 httpSession.setAttribute("projects", null);
             }else {
@@ -90,16 +86,7 @@ public class WorkController {
         workService.addProject(flashProject);
         List<FlashProject> flashProjects = workService.findByUid(user.getId());
         List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
-        projectDtos = Lists.transform(flashProjects, new Function<FlashProject, ProjectDto>() {
-            public ProjectDto apply(FlashProject flashProject) {
-                ProjectDto projectDto = new ProjectDto();
-                projectDto.setDescription("项目描述："+flashProject.getDescription());
-                projectDto.setId(flashProject.getId());
-                projectDto.setTitle("项目名称："+flashProject.getTitle());
-                projectDto.setUpdateTime("更新时间："+DateFormatUtils.format(flashProject.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
-                return projectDto;
-            }
-        });
+        projectDtos = toTransformProject(flashProjects);
         if (CollectionUtils.isEmpty(flashProjects)){
             httpSession.setAttribute("projects", null);
         }else {
@@ -113,5 +100,42 @@ public class WorkController {
     public Result setProjectId(int id, HttpSession httpSession) {
         httpSession.setAttribute("projectId",id);
         return Result.build(200,null);
+    }
+
+    @RequestMapping(value = "/deleteProjectId", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteProjectId(int id, HttpSession httpSession) {
+        workService.deleteProject(id);
+        List<FlashProject> flashProjects = new ArrayList<FlashProject>();
+        User user = (User) httpSession.getAttribute("user");
+        flashProjects = workService.findByUid(user.getId());
+        List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
+        projectDtos = toTransformProject(flashProjects);
+        if (CollectionUtils.isEmpty(flashProjects)){
+            httpSession.setAttribute("projects", null);
+        }else {
+            httpSession.setAttribute("projects", projectDtos);
+        }
+        return Result.build(200,null);
+    }
+
+    @RequestMapping(value = "/getShape" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Result getShape(String name){
+        LibraryWithBLOBs library = libraryService.getByName(name);
+        return Result.build(200,library.getContent());
+    }
+
+    private List<ProjectDto> toTransformProject(List<FlashProject> flashProjects){
+        return  Lists.transform(flashProjects, new Function<FlashProject, ProjectDto>() {
+            public ProjectDto apply(FlashProject flashProject) {
+                ProjectDto projectDto = new ProjectDto();
+                projectDto.setDescription("项目描述："+flashProject.getDescription());
+                projectDto.setId(flashProject.getId());
+                projectDto.setTitle("项目名称："+flashProject.getTitle());
+                projectDto.setUpdateTime("更新时间："+DateFormatUtils.format(flashProject.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
+                return projectDto;
+            }
+        });
     }
 }

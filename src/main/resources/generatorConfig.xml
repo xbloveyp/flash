@@ -46,10 +46,15 @@
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
         <!--</table>-->
-        <table tableName="flash_project" domainObjectName="FlashProject"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
+        <!--<table tableName="flash_project" domainObjectName="FlashProject"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+        <!--</table>-->
+        <table tableName="library" domainObjectName="Library"
+                enableCountByExample="true" enableUpdateByExample="true"
+                enableDeleteByExample="true" enableSelectByExample="true"
+                selectByExampleQueryId="true">
         </table>
 
     </context>

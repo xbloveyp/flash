@@ -33,16 +33,15 @@ public class WorkService {
 
     public List<FlashProject> findByUid(int uid){
         FlashProjectExample flashProjectExample = new FlashProjectExample();
-        flashProjectExample.createCriteria().andUidEqualTo(uid);
-        flashProjectExample.setOrderByClause("sort");
+        flashProjectExample.createCriteria().andUidEqualTo(uid).andStatusEqualTo(0);
+        flashProjectExample.setOrderByClause("add_time desc");
         List<FlashProject> flashProjectList = flashProjectMapper.selectByExampleWithBLOBs(flashProjectExample);
         return flashProjectList;
     }
 
     public FlashProject findById(int id){
         FlashProjectExample flashProjectExample = new FlashProjectExample();
-        flashProjectExample.createCriteria().andIdEqualTo(id);
-        flashProjectExample.setOrderByClause("sort");
+        flashProjectExample.createCriteria().andIdEqualTo(id).andStatusEqualTo(0);
         List<FlashProject> flashProjectList = flashProjectMapper.selectByExampleWithBLOBs(flashProjectExample);
         if (CollectionUtils.isNotEmpty(flashProjectList)){
             return flashProjectList.get(0);
@@ -55,6 +54,14 @@ public class WorkService {
     public void addProject(FlashProject flashProject){
         flashProject.setAddTime(new Date());
         flashProject.setUpdateTime(new Date());
+        flashProject.setStatus(0);
         flashProjectMapper.insert(flashProject);
+    }
+
+    public void deleteProject(int id){
+        FlashProject flashProject = new FlashProject();
+        flashProject.setId(id);
+        flashProject.setStatus(1);
+        flashProjectMapper.updateByPrimaryKeySelective(flashProject);
     }
 }

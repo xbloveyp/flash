@@ -13,9 +13,9 @@ public class FlashProject {
 
     private Date updateTime;
 
-    private Integer sort;
-
     private String description;
+
+    private Integer status;
 
     private String content;
 
@@ -29,10 +29,6 @@ public class FlashProject {
 
     public Integer getUid() {
         return uid;
-    }
-
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
     }
 
     public void setUid(Integer uid) {
@@ -51,6 +47,10 @@ public class FlashProject {
         return addTime;
     }
 
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -59,20 +59,20 @@ public class FlashProject {
         this.updateTime = updateTime;
     }
 
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getContent() {

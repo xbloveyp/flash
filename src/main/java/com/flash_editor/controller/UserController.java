@@ -67,6 +67,9 @@ public class UserController {
     public String logout(HttpSession httpSession) {
         httpSession.setAttribute("user", null);
         String logoutRefererUrl = (String)httpSession.getAttribute("logoutRefererUrl");
+        if (logoutRefererUrl==null){
+            return "index.jsp";
+        }
         return logoutRefererUrl;
     }
 }

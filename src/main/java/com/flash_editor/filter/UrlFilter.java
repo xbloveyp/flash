@@ -22,30 +22,34 @@ public class UrlFilter extends OncePerRequestFilter {
         if (httpServletRequest.getRequestURI().endsWith("login.jsp")){
             Map<String,String> map = new HashMap<String, String>();
             String refererUrl = httpServletRequest.getHeader("referer");
-            if (refererUrl.endsWith(".jsp")) {
-                refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
-            }else if (refererUrl.endsWith("findAllPosts")){
-                refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
-            }else if (refererUrl.endsWith("loadProject")){
-                refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+            if (refererUrl!=null) {
+                if (refererUrl.endsWith(".jsp")) {
+                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                    httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                } else if (refererUrl.endsWith("findAllPosts")) {
+                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                    httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                } else if (refererUrl.endsWith("loadProject")) {
+                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                    httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                }
             }
 
         }
-        if (httpServletRequest.getRequestURI().endsWith("logout")){
-            Map<String,String> map = new HashMap<String, String>();
+        if (httpServletRequest.getRequestURI().endsWith("logout")) {
+            Map<String, String> map = new HashMap<String, String>();
             String refererUrl = httpServletRequest.getHeader("referer");
-            if (refererUrl.endsWith(".jsp")) {
-                refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
-            }else if (refererUrl.endsWith("findAllPosts")){
-                refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
-            }else if (refererUrl.endsWith("loadProject")){
-                refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+            if (refererUrl != null) {
+                if (refererUrl.endsWith(".jsp")) {
+                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
+                } else if (refererUrl.endsWith("findAllPosts")) {
+                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
+                } else if (refererUrl.endsWith("loadProject")) {
+                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                    httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                }
             }
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);

@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -65,7 +66,7 @@
         </div><!--/.navbar-collapse -->
     </div>
 </nav>
-<div class="container col-lg-6 col-lg-offset-2" style="margin-top: 10%;" >
+<div class="container col-lg-8 col-lg-offset-2" style="margin-top: 10%;" >
     <div class="modal fade" id="creatProject" tabindex="-1" role="dialog" aria-labelledby="creatProject">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -108,10 +109,10 @@
         </c:if>
         <c:if test="${sessionScope.projects!=null}">
         <c:forEach items="${projects}" var="pj" varStatus="vs">
-            <c:if test="${(vs.index+1)%3==0}">
+            <c:if test="${vs.index%3==0}">
                 <tr>
             </c:if>
-            <td class="col-lg-1">
+            <td class="col-lg-2" style="margin-left: 20px">
                 <div class="row" style="border-radius: 15px">
                     <div class="thumbnail">
                         <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class=" img-responsive" style="margin-top: 10%">
@@ -119,18 +120,19 @@
                             <h3>${pj.title}</h3>
                             <p>${pj.description}</p>
                             <p>${pj.updateTime}</p>
-                            <p><a href="#" class="btn btn-primary" role="button" name="editor" id="${pj.id}">开始制作</a> </p>
+                            <p style="display: inline"><a href="#" class="btn btn-primary" role="button" name="editor" id="${pj.id}">开始制作</a> </p>
+                            <p style="display: inline"><a href="#" class="btn btn-danger" role="button" name="delete" id="${pj.id}">删除</a> </p>
                         </div>
                     </div>
                 </div>
             </td>
-            <c:if test="${vs.index+1 == vs.count && vs.index<6}">
-                <td class="col-lg-2" style="vertical-align: middle">
-                    <button class="iconfont " type="button" data-toggle="modal" data-target="#creatProject" style="margin-top: 2px;border-radius: 10px">&#xe613;</button>
-                </td>
-            </c:if>
             <c:if test="${(vs.index+1)%3==0}">
                 </tr>
+            </c:if>
+            <c:if test="${((vs.index+1) == fn:length(projects)) && vs.index<5}">
+                <td class="col-lg-2" style="vertical-align: middle">
+                <button class="iconfont " type="button" data-toggle="modal" data-target="#creatProject" style="margin-top: 2px;border-radius: 10px">&#xe613;</button>
+                </td>
             </c:if>
         </c:forEach>
         </c:if>
@@ -177,13 +179,26 @@
 
         $("a[name = 'editor']").click(function(){
             var url = "/setProjectId";
-            var projectId = $("a[name = 'editor']").attr("id");
+            var projectId = $(this).attr("id");
             $.ajax({
                 type: 'POST',
                 url: url,
                 data:{id: projectId},
                 success: function (result) {
                     window.location.href="edtior.jsp";
+                }
+            });
+        });
+
+        $("a[name = 'delete']").click(function(){
+            var url = "/deleteProjectId";
+            var projectId = $(this).attr("id");
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data:{id: projectId},
+                success: function (result) {
+                    window.location.href="workSpace.jsp";
                 }
             });
         });

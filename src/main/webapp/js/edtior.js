@@ -165,6 +165,7 @@ window.onload=function(){
             addToModule(shape,"text");
         }else if (name=="mouse"){
             canvas.isDrawingMode = true;
+            canvas.freeDrawingBrush = Circle;
             addToModule(shape,"freedraw");
         }else if (name=="polygon"){
             canvas.isDrawingMode = false;
@@ -296,6 +297,43 @@ window.onload=function(){
         console.log(selected);
         canvas.renderAll();
     })
+    //清空画布
+    $("#deleteAll").click(function(){
+        canvas.clear();
+        canvas.renderAll();
+    })
+    //复制图形
+    $("#clone").click(function(){
+        var clone = fabric.util.object.clone(selected);
+        clone.set({left: 150,top: 150});
+        canvas.add(clone);
+        canvas.renderAll();
+    })
+    //上移一层
+    $("#upOne").click(function(){
+        canvas.bringForward(selected);
+        canvas.renderAll();
+    })
+    //置于顶层
+    $("#upTop").click(function(){
+        canvas.bringToFront(selected);
+        canvas.renderAll();
+    })
+    //下移一层
+    $("#downOne").click(function(){
+        canvas.sendBackwards(selected);
+        canvas.renderAll();
+    })
+    //置于底层
+    $("#downBottom").click(function(){
+        canvas.sendToBack(selected);
+        canvas.renderAll();
+    })
+    //导出图片
+    $("#importImage").click(function(){
+        var image = canvas.toDataURL();
+        console.log(image);
+    })
     //吧选中图形赋值给selected
     canvas.on('mouse:down', function(options) {
         activeObject = canvas.getActiveObject();
@@ -305,12 +343,17 @@ window.onload=function(){
         }
     });
     $("#load").click(function(){
-        var json = JSON.parse(JSON.stringify(canvas));
-        var ob = json.objects;
-        var aa = {"type":"rect","left":50,"top":50,"width":20,"height":20,"fill":"green","overlayFill":null,"stroke":null,"strokeWidth":1,"strokeDashArray":null,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"selectable":true,"hasControls":true,"hasBorders":true,"hasRotatingPoint":false,"transparentCorners":true,"perPixelTargetFind":false,"rx":0,"ry":0};
-        ob.push(aa);
-        json.objects=ob;
-        canvas.loadFromJSON(JSON.stringify(json));
+        canvas.add( new fabric.Polygon(
+            [
+                {x: 50, y: 0},
+                {x: 100, y: 100},
+                {x: 50, y: 200},
+                {x: 0, y: 100}
+            ],{
+                fill: 'red',
+                left:100,
+                top:100
+            }));
     })
     //组合图形
     $("#groups").click(function(){
@@ -332,4 +375,27 @@ window.onload=function(){
         //console.log(group);
         //canvas.add(group);
     })
+
+    $(".importShape").click(function(){
+        var url = "/getShape";
+        var shapeName = $(this).attr("id");
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data:{name: shapeName},
+            success: function (result) {
+                if (result.code==200){
+                    var json = JSON.parse(JSON.stringify(canvas));
+                    var ob = json.objects;
+                    var library = result.data;
+                    var shape = JSON.parse(library).objects;
+                    for(var i=0;i<shape.length;i++){
+                        ob.push(shape[i]);
+                    }
+                    json.objects=ob;
+                    canvas.loadFromJSON(JSON.stringify(json));
+                }
+            }
+        });
+    });
 };

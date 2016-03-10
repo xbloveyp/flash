@@ -79,8 +79,42 @@
             <button class="iconfont " type="button" id="triangle" create="triangle" style="margin-top: 2px;border-radius: 10px">&#xe608;</button>
             <button class="iconfont " type="button" id="line" create="line" style="margin-top: 2px;border-radius: 10px">&#xe60b;</button>
             <button class="iconfont " type="button" id="text" create="text" style="margin-top: 2px;border-radius: 10px">&#xe604;</button>
-            <button class="iconfont " type="button" id="polygon" create="polygon" style="margin-top: 2px;border-radius: 10px">&#xe613;</button>
-        </form>
+            <button  type="button"  data-toggle="modal" data-target="#library" style="margin-top: 2px;border-radius: 10px">加载图形</button>
+            <div class="modal fade" id="library" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">官方图库</h4>
+                        </div>
+                        <div class="modal-body" style="overflow-y: scroll;height: 200px">
+                            <div class="container-fluid">
+                                <div class="row" >
+                                    <div style="width: auto;float: left;display: inline" id="shape_1" type="button" class="importShape">
+                                        <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ">
+                                    </div>
+                                    <div style="width: auto;float: left;display: inline" id="shape_2" class="importShape">
+                                        <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ">
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 20px">
+                                    <div style="width: auto;float: left;display: inline" id="shape_3" class="importShape">
+                                        <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ">
+                                    </div>
+                                    <div style="width: auto;float: left;display: inline" id="shape_4" class="importShape">
+                                        <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
     </div>
 
 
@@ -112,8 +146,15 @@
 
             <!--&lt;!&ndash;</p>&ndash;&gt;-->
         </form>
-        <button id="delete">删除</button>
-        <button id="groups">组合</button>
+        <button id="clone">复制</button>
+        <button id="upOne">上移一层</button>
+        <button id="upTop">置于顶层</button>
+        <button id="downOne">下移一层</button>
+        <button id="downBottom">置于底层</button>
+        <button id="delete">删除选中图形</button>
+        <button id="deleteAll">清空画板</button>
+        <button id="importImage">导出图片</button>
+        <%--<button id="groups">组合</button>--%>
     </div>
 
     <div id="canvas" class="col-lg-7 container col-lg-offset-3" style="padding: 0;border: 1px solid #333333;bottom: 0;position: absolute;top: 51px" >
