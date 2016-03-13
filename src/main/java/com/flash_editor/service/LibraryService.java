@@ -23,9 +23,9 @@ public class LibraryService {
        return libraryMapper.selectByPrimaryKey(id);
     }
 
-    public LibraryWithBLOBs getByName(String name){
+    public LibraryWithBLOBs getByCode(String code){
         LibraryExample libraryExample = new LibraryExample();
-        libraryExample.createCriteria().andNameEqualTo(name);
+        libraryExample.createCriteria().andCodeEqualTo(code);
         return libraryMapper.selectByExampleWithBLOBs(libraryExample).get(0);
     }
 }

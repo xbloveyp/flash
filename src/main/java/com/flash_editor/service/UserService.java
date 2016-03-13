@@ -2,6 +2,7 @@ package com.flash_editor.service;
 
 import com.flash_editor.domain.User;
 import com.flash_editor.domain.UserExample;
+import com.flash_editor.dto.UserRequest;
 import com.flash_editor.mapper.UserMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserService {
 	}
 
 
-	public User login(User user) {
+	public User login(UserRequest user) {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUserNameEqualTo(user.getUserName())
                     .andPasswordEqualTo(user.getPassword());

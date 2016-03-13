@@ -121,8 +121,8 @@ public class WorkController {
 
     @RequestMapping(value = "/getShape" ,method = RequestMethod.POST)
     @ResponseBody
-    public Result getShape(String name){
-        LibraryWithBLOBs library = libraryService.getByName(name);
+    public Result getShape(String code){
+        LibraryWithBLOBs library = libraryService.getByCode(code);
         return Result.build(200,library.getContent());
     }
 

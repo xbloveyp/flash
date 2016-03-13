@@ -1,5 +1,6 @@
 package com.flash_editor.filter;
 
+import com.flash_editor.domain.User;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -41,8 +42,12 @@ public class UrlFilter extends OncePerRequestFilter {
             String refererUrl = httpServletRequest.getHeader("referer");
             if (refererUrl != null) {
                 if (refererUrl.endsWith(".jsp")) {
-                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
+                    if (refererUrl.endsWith("edtior.jsp")){
+                        httpServletRequest.getSession().setAttribute("logoutRefererUrl", "workSpace.jsp");
+                    }else {
+                        refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                        httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
+                    }
                 } else if (refererUrl.endsWith("findAllPosts")) {
                     refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
                     httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
@@ -50,6 +55,12 @@ public class UrlFilter extends OncePerRequestFilter {
                     refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
                     httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
                 }
+            }
+        }
+        if (httpServletRequest.getRequestURI().endsWith("edtior.jsp")){
+            User user = (User) httpServletRequest.getSession().getAttribute("user");
+            if (user==null){
+                httpServletResponse.sendRedirect("index.jsp");
             }
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);

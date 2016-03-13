@@ -378,11 +378,11 @@ window.onload=function(){
 
     $(".importShape").click(function(){
         var url = "/getShape";
-        var shapeName = $(this).attr("id");
+        var shapeCode = $(this).attr("id");
         $.ajax({
             type: 'POST',
             url: url,
-            data:{name: shapeName},
+            data:{code: shapeCode},
             success: function (result) {
                 if (result.code==200){
                     var json = JSON.parse(JSON.stringify(canvas));
@@ -394,6 +394,7 @@ window.onload=function(){
                     }
                     json.objects=ob;
                     canvas.loadFromJSON(JSON.stringify(json));
+                    $("#library").modal('toggle');
                 }
             }
         });

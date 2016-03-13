@@ -65,8 +65,8 @@
     </div>
     <div class="" role="alert" id="passwordtip" ></div>
 
-    <div class="checkbox col-lg-offset-1">
-            <input type="checkbox"> 记住密码
+    <div class="checkbox col-lg-offset-1" >
+            <input type="checkbox" id="savePassword"> 保存密码30天
     </div>
     <div class="">
     <button type="button" class="btn btn-success col-lg-12" style="margin-top: 20px" id="loginbtn">登录</button>
@@ -77,6 +77,21 @@
 <script src="js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function(){
+        init();
+        function init(){
+            $.ajax({
+                type: 'POST',
+                url: "/getCookie",
+                contentType: "application/json",
+                data:{},
+                success: function (result) {
+                    if (result.code == 200) {
+                        $("#username").val( result.data.userName);
+                        $("#password").val( result.data.password);
+                    }
+                }
+            });
+        }
         $("#username").focus(function () {
             $("#usernametip").html("请输入用户名");
             document.getElementById("usernametip").className = "alert alert-success text-center";
@@ -123,22 +138,24 @@
         $("#loginbtn").click(function(){
             $("#password").blur();
             $("#username").blur();
-            var roles = $("div[role='alert']");
             var flag = true;
-            for(var i = 0;i<roles.length;i++){
-                if(roles[i].innerHTML!=""){
-                    flag=false;
-                }
-            }
+            function valid(){ var roles = $("div[role='alert']");
+                for(var i = 0;i<roles.length;i++){
+                    if(roles[i].innerHTML!=""){
+                        flag=false;
+                    }
+                }};
+            setTimeout(valid(),1000);
             if(flag) {
                 var userName = $("#username").val();
                 var password = $("#password").val();
+                var save = $("#savePassword").is(':checked');
                 var url = "/login";
                 $.ajax({
                     type: 'POST',
                     url: url,
                     contentType: "application/json",
-                    data:JSON.stringify({userName: userName, password: password}),
+                    data:JSON.stringify({userName: userName, password: password,save:save}),
                     success: function (result) {
                         if (result.code == 200) {
                             if(result.data["loginRefererUrl"]!=null){
