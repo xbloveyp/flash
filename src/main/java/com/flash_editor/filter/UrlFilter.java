@@ -29,10 +29,10 @@ public class UrlFilter extends OncePerRequestFilter {
                     httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
                 } else if (refererUrl.endsWith("findAllPosts")) {
                     refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                    httpServletRequest.getSession().setAttribute("loginRefererUrl", "flash/"+refererUrl);
                 } else if (refererUrl.endsWith("loadProject")) {
                     refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                    httpServletRequest.getSession().setAttribute("loginRefererUrl","flash/"+refererUrl);
                 }
             }
 
@@ -50,10 +50,10 @@ public class UrlFilter extends OncePerRequestFilter {
                     }
                 } else if (refererUrl.endsWith("findAllPosts")) {
                     refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
+                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", "flash/"+refererUrl);
                 } else if (refererUrl.endsWith("loadProject")) {
                     refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", "flash/"+refererUrl);
                 }
             }
         }

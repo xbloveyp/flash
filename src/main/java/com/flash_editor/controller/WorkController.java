@@ -1,20 +1,17 @@
 package com.flash_editor.controller;
 
 import com.flash_editor.domain.FlashProject;
-import com.flash_editor.domain.Library;
 import com.flash_editor.domain.LibraryWithBLOBs;
 import com.flash_editor.domain.User;
 import com.flash_editor.dto.ProjectDto;
 import com.flash_editor.dto.Result;
 import com.flash_editor.service.LibraryService;
 import com.flash_editor.service.WorkService;
-import com.flash_editor.util.DateUtil;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +26,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/2/23.
  */
+@RequestMapping("/flash")
 @Controller
 public class WorkController {
     @Autowired

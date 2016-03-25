@@ -12,7 +12,7 @@
     <meta name="author" content="Cao Xiaobo">
     <link rel="icon" href="../../favicon.ico">
     <title></title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'iconfont';
@@ -39,27 +39,27 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp" style="margin: 0;padding: 5px">
-                <img src="img/1.jpg" class="img-circle img-responsive" style="height:40px;width: 40px;float: left ;margin: 0;vertical-align: top">
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp" style="margin: 0;padding: 5px">
+                <img src="${pageContext.request.contextPath}/static/img/1.jpg" class="img-circle img-responsive" style="height:40px;width: 40px;float: left ;margin: 0;vertical-align: top">
                 <p  style="float: left ;margin-top: 8px;margin-left: 15px">益画</p>
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
-                <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="/loadProject">创作空间</a></li>
+                <li role="presentation" ><a href="${pageContext.request.contextPath}/tutorial.jsp">新手教程</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllPosts">讨论区</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
-                    <a  class=" btn btn-normal btn-primary" href="login.jsp" style="padding-left: 30px;padding-right: 30px">登录</a>
-                    <a  class=" btn btn-normal btn-success" href="regist.jsp" style="padding-left: 30px;padding-right: 30px;margin-left: 15px">注册</a>
+                    <a  class=" btn btn-normal btn-primary" href="${pageContext.request.contextPath}/login.jsp" style="padding-left: 30px;padding-right: 30px">登录</a>
+                    <a  class=" btn btn-normal btn-success" href="${pageContext.request.contextPath}/regist.jsp" style="padding-left: 30px;padding-right: 30px;margin-left: 15px">注册</a>
                 </form>
             </c:if>
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
-                        <a href="/logout" role="presentation">注销</a>
+                        <a href="${pageContext.request.contextPath}/flash/logout" role="presentation">注销</a>
                     </h5>
                 </form>
             </c:if>
@@ -142,20 +142,20 @@
         <div class="jumbotron">
             <h1>开始创建你的项目</h1>
             <p>您尚未登录，请先登录</p>
-            <p><a class="btn btn-primary btn-lg" href="login.jsp" role="button">登录</a></p>
+            <p><a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/login.jsp" role="button">登录</a></p>
         </div>
     </c:if>
 </div>
 
 
 </body>
-<script src="js/jquery-2.1.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery-2.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
 </html>
 <script>
     $(document).ready(function(){
         $("#project_save").click(function(){
-            var url = "/saveProject";
+            var url = "/flash/saveProject";
             var projectName = $("#project_name").val();
             if(projectName==null || ""==projectName.trim()){
                 window.alert("请输入项目名称");
@@ -178,7 +178,7 @@
         });
 
         $("a[name = 'editor']").click(function(){
-            var url = "/setProjectId";
+            var url = "/flash/setProjectId";
             var projectId = $(this).attr("id");
             $.ajax({
                 type: 'POST',
@@ -191,7 +191,7 @@
         });
 
         $("a[name = 'delete']").click(function(){
-            var url = "/deleteProjectId";
+            var url = "/flash/deleteProjectId";
             var projectId = $(this).attr("id");
             $.ajax({
                 type: 'POST',

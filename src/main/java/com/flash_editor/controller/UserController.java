@@ -25,6 +25,7 @@ import java.util.Map;
 /**
  * Created by xiaobo.cao on 2016/2/18.
  */
+@RequestMapping("/flash")
 @Controller
 public class UserController {
     @Autowired
@@ -45,9 +46,10 @@ public class UserController {
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     @ResponseBody
     public Result addUser(@RequestBody User user, HttpSession httpSession) {
+        user.setPassword(MD5Util.encode(user.getPassword()));
         userService.add(user);
         UserRequest userRequest = new UserRequest();
-        userRequest.setPassword(MD5Util.encode(user.getPassword()));
+        userRequest.setPassword(user.getPassword());
         userRequest.setUserName(user.getUserName());
         User u =  userService.login(userRequest);
         httpSession.setAttribute("user", u);
@@ -85,9 +87,9 @@ public class UserController {
         httpSession.setAttribute("user", null);
         String logoutRefererUrl = (String)httpSession.getAttribute("logoutRefererUrl");
         if (logoutRefererUrl==null){
-            return "index.jsp";
+            return "redirect:/index.jsp";
         }
-        return logoutRefererUrl;
+        return "redirect:/"+logoutRefererUrl;
     }
 
     @RequestMapping(value = "/getCookie", method = RequestMethod.POST)

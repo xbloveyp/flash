@@ -17,7 +17,7 @@ window.onload=function(){
 
     //加载用户保存的flash
     var init = function(){
-        var url = "/loadCanvas"
+        var url = "/flash/loadCanvas"
         $.ajax({
             type: 'POST',
             url: url,
@@ -279,7 +279,7 @@ window.onload=function(){
     //保存用户的flash
     $("#save").click(function(){
         var canvasJson = JSON.stringify(canvas);
-        var url = "/saveCanvas";
+        var url = "/flash/saveCanvas";
         $.ajax({
             type: 'POST',
             url: url,
@@ -377,7 +377,7 @@ window.onload=function(){
     })
 
     $(".importShape").click(function(){
-        var url = "/getShape";
+        var url = "/flash/getShape";
         var shapeCode = $(this).attr("id");
         $.ajax({
             type: 'POST',

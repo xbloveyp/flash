@@ -14,7 +14,7 @@
 
     <script type="text/javascript" src="js/edtior.js"></script>
     <!--<link href="css/edtior.css" rel="stylesheet">-->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'iconfont';
@@ -42,15 +42,15 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="index.jsp" style="margin: 0;padding: 5px">
-                <img src="img/1.jpg" class="img-circle img-responsive" style="height:40px;width: 40px;float: left ;margin: 0;vertical-align: top">
+                <img src="static/img/1.jpg" class="img-circle img-responsive" style="height:40px;width: 40px;float: left ;margin: 0;vertical-align: top">
                 <p  style="float: left ;margin-top: 8px;margin-left: 15px">益画</p>
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="/loadProject">创作空间</a></li>
+                <li role="presentation"><a href="/flash/findAllPosts">讨论区</a></li>
+                <li role="presentation"><a href="/flash/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
@@ -61,7 +61,7 @@
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
-                        <a href="/logout" role="presentation">注销</a>
+                        <a href="/flash/logout" role="presentation">注销</a>
                         <a id ="save" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">保存</a>
                         <a id ="load" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">加载</a>
                     </h5>
@@ -171,7 +171,7 @@
 
 </div>
 </body>
-<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/fabric.min.js"></script>
+<script type="text/javascript" src="static/js/jquery-2.1.1.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/js/fabric.min.js"></script>
 </html>

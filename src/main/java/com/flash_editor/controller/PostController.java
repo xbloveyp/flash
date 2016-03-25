@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Created by xiaobo.cao on 2016/2/18.
  */
+@RequestMapping("/flash")
 @Controller
 public class PostController {
     @Autowired
