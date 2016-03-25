@@ -31,8 +31,8 @@
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="/flash/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="/flash/loadProject">创作空间</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllPosts">讨论区</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
@@ -75,13 +75,14 @@
 </body>
 <script src="static/js/jquery-2.1.1.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/util.js"></script>
 <script>
     $(document).ready(function(){
         init();
         function init(){
             $.ajax({
                 type: 'POST',
-                url: "/flash/getCookie",
+                url: getRootPath()+"/flash/getCookie",
                 contentType: "application/json",
                 data:{},
                 success: function (result) {
@@ -106,7 +107,7 @@
             var username = $(this).val();
             var divtip = document.getElementById("usernametip");
 
-            var url = "/flash/getUser";
+            var url = getRootPath()+"/flash/getUser";
             $.ajax({
                 type: 'POST',
                 url:url,
@@ -150,7 +151,7 @@
                 var userName = $("#username").val();
                 var password = $("#password").val();
                 var save = $("#savePassword").is(':checked');
-                var url = "/flash/login";
+                var url = getRootPath()+"/flash/login";
                 $.ajax({
                     type: 'POST',
                     url: url,

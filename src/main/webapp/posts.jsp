@@ -31,8 +31,8 @@
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="/flash/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="/flash/loadProject">创作空间</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllPosts">讨论区</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
@@ -121,12 +121,13 @@
 </body>
 <script src="static/js/jquery-2.1.1.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/util.js"></script>
 </html>
 <script>
     $(document).ready(function(){
 
         $("#send").click(function(){
-            var url = "/flash/addPost";
+            var url = getRootPath()+ "/flash/addPost";
             var content = $("#content").val();
             if(content==null || ""==content.trim()){
                 window.alert("请输入内容");

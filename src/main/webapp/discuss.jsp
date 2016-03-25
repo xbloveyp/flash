@@ -103,11 +103,12 @@
 </body>
 <script src="${pageContext.request.contextPath}/static/js/jquery-2.1.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/util.js"></script>
 </html>
 <script>
     $(document).ready(function(){
         $("#send").click(function(){
-            var url = "/flash/addPost";
+            var url = getRootPath()+"/flash/addPost";
             var title = $("#title").val();
             if(title==null || ""==title.trim()){
                 window.alert("请输入标题");

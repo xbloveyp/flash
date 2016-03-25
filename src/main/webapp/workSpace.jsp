@@ -151,11 +151,12 @@
 </body>
 <script src="${pageContext.request.contextPath}/static/js/jquery-2.1.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/util.js"></script>
 </html>
 <script>
     $(document).ready(function(){
         $("#project_save").click(function(){
-            var url = "/flash/saveProject";
+            var url = getRootPath()+"/flash/saveProject";
             var projectName = $("#project_name").val();
             if(projectName==null || ""==projectName.trim()){
                 window.alert("请输入项目名称");
@@ -178,7 +179,7 @@
         });
 
         $("a[name = 'editor']").click(function(){
-            var url = "/flash/setProjectId";
+            var url = getRootPath()+"/flash/setProjectId";
             var projectId = $(this).attr("id");
             $.ajax({
                 type: 'POST',
@@ -191,7 +192,7 @@
         });
 
         $("a[name = 'delete']").click(function(){
-            var url = "/flash/deleteProjectId";
+            var url = getRootPath()+"/flash/deleteProjectId";
             var projectId = $(this).attr("id");
             $.ajax({
                 type: 'POST',

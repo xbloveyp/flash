@@ -11,8 +11,8 @@
     <meta name="author" content="Cao Xiaobo">
     <link rel="icon" href="../../favicon.ico">
     <title>flash_edtior</title>
-
-    <script type="text/javascript" src="js/edtior.js"></script>
+    <script type="text/javascript" src="static/js/util.js"></script>
+    <script type="text/javascript" src="static/js/edtior.js"></script>
     <!--<link href="css/edtior.css" rel="stylesheet">-->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -49,8 +49,8 @@
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="/flash/findAllPosts">讨论区</a></li>
-                <li role="presentation"><a href="/flash/loadProject">创作空间</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllPosts">讨论区</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
