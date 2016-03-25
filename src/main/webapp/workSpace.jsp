@@ -173,7 +173,7 @@
                 contentType: "application/json",
                 data:JSON.stringify({title: projectName, description: projectDescription}),
                 success: function (result) {
-                    window.location.href="workSpace.jsp";
+                    window.location.href=getRootPath()+"workSpace.jsp";
                 }
             });
         });
@@ -186,7 +186,7 @@
                 url: url,
                 data:{id: projectId},
                 success: function (result) {
-                    window.location.href="edtior.jsp";
+                    window.location.href=getRootPath()+"edtior.jsp";
                 }
             });
         });
@@ -199,7 +199,7 @@
                 url: url,
                 data:{id: projectId},
                 success: function (result) {
-                    window.location.href="workSpace.jsp";
+                    window.location.href=getRootPath()+"workSpace.jsp";
                 }
             });
         });

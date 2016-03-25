@@ -125,7 +125,7 @@
                 contentType: "application/json",
                 data:JSON.stringify({title: title, content: content}),
                 success: function (result) {
-                    window.location.href="discuss.jsp";
+                    window.location.href=getRootPath()+"discuss.jsp";
                 }
             });
         });

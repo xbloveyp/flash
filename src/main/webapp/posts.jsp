@@ -134,7 +134,7 @@
                 return;
             }
             $.post(url, {title: title, content: content}, function (data) {
-                window.location.href="discuss.jsp";
+                window.location.href=getRootPath()+"discuss.jsp";
             });
         });
     });

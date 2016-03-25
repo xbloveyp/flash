@@ -196,7 +196,7 @@
                      contentType: "application/json",
                      data:JSON.stringify({userName: userName, password: password, email: email}),
                      success: function (result) {
-                         window.location.href="index.jsp";
+                         window.location.href=getRootPath()+"index.jsp";
                      }
                  });
              }

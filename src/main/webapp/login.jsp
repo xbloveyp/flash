@@ -161,9 +161,9 @@
                         if (result.code == 200) {
                             if(result.data["loginRefererUrl"]!=null){
                                 var refererUrl = result.data["loginRefererUrl"];
-                                window.location.href = refererUrl;
+                                window.location.href = getRootPath()+refererUrl;
                             }else {
-                                window.location.href = "index.jsp";
+                                window.location.href = getRootPath()+"index.jsp";
                             }
                         } else {
                             $("#passwordtip").html("用户名或密码错误");
