@@ -58,12 +58,22 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Result login(@RequestBody UserRequest user, HttpSession httpSession, HttpServletResponse response) {
+    public Result login(@RequestBody UserRequest user, HttpSession httpSession, HttpServletResponse response,HttpServletRequest request) {
         if (user.getSave()) {
             String cookieString = user.getUserName() + "-" + user.getPassword();
             Cookie cookie = new Cookie("flashUser", cookieString);
             cookie.setMaxAge(3600*24*30);
             response.addCookie(cookie);
+        }else {
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie:cookies){
+                if (cookie.getName().equals("flashUser")){
+                    cookie.setValue(null);
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    break;
+                }
+            }
         }
         user.setPassword(MD5Util.encode(user.getPassword()));
         User u =  userService.login(user);

@@ -37,14 +37,14 @@
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
-                    <a  class=" btn btn-normal btn-primary" href="login.jsp" style="padding-left: 30px;padding-right: 30px">登录</a>
-                    <a  class=" btn btn-normal btn-success" href="regist.jsp" style="padding-left: 30px;padding-right: 30px;margin-left: 15px">注册</a>
+                    <a  class=" btn btn-normal btn-primary" href="${pageContext.request.contextPath}/login.jsp" style="padding-left: 30px;padding-right: 30px">登录</a>
+                    <a  class=" btn btn-normal btn-success" href="${pageContext.request.contextPath}/regist.jsp" style="padding-left: 30px;padding-right: 30px;margin-left: 15px">注册</a>
                 </form>
             </c:if>
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
-                        <a href="/flash/logout" role="presentation">注销</a>
+                        <a href="${pageContext.request.contextPath}/flash/logout" role="presentation">注销</a>
                     </h5>
                 </form>
             </c:if>
@@ -196,7 +196,7 @@
                      contentType: "application/json",
                      data:JSON.stringify({userName: userName, password: password, email: email}),
                      success: function (result) {
-                         window.location.href=getRootPath()+"index.jsp";
+                         window.location.href=getRootPath()+"/index.jsp";
                      }
                  });
              }

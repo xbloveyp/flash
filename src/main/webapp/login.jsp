@@ -36,8 +36,8 @@
             </ul>
             <c:if test="${sessionScope.user==null}">
                 <form class="navbar-form navbar-right">
-                    <a  class=" btn btn-normal btn-primary" href="login.jsp" style="padding-left: 30px;padding-right: 30px">登录</a>
-                    <a  class=" btn btn-normal btn-success" href="regist.jsp" style="padding-left: 30px;padding-right: 30px;margin-left: 15px">注册</a>
+                    <a  class=" btn btn-normal btn-primary" href="${pageContext.request.contextPath}/login.jsp" style="padding-left: 30px;padding-right: 30px">登录</a>
+                    <a  class=" btn btn-normal btn-success" href="${pageContext.request.contextPath}/regist.jsp" style="padding-left: 30px;padding-right: 30px;margin-left: 15px">注册</a>
                 </form>
             </c:if>
             <c:if test="${sessionScope.user!=null}">
@@ -89,6 +89,7 @@
                     if (result.code == 200) {
                         $("#username").val( result.data.userName);
                         $("#password").val( result.data.password);
+                        $("#savePassword").attr("checked",true);
                     }
                 }
             });
@@ -161,9 +162,9 @@
                         if (result.code == 200) {
                             if(result.data["loginRefererUrl"]!=null){
                                 var refererUrl = result.data["loginRefererUrl"];
-                                window.location.href = getRootPath()+refererUrl;
+                                window.location.href = getRootPath()+"/"+refererUrl;
                             }else {
-                                window.location.href = getRootPath()+"index.jsp";
+                                window.location.href = getRootPath()+"/index.jsp";
                             }
                         } else {
                             $("#passwordtip").html("用户名或密码错误");
