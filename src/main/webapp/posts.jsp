@@ -9,8 +9,8 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="在线动画设计">
     <meta name="author" content="Cao Xiaobo">
-    <link rel="icon" href="../../favicon.ico">
-    <title></title>
+    <link rel="shortcut icon" href="static/img/1.jpg" type="image/x-icon" />
+    <title>益画</title>
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="height: 80%">
@@ -43,7 +43,7 @@
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
-                        <a href="/flash/logout" role="presentation">注销</a>
+                        <a href="${pageContext.request.contextPath}/flash/logout" role="presentation">注销</a>
                     </h5>
                 </form>
             </c:if>
@@ -52,66 +52,52 @@
 </nav>
 <div class="container " style="border-radius: 10px;margin-top: 70px;background-color: #e7e7e7;width: 80%;height: auto;margin-left: auto;margin-right: auto;padding: 1%">
     <div>
-        <h3>到那里是到哪里的哪里是到哪里是</h3>
-        <h4 style="margin-top: 20px">哪里上课那两款的哪里上的那是理科的哪里的哪里的农村的内存是动车上那是你拉上车那算了采纳了</h4>
-    </div>
-    <div class="" style="float: left;margin-top: 40px">
-        <small style="color: #adadad;margin-left: 40px">一天前</small>
-        <small style="color: #adadad;margin-left: 20px"><a href="#">回复</a></small>
-    </div>
-    <div style="right: 10px;float: right">
-        <a style="" href="#">
-            <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ;margin-top: 0px">
-            <small>开发团队</small>
-        </a>
+        <h3 class="pid" id="${post.id}">${post.title}</h3>
     </div>
 </div>
-<div class="container " style="border-radius: 10px;margin-top: 20px;background-color: #e7e7e7;width: 80%;height: auto;margin-left: auto;margin-right: auto;padding: 1%">
-    <h3>2个回复</h3>
-    <div style="width: 100% ;background-color: #b17ba2;height: 1px;margin-top: 10px;margin-bottom: 10px" ></div>
+<div class="container " style="border-radius: 5px;margin-top: 20px;background-color: #e7e7e7;width: 80%;height: auto;margin-left: auto;margin-right: auto;padding: 1%">
     <div>
-        <div style="float: left">
+        <div style="float: left;text-align: center">
             <a style="" href="#">
-                <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ;margin-top: 0px">
-                <small>开发团队</small>
+                <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 50px;width: 50px ;margin-top: 0px">
+                <small>${post.userName}</small>
             </a>
         </div>
         <div class="container" style="margin-top: 10px;margin-left: 50px">
-            <p>
-                adadanlkda<br><br><br><br><br>
-                ncocnsdoicnocinoiasdcnaslkncaslkcna/ns你从爱上你插上吵闹的成三次那是从那时才那是尺寸
-            </p>
+            <p>${post.content}</p>
         </div>
         <div style="float: right;right: 10px">
-            <small style="color: #adadad">一天前</small>
+            <small style="color: #adadad">${post.addTime}</small>
         </div>
     </div>
-    <div style="width: 100% ;background-color: #b17ba2;height: 1px;margin-top: 25px" ></div>
-    <div>
-        <div style="float: left">
-            <a style="" href="#">
-                <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ;margin-top: 0px">
-                <small>开发团队</small>
-            </a>
+    <c:forEach items="${followPosts}" var="fp" varStatus="vs">
+        <%--<c:if test="${vs.index==0}">--%>
+            <%--<h3>${post.followNum}个回复</h3>--%>
+        <%--</c:if>--%>
+        <div style="width: 100% ;background-color: #b17ba2;height: 1px;margin-top: 30px;margin-bottom: 10px" ></div>
+        <div>
+            <div style="float: left;text-align: center">
+                <a style="" href="#">
+                    <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 50px;width: 50px ;margin-top: 0px">
+                    <small>${fp.userName}</small>
+                </a>
+            </div>
+            <div class="container" style="margin-top: 10px;margin-left: 50px">
+                <p>${fp.content}</p>
+            </div>
+            <div style="float: right;right: 10px">
+                <small style="color: #adadad">${fp.addTime}</small>
+            </div>
         </div>
-        <div class="container" style="margin-top: 10px;margin-left: 50px">
-            <p>
-                adadanlkda<br><br><br><br><br>
-                ncocnsdoicnocinoiasdcnaslkncaslkcna/ns你从爱上你插上吵闹的成三次那是从那时才那是尺寸
-            </p>
-        </div>
-        <div style="float: right;right: 10px">
-            <small style="color: #adadad">一天前</small>
-        </div>
-    </div>
+    </c:forEach>
 </div>
 <div class="container " style="border-radius: 10px;margin-top: 20px;background-color: #e7e7e7;width: 80%;height: auto;margin-left: auto;margin-right: auto;padding: 1%">
     <div style="margin-top: 10px">
-        <textarea style="border-radius: 5px;height:150px;width: 100%" placeholder="请文明回帖！" name="content" id="content"></textarea>
+        <textarea style="border-radius: 5px;height:150px;width: 100%" placeholder="请文明跟帖！" name="content" id="content"></textarea>
     </div>
     <div style="margin-top: 10px;margin-right: 10px;margin-bottom:10px;text-align: right">
         <c:if test="${sessionScope.user!=null}">
-            <button class="btn  btn-success" type="button" id="send">发布</button>
+            <button class="btn  btn-success" type="button" id="send">回复</button>
         </c:if>
         <c:if test="${sessionScope.user==null}">
             <button class="btn  btn-danger" disabled="disabled" type="button" >请先登录</button>
@@ -125,16 +111,22 @@
 </html>
 <script>
     $(document).ready(function(){
-
         $("#send").click(function(){
-            var url = getRootPath()+ "/flash/addPost";
+            var url = getRootPath()+ "/flash/addFollowPost";
             var content = $("#content").val();
+            var postId =  $(".pid").attr("id");
             if(content==null || ""==content.trim()){
                 window.alert("请输入内容");
                 return;
             }
-            $.post(url, {title: title, content: content}, function (data) {
-                window.location.href=getRootPath()+"/discuss.jsp";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                contentType: "application/json",
+                data:JSON.stringify({pid:postId, content: content}),
+                success: function (result) {
+                    window.location.href=getRootPath()+"/posts.jsp";
+                }
             });
         });
     });

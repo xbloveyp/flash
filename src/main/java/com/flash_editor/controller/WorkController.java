@@ -90,7 +90,7 @@ public class WorkController {
         }else {
             httpSession.setAttribute("projects", projectDtos);
         }
-        return "forward:/workSpace.jsp";
+        return "redirect:/workSpace.jsp";
     }
 
     @RequestMapping(value = "/setProjectId", method = RequestMethod.POST)

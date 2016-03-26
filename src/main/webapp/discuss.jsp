@@ -9,8 +9,8 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="在线动画设计">
     <meta name="author" content="Cao Xiaobo">
-    <link rel="icon" href="../../favicon.ico">
-    <title></title>
+    <link rel="shortcut icon" href="static/img/1.jpg" type="image/x-icon" />
+    <title>益画</title>
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="height: 80%">
@@ -63,7 +63,7 @@
                     <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ;position: absolute;margin-top: 20px">
                 </a>
                 <div class="" style="margin-left: 50px">
-                    <h3 class=""><a href="">${po.title}</a></h3>
+                    <h3 class=""><a href="#" class="postItem" id="${po.id}">${po.title}</a></h3>
                     <a href="#" class="" style="margin-left: 10px">
                         <small>${po.userName}</small>
                     </a>
@@ -126,6 +126,19 @@
                 data:JSON.stringify({title: title, content: content}),
                 success: function (result) {
                     window.location.href=getRootPath()+"/discuss.jsp";
+                }
+            });
+        });
+        $(".postItem").click(function(){
+            var url = getRootPath()+"/flash/findFollowPost";
+            var postId =  $(this).attr("id");
+            $.ajax({
+                type: 'GET',
+                url: url,
+                contentType: "application/json",
+                data:{id:postId},
+                success: function (result) {
+                    window.location.href=getRootPath()+"/posts.jsp";
                 }
             });
         });

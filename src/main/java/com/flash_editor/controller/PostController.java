@@ -28,7 +28,7 @@ public class PostController {
     public String findAllPosts(HttpSession httpSession) {
         List<Post> posts = postService.findAllPosts();
         httpSession.setAttribute("posts",posts);
-        return "forward:/discuss.jsp";
+        return "redirect:/discuss.jsp";
     }
 
     @RequestMapping(value = "/addPost", method =RequestMethod.POST)

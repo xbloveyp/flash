@@ -9,8 +9,8 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="在线动画设计">
     <meta name="author" content="Cao Xiaobo">
-    <link rel="icon" href="../../favicon.ico">
-    <title></title>
+    <link rel="shortcut icon" href="static/img/1.jpg" type="image/x-icon" />
+    <title>益画</title>
 
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -90,7 +90,7 @@
             <div class="carousel-caption" style="top: 5%">
                 <h3 style="color: #262626">在线绘画</h3>
                 <p style="color: #262626">人人都可以做设计师，设计从未如此简单！</p>
-                <p><a class="btn btn-primary" href="/loadProject">创建动画</a></p>
+                <p><a class="btn btn-primary" href="${pageContext.request.contextPath}/flash/loadProject">创建动画</a></p>
             </div>
         </div>
         <div class="item" style="height: 600px;width: 100%" >
@@ -98,7 +98,7 @@
             <div class="carousel-caption" style="top: 5%;left: 10%;">
                 <h3 style="color: #262626;margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px">创建属于你的动画</h3>
                 <p style="color: #262626;margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px">还不赶紧尝试一下！</p>
-                <p style="margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px"><a class="btn btn-primary" href="/loadProject">创建动画</a></p>
+                <p style="margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px"><a class="btn btn-primary" href="${pageContext.request.contextPath}/flash/loadProject">创建动画</a></p>
             </div>
         </div>
         <div class="item" style="height: 600px;width: 100%" >
@@ -106,7 +106,7 @@
             <div class="carousel-caption" style="top: 15%;left: 20%">
                 <h3 style="color: #262626;margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px">团队合作</h3>
                 <p style="color: #262626;margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px">共同为项目献一份力</p>
-                <p style="margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px"><a class="btn btn-primary" href="/loadProject">创建动画</a></p>
+                <p style="margin-left: 0;margin-right: 0;padding-left: 0;padding-right: 0;width: 300px"><a class="btn btn-primary" href="${pageContext.request.contextPath}/flash/loadProject">创建动画</a></p>
             </div>
         </div>
     </div>

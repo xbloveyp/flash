@@ -9,8 +9,8 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="在线动画设计">
     <meta name="author" content="Cao Xiaobo">
-    <link rel="icon" href="../../favicon.ico">
-    <title></title>
+    <link rel="shortcut icon" href="static/img/1.jpg" type="image/x-icon" />
+    <title>益画</title>
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background-color: #e7e7e7">
@@ -43,7 +43,7 @@
             <c:if test="${sessionScope.user!=null}">
                 <form class="navbar-form navbar-right" style="display: inline">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
-                        <a href="/flash/logout" role="presentation">注销</a>
+                        <a href="${pageContext.request.contextPath}/flash/logout" role="presentation">注销</a>
                     </h5>
                 </form>
             </c:if>

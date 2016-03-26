@@ -22,4 +22,8 @@ public class PostService {
     public void addPost(Post post) {
          postMapper.insert(post);
     }
+
+    public Post findPostById(int id) {
+        return postMapper.selectByPrimaryKey(id);
+    }
 }
