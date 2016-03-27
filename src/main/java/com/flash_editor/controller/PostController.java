@@ -75,6 +75,7 @@ public class PostController {
         post.setAddTime(new Date());
         post.setUpdateTime(new Date());
         post.setFollowNum(0);
+        post.setPraise(0);
         User u = (User) httpSession.getAttribute("user");
         post.setUserName(u.getUserName());
         post.setUid(u.getId());
