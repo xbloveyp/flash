@@ -15,6 +15,7 @@ window.onload=function(){
     var attrForm = document.getElementById('shape-attrs');
     var createForm = document.getElementById('pan');
 
+
     //加载用户保存的flash
     var init = function(){
         var url = getRootPath()+"/flash/loadCanvas"
@@ -128,7 +129,13 @@ window.onload=function(){
     attrForm.addEventListener('input', function(e) {
         if (e.target.tagName.toLowerCase() != 'input') return;
         var handle = e.target;
-        selected.set(handle.name,handle.value);
+        if (handle.name=='left'){
+            selected.setLeft(parseInt(handle.value, 10)).setCoords();
+        }
+        else if (handle.name=='top'){
+            selected.setTop(parseInt(handle.value, 10)).setCoords();
+        }
+        //selected.set(handle.name,handle.value);
         canvas.renderAll();
     });
     //点击属性面板，更改属性
@@ -197,8 +204,8 @@ window.onload=function(){
                 stroke: '#00D5FF',
                 strokeWidth: 1})
         }
-        else if (name="polygon"){
-        }
+        //else if (name="polygon"){
+        //}
         else {
             shape.set(defaultAttrs);
         }
@@ -207,50 +214,72 @@ window.onload=function(){
     }
     //选中图形，用于属性栏更改属性用的
     function select(shape) {
-        if (shape.name) {
-            var attrs = shapeAttribute[shape.name].split(',');
-            var attr, _name, value;
+        //if (shape.name) {
+            //var attrs = shapeAttribute[shape.name].split(',');
+            //var attr, _name, value;
             attrForm.innerHTML = "";
-            while (attrs.length) {
-                attr = attrs.shift().split(':');
-                _name = attr[0];
-                value = shape._name || attr[1];
-                createHandle(shape, _name, value);
-            }
+            //while (attrs.length) {
+            //    attr = attrs.shift().split(':');
+            //    _name = attr[0];
+            //    value = shape._name || attr[1];
+                createHandle(shape);
+            //}
             selected = shape;
             updateLookHandle();
-        }else {
-            selected = shape;
-        }
+        //}else {
+        //    selected = shape;
+        //}
     }
 
     //将属性加到图形上
-    function createHandle(shape, name, value) {
+    function createHandle(shape) {
+        addAttr("left",shape);
+        addAttr("top",shape);
+        var name = shape.name;
+        if(name=='text'){
+            addTextAttr(text,shape);
+        }
+    }
+    //单独增加range属性
+    function addAttr(name,shape){
         var label = document.createElement('label');
         label.textContent = name;
-
         var handle = document.createElement('input');
-        if(name=='text'){
-            handle.setAttribute('name', name);
-            handle.setAttribute('type', 'text');
-            handle.setAttribute('value', value);
-        }else {
-            handle.setAttribute('name', name);
-            handle.setAttribute('type', 'range');
-            handle.setAttribute('value', value);
-            handle.setAttribute('min', 0);
-            handle.setAttribute('max', 50);
+        handle.setAttribute('name', name);
+        handle.setAttribute('type', 'range');
+        handle.setAttribute('value', shape.left);
+        handle.setAttribute('min', 0);
+        if (name=="left") {
+            handle.setAttribute('max', canvas.width);
         }
+        if (name=="top") {
+            handle.setAttribute('max', canvas.height);
+        }
+        attrForm.appendChild(label);
+        attrForm.appendChild(handle);
+    }
+    //单独增加text属性
+    function addTextAttr(name,shape){
+        var label = document.createElement('label');
+        label.textContent = name;
+        var handle = document.createElement('input');
+        handle.setAttribute('name', name);
+        handle.setAttribute('type', 'text');
+        handle.setAttribute('value', shape.text);
         attrForm.appendChild(label);
         attrForm.appendChild(handle);
     }
 
     //更新属性参数 颜色，线条粗细，位置，旋转角度
     function updateLookHandle() {
-        fill.value = selected.fill;
-        stroke.value = selected.stroke;
-        //left.value = selected ? selected.left : 0;
-        //top.value = selected ? selected.top : 0;
+        var fill = $("fill");
+        var stroke = $("stroke");
+        var left = $("left");
+        var top = $("top");
+        fill.value = selected.getFill();
+        stroke.value = selected.getStroke();
+        left.value = selected.getLeft();
+        top.value = selected.getTop();
         //rotate.value = selected ? selected.rotate : 0;
     }
     //禁止表单回车键
@@ -335,13 +364,23 @@ window.onload=function(){
         console.log(image);
     })
     //吧选中图形赋值给selected
-    canvas.on('mouse:down', function(options) {
-        activeObject = canvas.getActiveObject();
-        if (activeObject){
-            selected = activeObject;
-            updateLookHandle();
-        }
+    //canvas.on('mouse:down', function() {
+    //    //activeObject = canvas.getActiveObject();
+    //    //if (activeObject){
+    //    //    selected = activeObject;
+    //    //    updateLookHandle();
+    //    //}
+    //    select(canvas.getActiveObject())
+    //});
+    canvas.on('mouse:up', function() {
+        select(canvas.getActiveObject())
     });
+    //canvas.on({
+    //    'object:moving': select(canvas.getActiveObject()),
+    //    'object:scaling': select(canvas.getActiveObject()),
+    //    'object:resizing': select(canvas.getActiveObject()),
+    //    'object:rotating': select(canvas.getActiveObject())
+    //});
     $("#load").click(function(){
         canvas.add( new fabric.Polygon(
             [

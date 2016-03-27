@@ -74,7 +74,7 @@ public class WorkController {
                 httpSession.setAttribute("projects", projectDtos);
             }
         }
-        return "forward:/workSpace.jsp";
+        return "redirect:/workSpace.jsp";
     }
 
     @RequestMapping(value = "/saveProject", method = RequestMethod.POST)

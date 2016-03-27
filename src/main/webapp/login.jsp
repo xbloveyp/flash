@@ -162,7 +162,11 @@
                         if (result.code == 200) {
                             if(result.data["loginRefererUrl"]!=null){
                                 var refererUrl = result.data["loginRefererUrl"];
-                                window.location.href = getRootPath()+"/"+refererUrl;
+                                if (refererUrl=="workSpace.jsp"){
+                                    window.location.href = getRootPath()+"/flash/loadProject";
+                                }else {
+                                    window.location.href = getRootPath() + "/" + refererUrl;
+                                }
                             }else {
                                 window.location.href = getRootPath()+"/index.jsp";
                             }

@@ -27,13 +27,14 @@ public class UrlFilter extends OncePerRequestFilter {
                 if (refererUrl.endsWith(".jsp")) {
                     refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
                     httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
-                } else if (refererUrl.endsWith("findAllPosts")) {
-                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("loginRefererUrl", "flash/"+refererUrl);
-                } else if (refererUrl.endsWith("loadProject")) {
-                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("loginRefererUrl","flash/"+refererUrl);
                 }
+//                else if (refererUrl.endsWith("findAllPosts")) {
+//                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+//                    httpServletRequest.getSession().setAttribute("loginRefererUrl", "flash/"+refererUrl);
+//                } else if (refererUrl.endsWith("loadProject")) {
+//                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+//                    httpServletRequest.getSession().setAttribute("loginRefererUrl","flash/"+refererUrl);
+//                }
             }
 
         }
@@ -48,13 +49,14 @@ public class UrlFilter extends OncePerRequestFilter {
                         refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
                         httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
                     }
-                } else if (refererUrl.endsWith("findAllPosts")) {
-                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", "flash/"+refererUrl);
-                } else if (refererUrl.endsWith("loadProject")) {
-                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", "flash/"+refererUrl);
                 }
+//                else if (refererUrl.endsWith("findAllPosts")) {
+//                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+//                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", "flash/"+refererUrl);
+//                } else if (refererUrl.endsWith("loadProject")) {
+//                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+//                    httpServletRequest.getSession().setAttribute("logoutRefererUrl", "flash/"+refererUrl);
+//                }
             }
         }
         if (httpServletRequest.getRequestURI().endsWith("edtior.jsp")){
