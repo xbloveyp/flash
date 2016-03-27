@@ -614,6 +614,126 @@ public class PostExample {
             addCriterion("follow_num not between", value1, value2, "followNum");
             return (Criteria) this;
         }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseIsNull() {
+            addCriterion("praise is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseIsNotNull() {
+            addCriterion("praise is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseEqualTo(Integer value) {
+            addCriterion("praise =", value, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseNotEqualTo(Integer value) {
+            addCriterion("praise <>", value, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseGreaterThan(Integer value) {
+            addCriterion("praise >", value, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseGreaterThanOrEqualTo(Integer value) {
+            addCriterion("praise >=", value, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseLessThan(Integer value) {
+            addCriterion("praise <", value, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseLessThanOrEqualTo(Integer value) {
+            addCriterion("praise <=", value, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseIn(List<Integer> values) {
+            addCriterion("praise in", values, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseNotIn(List<Integer> values) {
+            addCriterion("praise not in", values, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseBetween(Integer value1, Integer value2) {
+            addCriterion("praise between", value1, value2, "praise");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraiseNotBetween(Integer value1, Integer value2) {
+            addCriterion("praise not between", value1, value2, "praise");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

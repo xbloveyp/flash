@@ -49,7 +49,7 @@
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllPosts">讨论区</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllEssencePosts">讨论区</a></li>
                 <li role="presentation"><a href="${pageContext.request.contextPath}/flash/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
@@ -59,7 +59,7 @@
                 </form>
             </c:if>
             <c:if test="${sessionScope.user!=null}">
-                <form class="navbar-form navbar-right" style="display: inline;padding-top: 0;padding-bottom: 0">
+                <form class="navbar-form navbar-right" style="display: inline;padding:0;margin:0;height: 50px">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
                         <a href="${pageContext.request.contextPath}/flash/logout" role="presentation">注销</a>
                         <a id ="save" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">保存</a>
@@ -81,29 +81,20 @@
             <button class="iconfont " type="button" id="text" create="text" style="margin-top: 2px;border-radius: 10px">&#xe604;</button>
             <button  type="button"  data-toggle="modal" data-target="#library" style="margin-top: 2px;border-radius: 10px">加载图形</button>
             <div class="modal fade" id="library" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">官方图库</h4>
                         </div>
-                        <div class="modal-body" style="overflow-y: scroll;height: 200px">
-                            <div class="container-fluid">
-                                <div class="row" >
-                                    <div style="width: auto;float: left;display: inline" id="shape_1" type="button" class="importShape">
-                                        <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ">
-                                    </div>
-                                    <div style="width: auto;float: left;display: inline" id="shape_2" class="importShape">
-                                        <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ">
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 20px">
-                                    <div style="width: auto;float: left;display: inline" id="shape_3" class="importShape">
-                                        <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ">
-                                    </div>
-                                    <div style="width: auto;float: left;display: inline" id="shape_4" class="importShape">
-                                        <img src="http://wenda.bootcss.com/static/common/avatar-max-img.png" alt="..." class="img-circle img-responsive" style="height: 40px;width: 40px ">
-                                    </div>
+                        <div class="modal-body" style="overflow-y: scroll;height: 400px">
+                            <div class="container-fluid" >
+                                <div >
+                                    <c:forEach items="${librarys}" var="lib" varStatus="vs">
+                                        <div  id="${lib.code}" type="button" class="importShape" style="float: left">
+                                            <a href="#"> <img src="${lib.imageUrl}" alt="..." class="img-responsive" style="margin:1px;border: solid  1px #CACACA"></a>
+                                        </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
@@ -157,8 +148,8 @@
         <%--<button id="groups">组合</button>--%>
     </div>
 
-    <div id="canvas" class="col-lg-7 container col-lg-offset-3" style="padding: 0;border: 1px solid #333333;bottom: 0;position: absolute;top: 51px" >
-        <div style="padding:0;margin: 0;overflow:auto;height: 100%;width: 100%">
+    <div id="canvas" class="col-lg-7 container col-lg-offset-3" style="padding: 0;border: 1px solid #333333;bottom: 0;position: absolute;top: 50px" >
+        <div style="padding:0;margin: 0;height: 100%;width: 100%">
             <canvas id="c" width="760" height="577" style="top: 0;left: 0;right: 0;bottom: 0"></canvas>
         </div>
     </div>

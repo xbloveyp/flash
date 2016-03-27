@@ -10,6 +10,8 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="follow_num" property="followNum" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="praise" property="praise" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, uid, user_name, add_time, update_time, title, content, follow_num
+    id, uid, user_name, add_time, update_time, title, content, follow_num, type, praise
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.flash_editor.domain.PostExample" >
     select
@@ -106,10 +108,12 @@
   <insert id="insert" parameterType="com.flash_editor.domain.Post" >
     insert into posts (id, uid, user_name, 
       add_time, update_time, title, 
-      content, follow_num)
+      content, follow_num, type, 
+      praise)
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{followNum,jdbcType=INTEGER})
+      #{content,jdbcType=VARCHAR}, #{followNum,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{praise,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.flash_editor.domain.Post" >
     insert into posts
@@ -138,6 +142,12 @@
       <if test="followNum != null" >
         follow_num,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="praise != null" >
+        praise,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -163,6 +173,12 @@
       </if>
       <if test="followNum != null" >
         #{followNum,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="praise != null" >
+        #{praise,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -199,6 +215,12 @@
       <if test="record.followNum != null" >
         follow_num = #{record.followNum,jdbcType=INTEGER},
       </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.praise != null" >
+        praise = #{record.praise,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -213,7 +235,9 @@
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       title = #{record.title,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
-      follow_num = #{record.followNum,jdbcType=INTEGER}
+      follow_num = #{record.followNum,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      praise = #{record.praise,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -242,6 +266,12 @@
       <if test="followNum != null" >
         follow_num = #{followNum,jdbcType=INTEGER},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="praise != null" >
+        praise = #{praise,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -253,7 +283,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       title = #{title,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
-      follow_num = #{followNum,jdbcType=INTEGER}
+      follow_num = #{followNum,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      praise = #{praise,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -19,6 +19,10 @@ public class Post {
 
     private Integer followNum;
 
+    private Integer type;
+
+    private Integer praise;
+
     public Integer getId() {
         return id;
     }
@@ -81,5 +85,21 @@ public class Post {
 
     public void setFollowNum(Integer followNum) {
         this.followNum = followNum;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getPraise() {
+        return praise;
+    }
+
+    public void setPraise(Integer praise) {
+        this.praise = praise;
     }
 }

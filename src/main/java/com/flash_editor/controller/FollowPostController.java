@@ -51,6 +51,9 @@ public class FollowPostController {
         followPost.setUid(u.getId());
         followPostService.addFollowPost(followPost);
         List<FollowPost> followPosts = followPostService.findFollowPostsByPid(followPost.getPid());
+        Post post = postService.findPostById(followPost.getPid());
+        post.setUpdateTime(new Date());
+        postService.updata(post);
         httpSession.setAttribute("followPosts",followPosts);
         return Result.build(200, followPosts);
     }

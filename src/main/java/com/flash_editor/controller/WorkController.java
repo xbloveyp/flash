@@ -97,6 +97,8 @@ public class WorkController {
     @ResponseBody
     public Result setProjectId(int id, HttpSession httpSession) {
         httpSession.setAttribute("projectId",id);
+        List<LibraryWithBLOBs> librarys = libraryService.getAllLibraryShape();
+        httpSession.setAttribute("librarys",librarys);
         return Result.build(200,null);
     }
 
@@ -123,6 +125,15 @@ public class WorkController {
         LibraryWithBLOBs library = libraryService.getByCode(code);
         return Result.build(200,library.getContent());
     }
+
+    @RequestMapping(value = "/getAllShape" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Result getLibraryShape(HttpSession httpSession){
+        List<LibraryWithBLOBs> librarys = libraryService.getAllLibraryShape();
+        httpSession.setAttribute("librarys",librarys);
+        return Result.build(200,librarys);
+    }
+
 
     private List<ProjectDto> toTransformProject(List<FlashProject> flashProjects){
         return  Lists.transform(flashProjects, new Function<FlashProject, ProjectDto>() {

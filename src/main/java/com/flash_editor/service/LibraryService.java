@@ -7,6 +7,8 @@ import com.flash_editor.mapper.LibraryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/3/10.
  */
@@ -27,5 +29,11 @@ public class LibraryService {
         LibraryExample libraryExample = new LibraryExample();
         libraryExample.createCriteria().andCodeEqualTo(code);
         return libraryMapper.selectByExampleWithBLOBs(libraryExample).get(0);
+    }
+
+    public List<LibraryWithBLOBs> getAllLibraryShape(){
+        LibraryExample libraryExample = new LibraryExample();
+        libraryExample.createCriteria().andTypeEqualTo("shape");
+        return libraryMapper.selectByExampleWithBLOBs(libraryExample);
     }
 }

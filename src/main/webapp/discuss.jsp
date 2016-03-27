@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html style="height: 100%">
 <head lang="en">
@@ -31,7 +32,7 @@
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="${pageContext.request.contextPath}/tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllPosts">讨论区</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllEssencePosts">讨论区</a></li>
                 <li role="presentation"><a href="${pageContext.request.contextPath}/flash/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
@@ -52,10 +53,48 @@
 </nav>
 <div class="container " style="border-radius: 10px;margin-top: 70px;background-color: #e7e7e7;width: 80%;height: auto;margin-left: auto;margin-right: auto;padding: 1%">
         <div class="list-group " style="margin-bottom: 5%;margin-left: 1%">
-            <a id="essence" class="active  text-center list-group-item " href="#" style="float: left ;width: 20%"><span class="badge"></span>精选</a>
-            <a  class="  text-center list-group-item " href="#" style="float: left;width: 20%">最新</a>
-            <a  class="  text-center list-group-item " href="#" style="float: left;width: 20%">我的</a>
+            <c:if test="${postType=='essence'}">
+            <a id="essence" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllEssencePosts" style="float: left ;width: 20%"><span class="badge">${fn:length(posts)}</span>精选</a>
+            </c:if>
+            <c:if test="${postType!='essence'}">
+                <a id="essence" name="postType" class="text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllEssencePosts" style="float: left ;width: 20%">精选</a>
+            </c:if>
+            <c:if test="${postType=='newest'}">
+            <a id="newest" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllNewestPosts" style="float: left;width: 20%"><span class="badge">${fn:length(posts)}</span>最新</a>
+            </c:if>
+            <c:if test="${postType!='newest'}">
+                <a id="newest" name="postType" class="text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllNewestPosts" style="float: left;width: 20%">最新</a>
+            </c:if>
+            <c:if test="${postType=='my'}">
+                <a id="myPost" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllMyPosts" style="float: left;width: 20%"><span class="badge">${fn:length(posts)}</span>我的</a>
+            </c:if>
+            <c:if test="${postType!='my'}">
+                <a id="myPost" name="postType" class="  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllMyPosts" style="float: left;width: 20%">我的</a>
+            </c:if>
         </div>
+    <c:if test="${error==null}">
+        <c:if test="${posts==null}">
+            <div class="jumbotron">
+                <h3>发表跟帖</h3>
+                <p>快来占个沙发吧</p>
+                <p><a class="btn btn-primary btn-lg" role="button" href="#post" >发帖</a></p>
+            </div>
+        </c:if>
+    </c:if>
+    <c:if test="${error=='noUser'}">
+        <div class="jumbotron">
+            <h3>您尚未登录</h3>
+            <p>先登录再来查看吧</p>
+            <p><a class="btn btn-primary btn-lg" role="button" href="${pageContext.request.contextPath}/login.jsp" >登录</a></p>
+        </div>
+    </c:if>
+    <c:if test="${error=='noEssence'}">
+        <div class="jumbotron">
+            <h3>尚未有精华帖</h3>
+            <p>亲！来发个好贴，收到一定的点赞就能进入精华帖了</p>
+            <p><a class="btn btn-primary btn-lg" role="button" href="#post" >发帖</a></p>
+        </div>
+    </c:if>
     <c:forEach items="${posts}" var="po" varStatus="vs">
         <div class="" style="margin-top: 10px ;background-color: white;border-radius: 10px">
             <div class=" container" style="margin-top: 20px ;padding: 10px">
@@ -141,6 +180,9 @@
                     window.location.href=getRootPath()+"/posts.jsp";
                 }
             });
+        });
+        $("a[name='postType']").click(function(){
+
         });
     });
 </script>
