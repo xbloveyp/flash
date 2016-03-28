@@ -32,7 +32,7 @@
         <div id="navbar" class="navbar-collapse collapse" style="margin-left: 17%">
             <ul class="nav navbar-nav">
                 <li role="presentation" ><a href="${pageContext.request.contextPath}/tutorial.jsp">新手教程</a></li>
-                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllEssencePosts">讨论区</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/flash/findAllEssencePosts/1">讨论区</a></li>
                 <li role="presentation"><a href="${pageContext.request.contextPath}/flash/loadProject">创作空间</a></li>
             </ul>
             <c:if test="${sessionScope.user==null}">
@@ -54,22 +54,22 @@
 <div class="container " style="border-radius: 10px;margin-top: 70px;background-color: #e7e7e7;width: 80%;height: auto;margin-left: auto;margin-right: auto;padding: 1%">
         <div class="list-group " style="margin-bottom: 5%;margin-left: 1%">
             <c:if test="${postType=='essence'}">
-            <a id="essence" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllEssencePosts" style="float: left ;width: 20%"><span class="badge">${fn:length(posts)}</span>精选</a>
+            <a id="essence" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllEssencePosts/1" style="float: left ;width: 20%"><span class="badge">${page.count}</span>精选</a>
             </c:if>
             <c:if test="${postType!='essence'}">
-                <a id="essence" name="postType" class="text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllEssencePosts" style="float: left ;width: 20%">精选</a>
+                <a id="essence" name="postType" class="text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllEssencePosts/1" style="float: left ;width: 20%">精选</a>
             </c:if>
             <c:if test="${postType=='newest'}">
-            <a id="newest" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllNewestPosts" style="float: left;width: 20%"><span class="badge">${fn:length(posts)}</span>最新</a>
+            <a id="newest" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllNewestPosts/1" style="float: left;width: 20%"><span class="badge">${page.count}</span>最新</a>
             </c:if>
             <c:if test="${postType!='newest'}">
-                <a id="newest" name="postType" class="text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllNewestPosts" style="float: left;width: 20%">最新</a>
+                <a id="newest" name="postType" class="text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllNewestPosts/1" style="float: left;width: 20%">最新</a>
             </c:if>
             <c:if test="${postType=='my'}">
-                <a id="myPost" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllMyPosts" style="float: left;width: 20%"><span class="badge">${fn:length(posts)}</span>我的</a>
+                <a id="myPost" name="postType" class="active  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllMyPosts/1" style="float: left;width: 20%"><span class="badge">${page.count}</span>我的</a>
             </c:if>
             <c:if test="${postType!='my'}">
-                <a id="myPost" name="postType" class="  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllMyPosts" style="float: left;width: 20%">我的</a>
+                <a id="myPost" name="postType" class="  text-center list-group-item " href="${pageContext.request.contextPath}/flash/findAllMyPosts/1" style="float: left;width: 20%">我的</a>
             </c:if>
         </div>
     <c:if test="${error==null}">
@@ -113,6 +113,27 @@
         </div>
     </c:forEach>
 </div>
+<div class="container" style="width: 80%;height: auto;margin-left: auto;margin-right: auto;text-align: center">
+    <nav>
+        <ul class="pagination" id="pagination">
+            <%--<li>--%>
+                <%--<a href="#" aria-label="Previous">--%>
+                    <%--<span aria-hidden="true">&laquo;</span>--%>
+                <%--</a>--%>
+            <%--</li>--%>
+            <%--<li><a href="#">1</a></li>--%>
+            <%--<li><a href="#">2</a></li>--%>
+            <%--<li><a href="#">3</a></li>--%>
+            <%--<li><a href="#">4</a></li>--%>
+            <%--<li><a href="#">5</a></li>--%>
+            <%--<li>--%>
+                <%--<a href="#" aria-label="Next">--%>
+                    <%--<span aria-hidden="true">&raquo;</span>--%>
+                <%--</a>--%>
+            <%--</li>--%>
+        </ul>
+    </nav>
+</div>
 <div style="right:5%;top:30%;padding: 0;position: fixed">
   <a class="btn btn-normal btn-info" role="button" href="#post" >发帖</a>
 </div>
@@ -146,6 +167,52 @@
 </html>
 <script>
     $(document).ready(function(){
+        function init(){
+            var total = "${page.total}";
+            var current = "${page.current}";
+            var pagination = document.getElementById("pagination");
+            //往前翻页
+            var li = document.createElement("li")
+            if(current==1){
+                li.setAttribute("class","disabled");
+            }
+            var a = document.createElement("a");
+            a.href = "${pageContext.request.contextPath}/flash/findAllEssencePosts/"+(parseInt(current)-1);
+            a.setAttribute("aria-label","Previous");
+            var span = document.createElement("span");
+            span.setAttribute("aria-hidden","true");
+            span.innerHTML = "&laquo";
+            a.appendChild(span)
+            li.appendChild(a);
+            pagination.appendChild(li)
+            //中间页数
+            for(var i=1;i<=total;i++){
+                var li = document.createElement("li")
+                if(current==i){
+                    li.setAttribute("class","active");
+                }
+                var a = document.createElement("a");
+                a.href = "${pageContext.request.contextPath}/flash/findAllEssencePosts/"+i;
+                a.innerHTML = i;
+                li.appendChild(a);
+                pagination.appendChild(li)
+            }
+            //往后翻页
+            var li = document.createElement("li")
+            if(current==total){
+                li.setAttribute("class","disabled");
+            }
+            var a = document.createElement("a");
+            a.href = "${pageContext.request.contextPath}/flash/findAllEssencePosts/"+(parseInt(current)+1);
+            a.setAttribute("aria-label","Next");
+            var span = document.createElement("span");
+            span.setAttribute("aria-hidden","true");
+            span.innerHTML = "&raquo;";
+            a.appendChild(span)
+            li.appendChild(a);
+            pagination.appendChild(li)
+        }
+        init();
         $("#send").click(function(){
             var url = getRootPath()+"/flash/addPost";
             var title = $("#title").val();

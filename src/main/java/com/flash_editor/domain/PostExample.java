@@ -11,6 +11,27 @@ public class PostExample {
 
     protected List<Criteria> oredCriteria;
 
+    //自己加分页
+    protected int start;
+
+    protected int limit;
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     public PostExample() {
         oredCriteria = new ArrayList<Criteria>();
     }

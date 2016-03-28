@@ -8,6 +8,8 @@
     <classPathEntry
             location="C:\mysql-connector-java-5.0.8-bin.jar"/><!--换成本地jar包或者看看能不能换成项目里的-->
     <context id="my" targetRuntime="MyBatis3">
+        <!-- 这里引入分页扩展插件 -->
+        <!--<plugin type="com.flash_editor.util.PaginationPlugin" />-->
         <commentGenerator>
             <property name="suppressDate" value="true"/>
 
@@ -15,7 +17,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/flash_editor" userId="root"
+                        connectionURL="jdbc:mysql://localhost:3307/flash_editor" userId="root"
                         password="131421"/>
 
         <javaModelGenerator targetPackage="com.flash_editor.domain"
@@ -41,11 +43,11 @@
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
         <!--</table>-->
-        <!--<table tableName="posts" domainObjectName="Post"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-        <!--</table>-->
+        <table tableName="posts" domainObjectName="Post"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
         <!--<table tableName="flash_project" domainObjectName="FlashProject"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
@@ -61,11 +63,11 @@
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
         <!--</table>-->
-        <table tableName="user_post_praise" domainObjectName="UserPostPraise"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
+        <!--<table tableName="user_post_praise" domainObjectName="UserPostPraise"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+        <!--</table>-->
 
     </context>
 </generatorConfiguration>
