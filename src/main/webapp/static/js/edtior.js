@@ -31,9 +31,13 @@ window.onload=function(){
                     var objects = JSON.parse(result.data.content).objects;
                     for(var i=0; i<objects.length;i++){
                         var html = objects[i].alias;
-                        var innerhtml  = document.getElementById("module").innerHTML;
-                        innerhtml+="<p><a>"+html+"</a></p>";
-                        document.getElementById("module").innerHTML = innerhtml;
+                        var module  = document.getElementById("module");
+                        var a = document.createElement("a");
+                        a.href="javascript:void(0);";
+                        a.setAttribute("class","list-group-item list-group-item-info");
+                        a.setAttribute("name","moduleList");
+                        a.innerHTML = innerhtml;
+                        module.appendChild(a);
                         moduleList.push(objects[i]);
                     }
                     if (canvasJson.num_Rect) {
@@ -42,7 +46,8 @@ window.onload=function(){
                     if (canvasJson.num_Circle) {
                         num_Circle = canvasJson.num_Circle;
                     }
-                    if(canvasJson.num_Triangle) {
+                    if(canvasJson.num_Triangle
+                    ) {
                         num_Triangle = canvasJson.num_Triangle;
                     }
                     if(canvasJson.num_Tex) {
@@ -72,56 +77,45 @@ window.onload=function(){
         selected = null;
     })
 
+    function addToModuleList(_shape,num,name) {
+        innerhtml=name + num;
+        var module = document.getElementById("module");
+        $('#module > a').each(function () {
+            $(this).attr("class","list-group-item list-group-item-info");
+        });
+        var a = document.createElement("a");
+        a.href = "javascript:void(0);";
+        a.setAttribute("class", "list-group-item list-group-item-info active");
+        a.setAttribute("name","moduleList");
+        a.innerHTML = innerhtml;
+        module.appendChild(a);
+        _shape.alias = name + num;
+        moduleList.push(_shape);
+        return a;
+    }
+
     function addToModule(_shape,name){
         if(name=="rect"){
             num_Rect++;
-            var innerhtml  = document.getElementById("module").innerHTML;
-            innerhtml+="<p><a>Rect"+num_Rect+"</a></p>"
-            document.getElementById("module").innerHTML = innerhtml;
-            _shape.alias = "Rect"+num_Rect;
-            moduleList.push(_shape);
+            addToModuleList(_shape,num_Rect,name);
         }else if(name=="circle"){
             num_Circle++;
-            var innerhtml  = document.getElementById("module").innerHTML;
-            innerhtml+="<p><a>Cricle"+num_Circle+"</a></p>"
-            document.getElementById("module").innerHTML = innerhtml;
-            _shape.alias = "Cricle"+num_Circle;
-            moduleList.push(_shape);
+            addToModuleList(_shape,num_Circle,name);
         }else if(name=="triangle"){
             num_Triangle++;
-            var innerhtml  = document.getElementById("module").innerHTML;
-            innerhtml+="<p><a>Triangle"+num_Triangle+"</a></p>"
-            document.getElementById("module").innerHTML = innerhtml;
-            _shape.alias = "Triangle"+num_Triangle;
-            moduleList.push(_shape);
+            addToModuleList(_shape,num_Triangle,name);
         }else if(name=="text"){
             num_Text++;
-            var innerhtml  = document.getElementById("module").innerHTML;
-            innerhtml+="<p><a>Text"+num_Text+"</a></p>"
-            document.getElementById("module").innerHTML = innerhtml;
-            _shape.alias = "Text"+num_Text;
-            moduleList.push(_shape);
+            addToModuleList(_shape,num_Text,name);
         } else if(name=="line"){
             num_Line++;
-            var innerhtml  = document.getElementById("module").innerHTML;
-            innerhtml+="<p><a>Line"+num_Line+"</a></p>"
-            document.getElementById("module").innerHTML = innerhtml;
-            _shape.alias = "Line"+num_Line;
-            moduleList.push(_shape);
+            addToModuleList(_shape,num_Line,name);
         }else if(name=="polygon"){
             num_Polygon++;
-            var innerhtml  = document.getElementById("module").innerHTML;
-            innerhtml+="<p><a>Polygon"+num_Polygon+"</a></p>"
-            document.getElementById("module").innerHTML = innerhtml;
-            _shape.alias = "Polygon"+num_Polygon;
-            moduleList.push(_shape);
+            addToModuleList(_shape,num_Polygon,name);
         }else if (name = "freedraw"){
             num_Freedraw++;
-            var innerhtml  = document.getElementById("module").innerHTML;
-            innerhtml+="<p><a>Freedraw"+num_Freedraw+"</a></p>"
-            document.getElementById("module").innerHTML = innerhtml;
-            _shape.alias = "Freedraw"+num_Freedraw;
-            moduleList.push(_shape);
+            addToModuleList(_shape,num_Freedraw,name);
         }
 
 
@@ -257,8 +251,17 @@ window.onload=function(){
             //    _name = attr[0];
             //    value = shape._name || attr[1];
                 createHandle(shape);
-            //}
+        //}
             selected = shape;
+        var name = shape.alias;
+        $('#module > a').each(function () {
+            if( $(this).html()==name){
+                $(this).attr("class","list-group-item list-group-item-info active");
+            }
+            else {
+                $(this).attr("class","list-group-item list-group-item-info");
+            }
+        });
             updateLookHandle();
         //}else {
         //    selected = shape;
@@ -488,5 +491,17 @@ window.onload=function(){
                 }
             }
         });
+    });
+    //动态添加的元素需要用父元素绑定事件
+    $("#module").on("click","a",function(){
+        $('#module > a').each(function () {
+            $(this).attr("class","list-group-item list-group-item-info");
+        });
+        $(this).attr("class","list-group-item list-group-item-info active");
+        var name = $(this).html();
+        var shape = getShapeByName(moduleList,name);
+        canvas.setActiveObject(shape);
+        canvas.renderAll();
+        select(shape);
     });
 };

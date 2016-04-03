@@ -11,3 +11,11 @@ function getRootPath() {
         return window.location.protocol + '//' + window.location.host + '/' + webName;
     }
 }
+
+function getShapeByName(moduleList,name){
+    for(var i=0;i<moduleList.length;i++){
+        if (name == moduleList[i].alias){
+            return moduleList[i];
+        }
+    }
+}

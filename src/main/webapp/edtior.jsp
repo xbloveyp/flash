@@ -14,7 +14,7 @@
     <script type="text/javascript" src="static/js/util.js"></script>
     <script type="text/javascript" src="static/js/edtior.js"></script>
     <!--<link href="css/edtior.css" rel="stylesheet">-->
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'iconfont';
@@ -156,13 +156,14 @@
 
     <div  class="col-lg-2 container col-lg-offset-10" style="background-color:#e7e7e7 ;height: auto;position: absolute;bottom: 0;top: 51px">
         <h2>所有组件</h2>
-        <form id="module" disabled="disabled">
-        </form>
+        <div id="module" >
+        </div>
     </div>
 
 </div>
 </body>
-<script type="text/javascript" src="static/js/jquery-2.1.1.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="static/js/fabric.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-2.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/fabric.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/util.js"></script>
 </html>
