@@ -14,6 +14,9 @@ window.onload=function(){
     var lookForm = document.getElementById('look-and-transform');
     var attrForm = document.getElementById('shape-attrs');
     var createForm = document.getElementById('pan');
+    //记录图形个数
+    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw= 0,num_Library=0;
+    var moduleList = new Array();
 
 
     //加载用户保存的flash
@@ -24,6 +27,39 @@ window.onload=function(){
             url: url,
             success: function (result) {
                 if (result.code == 200) {
+                    var canvasJson = JSON.parse(result.data.content);
+                    var objects = JSON.parse(result.data.content).objects;
+                    for(var i=0; i<objects.length;i++){
+                        var html = objects[i].alias;
+                        var innerhtml  = document.getElementById("module").innerHTML;
+                        innerhtml+="<p><a>"+html+"</a></p>";
+                        document.getElementById("module").innerHTML = innerhtml;
+                        moduleList.push(objects[i]);
+                    }
+                    if (canvasJson.num_Rect) {
+                        num_Rect = canvasJson.num_Rect;
+                    }
+                    if (canvasJson.num_Circle) {
+                        num_Circle = canvasJson.num_Circle;
+                    }
+                    if(canvasJson.num_Triangle) {
+                        num_Triangle = canvasJson.num_Triangle;
+                    }
+                    if(canvasJson.num_Tex) {
+                        num_Text = canvasJson.num_Text;
+                    }
+                    if(canvasJson.num_Line) {
+                        num_Line = canvasJson.num_Line;
+                    }
+                    if(canvasJson.num_Polygon) {
+                        num_Polygon = canvasJson.num_Polygon;
+                    }
+                    if(canvasJson.num_Freedraw) {
+                        num_Freedraw = canvasJson.num_Freedraw;
+                    }
+                    if(canvasJson.num_Library) {
+                        num_Library = canvasJson.num_Library;
+                    }
                     canvas.loadFromJSON(result.data.content);
                 }
             }
@@ -35,58 +71,56 @@ window.onload=function(){
         isdraw = false;
         selected = null;
     })
-    //记录图形个数
-    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw=0;
-    var moduleList = new Array();
+
     function addToModule(_shape,name){
         if(name=="rect"){
             num_Rect++;
             var innerhtml  = document.getElementById("module").innerHTML;
             innerhtml+="<p><a>Rect"+num_Rect+"</a></p>"
             document.getElementById("module").innerHTML = innerhtml;
-            _shape.name = "Rect"+num_Rect;
+            _shape.alias = "Rect"+num_Rect;
             moduleList.push(_shape);
         }else if(name=="circle"){
             num_Circle++;
             var innerhtml  = document.getElementById("module").innerHTML;
             innerhtml+="<p><a>Cricle"+num_Circle+"</a></p>"
             document.getElementById("module").innerHTML = innerhtml;
-            _shape.name = "Cricle"+num_Circle;
+            _shape.alias = "Cricle"+num_Circle;
             moduleList.push(_shape);
         }else if(name=="triangle"){
             num_Triangle++;
             var innerhtml  = document.getElementById("module").innerHTML;
             innerhtml+="<p><a>Triangle"+num_Triangle+"</a></p>"
             document.getElementById("module").innerHTML = innerhtml;
-            _shape.name = "Triangle"+num_Triangle;
+            _shape.alias = "Triangle"+num_Triangle;
             moduleList.push(_shape);
         }else if(name=="text"){
             num_Text++;
             var innerhtml  = document.getElementById("module").innerHTML;
             innerhtml+="<p><a>Text"+num_Text+"</a></p>"
             document.getElementById("module").innerHTML = innerhtml;
-            _shape.name = "Text"+num_Text;
+            _shape.alias = "Text"+num_Text;
             moduleList.push(_shape);
         } else if(name=="line"){
             num_Line++;
             var innerhtml  = document.getElementById("module").innerHTML;
             innerhtml+="<p><a>Line"+num_Line+"</a></p>"
             document.getElementById("module").innerHTML = innerhtml;
-            _shape.name = "Line"+num_Line;
+            _shape.alias = "Line"+num_Line;
             moduleList.push(_shape);
         }else if(name=="polygon"){
             num_Polygon++;
             var innerhtml  = document.getElementById("module").innerHTML;
             innerhtml+="<p><a>Polygon"+num_Polygon+"</a></p>"
             document.getElementById("module").innerHTML = innerhtml;
-            _shape.name = "Polygon"+num_Polygon;
+            _shape.alias = "Polygon"+num_Polygon;
             moduleList.push(_shape);
         }else if (name = "freedraw"){
             num_Freedraw++;
             var innerhtml  = document.getElementById("module").innerHTML;
             innerhtml+="<p><a>Freedraw"+num_Freedraw+"</a></p>"
             document.getElementById("module").innerHTML = innerhtml;
-            _shape.name = "Freedraw"+num_Freedraw;
+            _shape.alias = "Freedraw"+num_Freedraw;
             moduleList.push(_shape);
         }
 
@@ -307,7 +341,24 @@ window.onload=function(){
     };
     //保存用户的flash
     $("#save").click(function(){
-        var canvasJson = JSON.stringify(canvas);
+        var canvasJson = JSON.parse(JSON.stringify(canvas));
+        var objects = canvasJson.objects;
+        objects = new Array();
+        for (var i=0;i<moduleList.length;i++){
+            var object = moduleList[i];
+            var ob = object.toJSON();
+            ob.alias = object.alias;
+            objects.push(ob);
+        }
+        canvasJson.num_Rect = num_Rect;
+        canvasJson.num_Circle = num_Circle;
+        canvasJson.num_Triangle =num_Triangle;
+        canvasJson.num_Text = num_Text;
+        canvasJson.num_Line = num_Line;
+        canvasJson.num_Polygon = num_Polygon;
+        canvasJson.num_Freedraw = num_Freedraw;
+        canvasJson.objects = objects;
+        canvasJson = JSON.stringify(canvasJson);
         var url = getRootPath()+"/flash/saveCanvas";
         $.ajax({
             type: 'POST',
