@@ -2,6 +2,10 @@
  * Created by Administrator on 2015/6/27.
  */
 window.onload=function(){
+    var width = $("#cParent").width();
+    var height = $("#cParent").height();
+    $("#c").attr("height",height);
+    $("#c").attr("width",width);
     var canvas = new fabric.Canvas('c',{
         backgroundColor: '#ffffff',
         //selection:false,
@@ -12,12 +16,14 @@ window.onload=function(){
     var _cornerSize = 6;
     var selected = null;
     var lookForm = document.getElementById('look-and-transform');
-    var attrForm = document.getElementById('shape-attrs');
     var createForm = document.getElementById('pan');
     //记录图形个数
     var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw= 0,num_Library=0;
     var moduleList = new Array();
-
+    var animationList = new Array();
+    var timeNum = 0;
+    var maxTime = 0;
+    var originalCanvas;
 
     //加载用户保存的flash
     var init = function(){
@@ -28,7 +34,8 @@ window.onload=function(){
             success: function (result) {
                 if (result.code == 200) {
                     var canvasJson = JSON.parse(result.data.content);
-                    var objects = JSON.parse(result.data.content).objects;
+                    var objects = canvasJson.objects;
+                    var flashContent = JSON.parse(result.data.flashContent);
                     for(var i=0; i<objects.length;i++){
                         var html = objects[i].alias;
                         var module  = document.getElementById("module");
@@ -36,7 +43,7 @@ window.onload=function(){
                         a.href="javascript:void(0);";
                         a.setAttribute("class","list-group-item list-group-item-info");
                         a.setAttribute("name","moduleList");
-                        a.innerHTML = innerhtml;
+                        a.innerHTML = html;
                         module.appendChild(a);
                         moduleList.push(objects[i]);
                     }
@@ -65,12 +72,20 @@ window.onload=function(){
                     if(canvasJson.num_Library) {
                         num_Library = canvasJson.num_Library;
                     }
-                    canvas.loadFromJSON(result.data.content);
+                    var canvasJ = {};
+                    canvasJ.objects = objects;
+                    canvasJ.background = canvasJson.background;
+                    originalCanvas = canvasJ;
+                    canvas.loadFromJSON(canvasJ);
                 }
             }
         });
     }
     init();
+
+    function loadCanvas(){
+        canvas.loadFromJSON(originalCanvas);
+    }
 
     $("#mouse").click(function(){
         isdraw = false;
@@ -154,26 +169,35 @@ window.onload=function(){
         }
     });
     //点击属性面板，更改属性
-    attrForm.addEventListener('input', function(e) {
-        if (e.target.tagName.toLowerCase() != 'input') return;
-        var handle = e.target;
-        if (handle.name=='left'){
-            selected.setLeft(parseInt(handle.value, 10)).setCoords();
-        }
-        else if (handle.name=='top'){
-            selected.setTop(parseInt(handle.value, 10)).setCoords();
-        }
-        //selected.set(handle.name,handle.value);
-        canvas.renderAll();
-    });
-    //点击属性面板，更改属性
     lookForm.addEventListener('input', function(e) {
         if (e.target.tagName.toLowerCase() != 'input') return;
         if (!selected) return;
-        selected.set('fill', fill.value);
-        defaultAttrs.fill = fill.value;
-        selected.set('stroke', stroke.value);
-        selected.set('stroke-width', strokeWidth.value);
+        var handle = e.target;
+        if (handle.name=="animation_left") {
+            selected.setLeft(parseFloat(handle.value)).setCoords();
+        }
+        if (handle.name=="animation_top") {
+            selected.setTop(parseFloat(handle.value)).setCoords();
+        }
+        if (handle.name=="animation_fill") {
+            selected.setFill(handle.value).setCoords();
+        }
+        if (handle.name=="animation_stroke") {
+            selected.setStroke(handle.value).setCoords();
+        }
+        if (handle.name=="animation_width") {
+            selected.setWidth(parseFloat(handle.value)).setCoords();
+        }
+        if (handle.name=="animation_height") {
+            selected.setHeight(parseFloat(handle.value)).setCoords();
+        }
+        if (handle.name=="animation_angle") {
+            selected.setAngle(parseFloat(handle.value)).setCoords();
+        }
+        if (handle.name=="animation_opacity") {
+            selected.setOpacity(parseFloat(handle.value)).setCoords();
+        }
+        defaultAttrs.fill = $("input[name='animation_fill']").attr("value" );
         canvas.renderAll();
     });
     //创建图形
@@ -242,16 +266,7 @@ window.onload=function(){
     }
     //选中图形，用于属性栏更改属性用的
     function select(shape) {
-        //if (shape.name) {
-            //var attrs = shapeAttribute[shape.name].split(',');
-            //var attr, _name, value;
-            attrForm.innerHTML = "";
-            //while (attrs.length) {
-            //    attr = attrs.shift().split(':');
-            //    _name = attr[0];
-            //    value = shape._name || attr[1];
-                createHandle(shape);
-        //}
+            createHandle(shape);
             selected = shape;
         var name = shape.alias;
         $('#module > a').each(function () {
@@ -270,11 +285,13 @@ window.onload=function(){
 
     //将属性加到图形上
     function createHandle(shape) {
-        addAttr("left",shape);
-        addAttr("top",shape);
-        var name = shape.name;
-        if(name=='text'){
-            addTextAttr(text,shape);
+        //addAttr("left",shape);
+        //addAttr("top",shape);
+        if(shape) {
+            var name = shape.alias;
+            if (name == 'text') {
+                addTextAttr(text, shape);
+            }
         }
     }
     //单独增加range属性
@@ -292,8 +309,8 @@ window.onload=function(){
         if (name=="top") {
             handle.setAttribute('max', canvas.height);
         }
-        attrForm.appendChild(label);
-        attrForm.appendChild(handle);
+        lookForm.appendChild(label);
+        lookForm.appendChild(handle);
     }
     //单独增加text属性
     function addTextAttr(name,shape){
@@ -303,20 +320,20 @@ window.onload=function(){
         handle.setAttribute('name', name);
         handle.setAttribute('type', 'text');
         handle.setAttribute('value', shape.text);
-        attrForm.appendChild(label);
-        attrForm.appendChild(handle);
+        lookForm.appendChild(label);
+        lookForm.appendChild(handle);
     }
 
     //更新属性参数 颜色，线条粗细，位置，旋转角度
     function updateLookHandle() {
-        var fill = $("fill");
-        var stroke = $("stroke");
-        var left = $("left");
-        var top = $("top");
-        fill.value = selected.getFill();
-        stroke.value = selected.getStroke();
-        left.value = selected.getLeft();
-        top.value = selected.getTop();
+        $("input[name='animation_left']").attr("value" ,selected.getLeft());
+        $("input[name='animation_top']").attr("value" ,selected.getTop());
+        $("input[name='animation_fill']").attr("value" ,selected.getFill());
+        $("input[name='animation_stroke']").attr("value" ,selected.getStroke());
+        $("input[name='animation_width']").attr("value" ,selected.getWidth());
+        $("input[name='animation_height']").attr("value" ,selected.getHeight());
+        $("input[name='animation_angle']").attr("value" ,selected.getAngle());
+        $("input[name='animation_opacity']").attr("value" ,selected.getOpacity());
         //rotate.value = selected ? selected.rotate : 0;
     }
     //禁止表单回车键
@@ -369,7 +386,11 @@ window.onload=function(){
             data:{canvasJson:canvasJson},
             success: function (result) {
                 if (result.code == 200) {
-                    alert("保存成功")
+                    var canvasJ = {};
+                    canvasJ.objects = objects;
+                    canvasJ.background = canvasJson.background;
+                    originalCanvas = canvasJ;
+                    alert("保存成功");
                 }
             }
         });
@@ -503,5 +524,87 @@ window.onload=function(){
         canvas.setActiveObject(shape);
         canvas.renderAll();
         select(shape);
+    });
+    //添加动画
+    $("#animation_add").click(function(){
+        if (!canvas.getActiveObject()){
+            alert("请选择一个对象");
+        }else {
+            var startTime = parseFloat($("#animation_startTime").val());
+            var endTime = parseFloat($("#animation_endTime").val());
+            if (startTime<0 || endTime<0){
+                alert("开始时间或结束时间不能小于0");
+                return;
+            }
+            if (endTime<startTime){
+                alert("开始时间不能小于结束时间");
+                return;
+            }
+            if (endTime>maxTime/1000){
+                maxTime = endTime*1000;
+            }
+            var animation ={shape:null,left:0,top:0,startTime:0,endTime:0,easing:null};
+            animation.shape = selected.alias;
+            animation.left = $("input[name='animation_left']").val();
+            animation.top = $("input[name='animation_top']").val();
+            animation.startTime = startTime*1000;
+            animation.endTime = endTime*1000;
+            animation.easing = $("#animation_easing").val();
+            animationList.push(animation);
+            var flashContent = {};
+            flashContent.animationList = animationList;
+            flashContent.maxTime = maxTime;
+            flashContent = JSON.stringify(flashContent);
+            $.ajax({
+                type: 'POST',
+                url: getRootPath()+"/flash/saveFlash",
+                data:{flashContent: flashContent},
+                success: function (result) {
+                    alert("添加成功");
+                }
+            });
+        }
+    });
+    //开始动画
+    var startAnm;
+    $("#animation_start").click(function(){
+        loadCanvas();
+        startAnm = setInterval(function(){startAnimation()},1000);
+    });
+    function startAnimation(){
+        if (timeNum>maxTime){
+            clearInterval(startAnm);
+            timeNum=0;
+            return;
+        }
+        for (var i=0;i<animationList.length;i++){
+            var animation = animationList[i];
+            if (timeNum==animation.startTime){
+                var shape = getShapeByName(moduleList,animation.shape);
+                animations(shape,animation);
+            }
+        }
+        timeNum+=1000;
+    }
+    function animations(shape,animation){
+        shape.animate('left', animation.left, {
+            duration: animation.endTime-animation.startTime,
+            onChange: canvas.renderAll.bind(canvas),
+            onComplete: function() {
+
+            },
+            easing: fabric.util.ease[animation.easing]
+        });
+        shape.animate('top', animation.top, {
+            duration: animation.endTime-animation.startTime,
+            onChange: canvas.renderAll.bind(canvas),
+            onComplete: function() {
+
+            },
+            easing: fabric.util.ease[animation.easing]
+        });
+    }
+    $("#loadOriginal").click(function(){
+        loadCanvas();
     });
 };

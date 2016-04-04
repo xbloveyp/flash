@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html style="margin: 0;padding: 0;height: 100%">
 <head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +31,7 @@
 
     </style>
 </head>
-<body style="margin: 0;padding: 0">
+<body style="margin: 0;padding: 0;height:100%;">
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container" style="margin-left: 3%">
         <div class="navbar-header" style="margin: 0">
@@ -62,7 +62,7 @@
                 <form class="navbar-form navbar-right" style="display: inline;padding:0;margin:0;height: 50px">
                     <h5 style="color: #888888">欢迎您：${sessionScope.user.userName==""?sessionScope.user.userName:sessionScope.user.userName}&nbsp;&nbsp;
                         <a href="${pageContext.request.contextPath}/flash/logout" role="presentation">注销</a>
-                        <a id ="save" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">保存</a>
+                        <a id ="save" class=" btn btn-normal btn-success" style="margin-left: 30px">保存为初始状态</a>
                         <%--<a id ="load" class=" btn btn-normal btn-success" style="padding-left: 30px;padding-right: 30px;margin-right: 30px">加载</a>--%>
                     </h5>
                 </form>
@@ -70,9 +70,9 @@
         </div><!--/.navbar-collapse -->
     </div>
 </nav>
-<div class="container" id="container" style="margin-top: 50px ; margin-left: 0 ; padding: 0;height: 100%">
-    <div id="paint" class="col-lg-1 container" style="background-color: #1F1F1F ;margin-left: 0;padding-left: 0;height: auto;position: absolute;bottom: 0;top: 51px;border-right:1px solid #707070;border-top:1px solid #A3A3A3">
-        <form id="pan" style="text-align: center">
+<div class="container col-lg-12" id="container" style="margin: 0; padding: 0;height: 92%;bottom: 0;position: absolute">
+    <div id="paint" class="col-lg-1 container" style="background-color: #1F1F1F ;margin: 0;padding: 0;border-top:1px solid #A3A3A3;float: left;height: 100%">
+        <div id="pan" style="text-align: center">
             <button class="iconfont " type="button" id="mouse" create="mouse" style="margin-top: 2px;border-radius: 10px">&#xe600;</button>
             <button class="iconfont " type="button" id="rect" create="rect" style="margin-top: 2px;border-radius: 10px">&#xe605;</button>
             <button class="iconfont " type="button" id="circle" create="circle" style="margin-top: 2px;border-radius: 10px">&#xe607;</button>
@@ -105,57 +105,170 @@
                     </div>
                 </div>
             </div>
-            </form>
+            </div>
     </div>
 
 
-    <div id="toolbox" class="col-lg-2 container col-lg-offset-1" style="background-color: #e7e7e7 ;height: auto;position: absolute;bottom: 0;top: 51px">
-        <h2>形状</h2>
-        <form id="shape-attrs">
+    <div class="panel-group col-lg-2" id="accordion" role="tablist" aria-multiselectable="true" style="margin: 0;padding: 0;float: left;height: 100%">
+        <div class="panel panel-default">
+            <%--<div class="panel-heading" role="button" id="headingOne">--%>
+                <%--<h4 class="panel-title">--%>
+                    <a id="headingOne" class="panel-heading btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
+                        外观和变换
+                    </a>
+                <%--</h4>--%>
+            <%--</div>--%>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div id="toolbox" >
+                        <form id="look-and-transform" disabled="disabled">
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">left</span>
+                                <input  name="animation_left" class="form-control" type="number" value="0" step="1">
+                            </div>
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">top</span>
+                                <input  name="animation_top" class="form-control" type="number" value="0" step="1">
+                            </div>
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">填充</span>
+                                <input name="animation_fill" type="color" class="form-control" value="#00D5FF" />
+                            </div>
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">描边</span>
+                                <input name="animation_stroke" class="form-control" type="color" value="#FFFFFF" />
+                            </div>
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">width</span>
+                                <input  name="animation_width" class="form-control" type="number" value="0" step="1">
+                            </div>
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">height</span>
+                                <input  name="animation_height" class="form-control" type="number" value="0" step="1">
+                            </div>
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">angle</span>
+                                <input  name="animation_angle" class="form-control" type="number" value="0" step="1">
+                            </div>
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">opacity</span>
+                                <input  name="animation_opacity" class="form-control" type="number" value="1" min="0" max="1" step="0.1">
+                            </div>
+                            <%--<input id="strokeWidth" name="strokeWidth" type="range" value="" />--%>
+                        </form>
 
-        </form>
-        <!--<h2>外观和变换</h2>-->
-        <form id="look-and-transform" disabled="disabled">
-            <p>
-                <label style="display: inline;">填充</label>
-                <input id="fill" name="fill" type="color" value="#00D5FF" />
-            </p>
-            <p>
-                <label style="display: inline;">描边</label>
-                <input id="stroke" name="stroke" type="color" value="#FFFFFF" />
-                <input id="strokeWidth" name="strokeWidth" type="range" value="" />
-            </p>
-            <!--&lt;!&ndash;<p>&ndash;&gt;-->
-                <!--&lt;!&ndash;<label>left</label>&ndash;&gt;-->
-                <!--&lt;!&ndash;<input id="left" name="left" type="range" min="0" max="100" value="0" />&ndash;&gt;-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <%--<div class="panel-heading" role="tab" id="headingTwo">--%>
+                <%--<h4 class="panel-title">--%>
+                    <a id="headingTwo" class="collapsed panel-heading btn btn-default" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="width: 100%">
+                        动画
+                    </a>
+                <%--</h4>--%>
+            <%--</div>--%>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">left</span>
+                        <input  name="animation_left" class="form-control" type="number" value="0" step="1">
+                    </div>
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">top</span>
+                        <input  name="animation_top" class="form-control" type="number" value="0" step="1">
+                    </div>
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">开始时间</span>
+                        <input id="animation_startTime" class="form-control" type="number" min="0" value="0" step="1">
+                        <span class="input-group-addon">秒</span>
+                    </div>
+                    <div class="input-group" style="margin-top: 5px">
+                        <span class="input-group-addon">结束时间</span>
+                        <input id="animation_endTime" class="form-control" type="number" min="0" value="0" step="1">
+                        <span class="input-group-addon">秒</span>
+                    </div>
+                    <div class="input-group" style="margin-top: 5px">
+                        <span class="input-group-addon">方式</span>
+                        <select id="animation_easing" class="form-control" >
+                        <option>easeInQuad</option>
+                        <option>easeOutQuad</option>
+                        <option>easeInOutQuad</option>
+                        <option>easeInCubic</option>
+                        <option>easeOutCubic</option>
+                        <option>easeInOutCubic</option>
+                        <option>easeInQuart</option>
+                        <option>easeOutQuart</option>
+                        <option>easeInOutQuart</option>
+                        <option>easeInQuint</option>
+                        <option>easeOutQuint</option>
+                        <option>easeInOutQuint</option>
+                        <option>easeInSine</option>
+                        <option>easeOutSine</option>
+                        <option>easeInOutSine</option>
+                        <option>easeInExpo</option>
+                        <option>easeOutExpo</option>
+                        <option>easeInOutExpo</option>
+                        <option>easeInCirc</option>
+                        <option>easeOutCirc</option>
+                        <option>easeInOutCirc</option>
+                        <option>easeInElastic</option>
+                        <option>easeOutElastic</option>
+                        <option>easeInOutElastic</option>
+                        <option>easeInBack</option>
+                        <option>easeOutBack</option>
+                        <option>easeInOutBack</option>
+                        <option>easeInBounce</option>
+                        <option>easeOutBounce</option>
+                        <option>easeInOutBounce</option>
+                    </select>
+                    </div>
+                    <button id="animation_add" class="btn btn-info" style="margin-top: 5px">添加动画</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <a class="collapsed panel-heading btn btn-default" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="width: 100%">
+                动画列表
+            </a>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
 
-                <!--&lt;!&ndash;<label>top</label>&ndash;&gt;-->
-                <!--&lt;!&ndash;<input id="top" name="top" type="range" min="0" max="100" value="0" />&ndash;&gt;-->
-
-                <!--&lt;!&ndash;<label>angle</label>&ndash;&gt;-->
-                <!--&lt;!&ndash;<input id="angle" name="angle" type="range" min="-180" max="180" value="0" />&ndash;&gt;-->
-
-            <!--&lt;!&ndash;</p>&ndash;&gt;-->
-        </form>
-        <button id="clone">复制</button>
-        <button id="upOne">上移一层</button>
-        <button id="upTop">置于顶层</button>
-        <button id="downOne">下移一层</button>
-        <button id="downBottom">置于底层</button>
-        <button id="delete">删除选中图形</button>
-        <button id="deleteAll">清空画板</button>
-        <button id="importImage">导出图片</button>
-        <%--<button id="groups">组合</button>--%>
-    </div>
-
-    <div id="canvas" class="col-lg-7 container col-lg-offset-3" style="padding: 0;border: 1px solid #333333;bottom: 0;position: absolute;top: 50px" >
-        <div style="padding:0;margin: 0;height: 100%;width: 100%">
-            <canvas id="c" width="760" height="577" style="top: 0;left: 0;right: 0;bottom: 0"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <a class="collapsed panel-heading btn btn-default" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="width: 100%">
+                操作
+            </a>
+            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    <button id="upOne" class="btn btn-success" style="margin-top: 5px">上移一层</button>
+                    <button id="upTop" class="btn btn-info" style="margin-top: 5px">置于顶层</button>
+                    <button id="downOne" class="btn btn-default" style="margin-top: 5px">下移一层</button>
+                    <button id="downBottom" class="btn btn-primary" style="margin-top: 5px">置于底层</button>
+                    <button id="clone" class="btn btn-info" style="margin-top: 5px">复制</button>
+                    <button id="delete" class="btn btn-danger" style="margin-top: 5px">删除选中图形</button>
+                    <button id="deleteAll" class="btn btn-danger" style="margin-top: 5px">清空画板</button>
+                    <button id="importImage" class="btn btn-success" style="margin-top: 5px">导出图片</button>
+                    <button id="groups" class="btn btn-primary" style="margin-top: 5px">组合</button>
+                    <button id="loadOriginal" class="btn btn-default" style="margin-top: 5px">加载初始状态</button>
+                    <button id="animation_start" class="btn btn-info" style="margin-top: 5px">开始动画</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div  class="col-lg-2 container col-lg-offset-10" style="background-color:#e7e7e7 ;height: auto;position: absolute;bottom: 0;top: 51px">
-        <h2>所有组件</h2>
+
+    <div id="canvas" class="col-lg-7 col-lg-offset-3" style="margin: 0;padding: 0;float: left;border-top:1px solid #A3A3A3;height: 100%" >
+        <div id="cParent" style="padding:0;margin: 0;height: 100%;width: 100%">
+            <canvas id="c"  style="top: 0;left: 0;right: 0;bottom: 0;height: 100%;width: 100%"></canvas>
+        </div>
+    </div>
+
+    <div  class="col-lg-2 container col-lg-offset-10" style="margin: 0;padding: 0;background-color:#e7e7e7 ;float: left;border-top:1px solid #A3A3A3;height: 100%">
+        <h2 style="text-align: center">所有组件</h2>
         <div id="module" >
         </div>
     </div>

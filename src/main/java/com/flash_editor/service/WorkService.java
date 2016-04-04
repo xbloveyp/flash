@@ -2,6 +2,7 @@ package com.flash_editor.service;
 
 import com.flash_editor.domain.FlashProject;
 import com.flash_editor.domain.FlashProjectExample;
+import com.flash_editor.domain.FlashProjectWithBLOBs;
 import com.flash_editor.mapper.FlashProjectMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -20,8 +21,8 @@ public class WorkService {
     @Autowired
     private FlashProjectMapper flashProjectMapper;
 
-    public void saveContent(FlashProject flashProject){
-        FlashProject flashProjectOld = findById(flashProject.getId());
+    public void saveContent(FlashProjectWithBLOBs flashProject){
+        FlashProjectWithBLOBs flashProjectOld = findById(flashProject.getId());
         if (flashProjectOld==null) {
             flashProjectOld.setAddTime(new Date());
             flashProjectMapper.insert(flashProject);
@@ -31,18 +32,18 @@ public class WorkService {
         }
     }
 
-    public List<FlashProject> findByUid(int uid){
+    public List<FlashProjectWithBLOBs> findByUid(int uid){
         FlashProjectExample flashProjectExample = new FlashProjectExample();
         flashProjectExample.createCriteria().andUidEqualTo(uid).andStatusEqualTo(0);
         flashProjectExample.setOrderByClause("add_time desc");
-        List<FlashProject> flashProjectList = flashProjectMapper.selectByExampleWithBLOBs(flashProjectExample);
+        List<FlashProjectWithBLOBs> flashProjectList = flashProjectMapper.selectByExampleWithBLOBs(flashProjectExample);
         return flashProjectList;
     }
 
-    public FlashProject findById(int id){
+    public FlashProjectWithBLOBs findById(int id){
         FlashProjectExample flashProjectExample = new FlashProjectExample();
         flashProjectExample.createCriteria().andIdEqualTo(id).andStatusEqualTo(0);
-        List<FlashProject> flashProjectList = flashProjectMapper.selectByExampleWithBLOBs(flashProjectExample);
+        List<FlashProjectWithBLOBs> flashProjectList = flashProjectMapper.selectByExampleWithBLOBs(flashProjectExample);
         if (CollectionUtils.isNotEmpty(flashProjectList)){
             return flashProjectList.get(0);
         }
@@ -51,7 +52,7 @@ public class WorkService {
         }
     }
 
-    public void addProject(FlashProject flashProject){
+    public void addProject(FlashProjectWithBLOBs flashProject){
         flashProject.setAddTime(new Date());
         flashProject.setUpdateTime(new Date());
         flashProject.setStatus(0);
@@ -59,9 +60,13 @@ public class WorkService {
     }
 
     public void deleteProject(int id){
-        FlashProject flashProject = new FlashProject();
+        FlashProjectWithBLOBs flashProject = new FlashProjectWithBLOBs();
         flashProject.setId(id);
         flashProject.setStatus(1);
+        flashProjectMapper.updateByPrimaryKeySelective(flashProject);
+    }
+
+    public void updateProject(FlashProjectWithBLOBs flashProject){
         flashProjectMapper.updateByPrimaryKeySelective(flashProject);
     }
 }

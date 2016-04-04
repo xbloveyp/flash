@@ -10,8 +10,9 @@
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.flash_editor.domain.FlashProject" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.flash_editor.domain.FlashProjectWithBLOBs" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="flash_content" property="flashContent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +76,7 @@
     id, uid, title, add_time, update_time, description, status
   </sql>
   <sql id="Blob_Column_List" >
-    content
+    content, flash_content
   </sql>
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.flash_editor.domain.FlashProjectExample" >
     select
@@ -127,15 +128,17 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.flash_editor.domain.FlashProject" >
+  <insert id="insert" parameterType="com.flash_editor.domain.FlashProjectWithBLOBs" >
     insert into flash_project (id, uid, title, 
       add_time, update_time, description, 
-      status, content)
+      status, content, flash_content
+      )
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+      #{status,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, #{flashContent,jdbcType=LONGVARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.flash_editor.domain.FlashProject" >
+  <insert id="insertSelective" parameterType="com.flash_editor.domain.FlashProjectWithBLOBs" >
     insert into flash_project
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -162,6 +165,9 @@
       <if test="content != null" >
         content,
       </if>
+      <if test="flashContent != null" >
+        flash_content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -187,6 +193,9 @@
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="flashContent != null" >
+        #{flashContent,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -223,6 +232,9 @@
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
+      <if test="record.flashContent != null" >
+        flash_content = #{record.flashContent,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -237,7 +249,8 @@
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       description = #{record.description,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
-      content = #{record.content,jdbcType=LONGVARCHAR}
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      flash_content = #{record.flashContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -255,7 +268,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.flash_editor.domain.FlashProject" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.flash_editor.domain.FlashProjectWithBLOBs" >
     update flash_project
     <set >
       <if test="uid != null" >
@@ -279,10 +292,13 @@
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
+      <if test="flashContent != null" >
+        flash_content = #{flashContent,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.flash_editor.domain.FlashProject" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.flash_editor.domain.FlashProjectWithBLOBs" >
     update flash_project
     set uid = #{uid,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
@@ -290,7 +306,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      content = #{content,jdbcType=LONGVARCHAR}
+      content = #{content,jdbcType=LONGVARCHAR},
+      flash_content = #{flashContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.flash_editor.domain.FlashProject" >

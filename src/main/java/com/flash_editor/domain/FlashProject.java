@@ -17,8 +17,6 @@ public class FlashProject {
 
     private Integer status;
 
-    private String content;
-
     public Integer getId() {
         return id;
     }
@@ -73,13 +71,5 @@ public class FlashProject {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
     }
 }

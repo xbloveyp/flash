@@ -1,6 +1,7 @@
 package com.flash_editor.controller;
 
 import com.flash_editor.domain.FlashProject;
+import com.flash_editor.domain.FlashProjectWithBLOBs;
 import com.flash_editor.domain.LibraryWithBLOBs;
 import com.flash_editor.domain.User;
 import com.flash_editor.dto.ProjectDto;
@@ -37,7 +38,7 @@ public class WorkController {
     @RequestMapping(value = "/saveCanvas", method = RequestMethod.POST)
     @ResponseBody
     public Result save(String canvasJson, HttpSession httpSession) {
-        FlashProject flashProject = new FlashProject();
+        FlashProjectWithBLOBs flashProject = new FlashProjectWithBLOBs();
         User user = (User)httpSession.getAttribute("user");
         flashProject.setUid(user.getId());
         flashProject.setContent(canvasJson);
@@ -51,8 +52,8 @@ public class WorkController {
     @ResponseBody
     public Result load(HttpSession httpSession) {
         int id = Integer.valueOf(httpSession.getAttribute("projectId").toString());
-        FlashProject flashProject = workService.findById(id);
-        if (flashProject!=null && StringUtils.isNoneBlank(flashProject.getContent())){
+        FlashProjectWithBLOBs flashProject = workService.findById(id);
+        if (flashProject!=null && StringUtils.isNotBlank(flashProject.getContent())){
             return Result.build(200,flashProject);
         }
         return Result.build(500,null);
@@ -61,7 +62,7 @@ public class WorkController {
     @RequestMapping(value = "/loadProject", method = RequestMethod.GET)
     public String loadProject( HttpSession httpSession) {
         User user = (User)httpSession.getAttribute("user");
-        List<FlashProject> flashProjects = new ArrayList<FlashProject>();
+        List<FlashProjectWithBLOBs> flashProjects = new ArrayList<FlashProjectWithBLOBs>();
         if (user==null){
             httpSession.setAttribute("projects",null);
         }else {
@@ -78,11 +79,11 @@ public class WorkController {
     }
 
     @RequestMapping(value = "/saveProject", method = RequestMethod.POST)
-    public String saveProject(@RequestBody FlashProject flashProject, HttpSession httpSession) {
+    public String saveProject(@RequestBody FlashProjectWithBLOBs flashProject, HttpSession httpSession) {
         User user = (User)httpSession.getAttribute("user");
         flashProject.setUid(user.getId());
         workService.addProject(flashProject);
-        List<FlashProject> flashProjects = workService.findByUid(user.getId());
+        List<FlashProjectWithBLOBs> flashProjects = workService.findByUid(user.getId());
         List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
         projectDtos = toTransformProject(flashProjects);
         if (CollectionUtils.isEmpty(flashProjects)){
@@ -106,7 +107,7 @@ public class WorkController {
     @ResponseBody
     public Result deleteProjectId(int id, HttpSession httpSession) {
         workService.deleteProject(id);
-        List<FlashProject> flashProjects = new ArrayList<FlashProject>();
+        List<FlashProjectWithBLOBs> flashProjects = new ArrayList<FlashProjectWithBLOBs>();
         User user = (User) httpSession.getAttribute("user");
         flashProjects = workService.findByUid(user.getId());
         List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
@@ -134,8 +135,18 @@ public class WorkController {
         return Result.build(200,librarys);
     }
 
+    @RequestMapping(value = "/saveFlash" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Result saveFlash(FlashProjectWithBLOBs flashProject,HttpSession httpSession){
+        User user = (User)httpSession.getAttribute("user");
+        flashProject.setUid(user.getId());
+        int id = Integer.valueOf(httpSession.getAttribute("projectId").toString());
+        flashProject.setId(id);
+        workService.updateProject(flashProject);
+        return Result.build(200,null);
+    }
 
-    private List<ProjectDto> toTransformProject(List<FlashProject> flashProjects){
+    private List<ProjectDto> toTransformProject(List<FlashProjectWithBLOBs> flashProjects){
         return  Lists.transform(flashProjects, new Function<FlashProject, ProjectDto>() {
             public ProjectDto apply(FlashProject flashProject) {
                 ProjectDto projectDto = new ProjectDto();
