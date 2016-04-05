@@ -124,35 +124,39 @@
                         <form id="look-and-transform" disabled="disabled">
                             <div class="input-group"  style="margin-top: 5px">
                                 <span class="input-group-addon">left</span>
-                                <input  name="animation_left" class="form-control" type="number" value="0" step="1">
+                                <input  id="animation_left1" name="animation_left" class="form-control" type="number" value="0" step="1">
                             </div>
                             <div class="input-group"  style="margin-top: 5px">
                                 <span class="input-group-addon">top</span>
-                                <input  name="animation_top" class="form-control" type="number" value="0" step="1">
+                                <input  id="animation_top1" name="animation_top" class="form-control" type="number" value="0" step="1">
                             </div>
                             <div class="input-group"  style="margin-top: 5px">
                                 <span class="input-group-addon">填充</span>
-                                <input name="animation_fill" type="color" class="form-control" value="#00D5FF" />
+                                <input id="animation_fill1" name="animation_fill" type="color" class="form-control" value="#00D5FF" />
                             </div>
                             <div class="input-group"  style="margin-top: 5px">
                                 <span class="input-group-addon">描边</span>
-                                <input name="animation_stroke" class="form-control" type="color" value="#FFFFFF" />
+                                <input id="animation_stroke1" name="animation_stroke" class="form-control" type="color" value="#FFFFFF" />
+                            </div>
+                            <div class="input-group"  style="margin-top: 5px">
+                                <span class="input-group-addon">描边大小</span>
+                                <input  id="animation_strokeWidth1" name="animation_strokeWidth" class="form-control" type="number" value="0" step="1">
                             </div>
                             <div class="input-group"  style="margin-top: 5px">
                                 <span class="input-group-addon">width</span>
-                                <input  name="animation_width" class="form-control" type="number" value="0" step="1">
+                                <input  id="animation_width1" name="animation_width" class="form-control" type="number" value="0" step="1">
                             </div>
                             <div class="input-group"  style="margin-top: 5px">
                                 <span class="input-group-addon">height</span>
-                                <input  name="animation_height" class="form-control" type="number" value="0" step="1">
+                                <input  id="animation_height1" name="animation_height" class="form-control" type="number" value="0" step="1">
                             </div>
                             <div class="input-group"  style="margin-top: 5px">
                                 <span class="input-group-addon">angle</span>
-                                <input  name="animation_angle" class="form-control" type="number" value="0" step="1">
+                                <input  id="animation_angle1" name="animation_angle" class="form-control" type="number" value="0" step="1">
                             </div>
                             <div class="input-group"  style="margin-top: 5px">
                                 <span class="input-group-addon">opacity</span>
-                                <input  name="animation_opacity" class="form-control" type="number" value="1" min="0" max="1" step="0.1">
+                                <input  id="animation_opacity1" name="animation_opacity" class="form-control" type="number" value="1" min="0" max="1" step="0.1">
                             </div>
                             <%--<input id="strokeWidth" name="strokeWidth" type="range" value="" />--%>
                         </form>
@@ -173,11 +177,35 @@
                 <div class="panel-body">
                     <div class="input-group"  style="margin-top: 5px">
                         <span class="input-group-addon">left</span>
-                        <input  name="animation_left" class="form-control" type="number" value="0" step="1">
+                        <input  id="animation_left2" name="animation_left" class="form-control" type="number" value="0" step="1">
                     </div>
                     <div class="input-group"  style="margin-top: 5px">
                         <span class="input-group-addon">top</span>
-                        <input  name="animation_top" class="form-control" type="number" value="0" step="1">
+                        <input  id="animation_top2" name="animation_top" class="form-control" type="number" value="0" step="1">
+                    </div>
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">填充</span>
+                        <input id="animation_fill2" name="animation_fill" type="color" class="form-control" value="#00D5FF" />
+                    </div>
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">描边</span>
+                        <input id="animation_stroke2" name="animation_stroke" class="form-control" type="color" value="#FFFFFF" />
+                    </div>
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">width</span>
+                        <input id="animation_width2" name="animation_width" class="form-control" type="number" value="0" step="1">
+                    </div>
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">height</span>
+                        <input id="animation_height2" name="animation_height" class="form-control" type="number" value="0" step="1">
+                    </div>
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">angle</span>
+                        <input  id="animation_angle2" name="animation_angle" class="form-control" type="number" value="0" step="1">
+                    </div>
+                    <div class="input-group"  style="margin-top: 5px">
+                        <span class="input-group-addon">opacity</span>
+                        <input  id="animation_opacity2" name="animation_opacity" class="form-control" type="number" value="1" min="0" max="1" step="0.1">
                     </div>
                     <div class="input-group"  style="margin-top: 5px">
                         <span class="input-group-addon">开始时间</span>

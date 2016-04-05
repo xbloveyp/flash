@@ -185,6 +185,9 @@ window.onload=function(){
         if (handle.name=="animation_stroke") {
             selected.setStroke(handle.value).setCoords();
         }
+        if (handle.name=="animation_strokeWidth") {
+            selected.setStrokeWidth(handle.value).setCoords();
+        }
         if (handle.name=="animation_width") {
             selected.setWidth(parseFloat(handle.value)).setCoords();
         }
@@ -326,14 +329,31 @@ window.onload=function(){
 
     //更新属性参数 颜色，线条粗细，位置，旋转角度
     function updateLookHandle() {
-        $("input[name='animation_left']").attr("value" ,selected.getLeft());
-        $("input[name='animation_top']").attr("value" ,selected.getTop());
-        $("input[name='animation_fill']").attr("value" ,selected.getFill());
-        $("input[name='animation_stroke']").attr("value" ,selected.getStroke());
-        $("input[name='animation_width']").attr("value" ,selected.getWidth());
-        $("input[name='animation_height']").attr("value" ,selected.getHeight());
-        $("input[name='animation_angle']").attr("value" ,selected.getAngle());
-        $("input[name='animation_opacity']").attr("value" ,selected.getOpacity());
+        $("#animation_fill1").val(selected.getFill());
+        $("#animation_stroke1").val(selected.getStroke());
+        $("#animation_strokeWidth1").val(selected.getStrokeWidth());
+        $("#animation_left1").val(selected.getLeft());
+        $("#animation_top1").val(selected.getTop());
+        $("#animation_width1").val(selected.getWidth());
+        $("#animation_height1").val(selected.getHeight());
+        $("#animation_angle1").val(selected.getAngle());
+        $("#animation_opacity1").val(selected.getOpacity());
+        $("#animation_fill2").val(selected.getFill());
+        $("#animation_stroke2").val(selected.getStroke());
+        $("#animation_left2").val(selected.getLeft());
+        $("#animation_top2").val(selected.getTop());
+        $("#animation_width2").val(selected.getWidth());
+        $("#animation_height2").val(selected.getHeight());
+        $("#animation_angle2").val(selected.getAngle());
+        $("#animation_opacity2").val(selected.getOpacity());
+        //$("input[name='animation_left']").attr("value" ,selected.getLeft());
+        //$("input[name='animation_top']").attr("value" ,selected.getTop());
+        //$("input[name='animation_fill']").val("value" ,selected.getFill());
+        //$("input[name='animation_stroke']").val("value" ,selected.getStroke());
+        //$("input[name='animation_width']").attr("value" ,selected.getWidth());
+        //$("input[name='animation_height']").attr("value" ,selected.getHeight());
+        //$("input[name='animation_angle']").attr("value" ,selected.getAngle());
+        //$("input[name='animation_opacity']").attr("value" ,selected.getOpacity());
         //rotate.value = selected ? selected.rotate : 0;
     }
     //禁止表单回车键
