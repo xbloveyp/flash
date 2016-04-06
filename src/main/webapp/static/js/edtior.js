@@ -109,6 +109,20 @@ window.onload=function(){
         return a;
     }
 
+    function updateModuleList() {
+        var module = document.getElementById("module");
+        module.innerHTML = null;
+        for(var i=0;i<moduleList.length;i++) {
+            innerhtml = moduleList[i].alias;
+            var a = document.createElement("a");
+            a.href = "javascript:void(0);";
+            a.setAttribute("class", "list-group-item list-group-item-info");
+            a.setAttribute("name", "moduleList");
+            a.innerHTML = innerhtml;
+            module.appendChild(a);
+        }
+    }
+
     function addToModule(_shape,name){
         if(name=="rect"){
             num_Rect++;
@@ -382,11 +396,17 @@ window.onload=function(){
     //保存用户的flash
     $("#save").click(function(){
         var canvasJson = JSON.parse(JSON.stringify(canvas));
-        var objects = canvasJson.objects;
-        objects = new Array();
+        var canvasObjects = canvasJson.objects;
+        var objects = new Array();
         for (var i=0;i<moduleList.length;i++){
             var object = moduleList[i];
-            var ob = object.toJSON();
+            var canvasObject = canvasObjects[i];
+            var ob;
+            if(canvasObject.canvas) {
+                ob = canvasObject.toJSON();
+            }else {
+                ob = canvasObject;
+            }
             ob.alias = object.alias;
             objects.push(ob);
         }
@@ -418,12 +438,20 @@ window.onload=function(){
     //删除图形
     $("#delete").click(function(){
         canvas.remove(selected);
-        console.log(selected);
+        for (var i=0;i<moduleList.length;i++){
+            if (moduleList[i].alias==selected.alias){
+                moduleList.splice(i,1);
+                break;
+            }
+        }
+        updateModuleList();
         canvas.renderAll();
     })
     //清空画布
     $("#deleteAll").click(function(){
         canvas.clear();
+        moduleList = new Array();
+        updateModuleList();
         canvas.renderAll();
     })
     //复制图形
@@ -431,27 +459,90 @@ window.onload=function(){
         var clone = fabric.util.object.clone(selected);
         clone.set({left: 150,top: 150});
         canvas.add(clone);
+        addToModule(clone,clone.type);
+        select(clone);
         canvas.renderAll();
     })
+    function refreshModule(){
+        moduleList = new Array();
+        var canvasJson = JSON.parse(JSON.stringify(canvas))
+        var objects = canvasJson.objects;
+        for(var i=0; i<objects.length;i++){
+            moduleList.push(objects[i]);
+        }
+    }
     //上移一层
     $("#upOne").click(function(){
         canvas.bringForward(selected);
         canvas.renderAll();
+        var length = moduleList.length;
+        for(var i=0; i<length;i++){
+            if ((i+1)==length){
+                break;
+            }
+            if(moduleList[i].alias==selected.alias){
+                if ((i+1)==length){
+                    break;
+                }
+                var temp = moduleList[i];
+                moduleList[i]=moduleList[i+1];
+                moduleList[i+1] = temp;
+                break;
+            }
+        }
     })
     //置于顶层
     $("#upTop").click(function(){
         canvas.bringToFront(selected);
         canvas.renderAll();
+        var length = moduleList.length;
+        for(var i=0; i<length;i++){
+            if((i+1)==length){
+                break;
+            }
+            if(moduleList[i].alias==selected.alias){
+                var temp = moduleList[i];
+                moduleList[i]=moduleList[i+1];
+                moduleList[i+1] = temp;
+            }
+        }
     })
     //下移一层
     $("#downOne").click(function(){
         canvas.sendBackwards(selected);
         canvas.renderAll();
+        for(var i=0; i<moduleList.length;i++){
+            if ((i-1)==0){
+                break;
+            }
+            if(moduleList[i].alias==selected.alias){
+                if ((i-1)==0){
+                    break;
+                }
+                var temp = moduleList[i];
+                moduleList[i]=moduleList[i-1];
+                moduleList[i-1] = temp;
+                break;
+            }
+        }
     })
     //置于底层
     $("#downBottom").click(function(){
         canvas.sendToBack(selected);
         canvas.renderAll();
+        for(var i=moduleList.length-1; i>0;i--){
+            if ((i-1)==0){
+                break;
+            }
+            if(moduleList[i].alias==selected.alias){
+                if ((i-1)==0){
+                    break;
+                }
+                var temp = moduleList[i];
+                moduleList[i]=moduleList[i-1];
+                moduleList[i-1] = temp;
+            }
+        }
     })
     //导出图片
     $("#importImage").click(function(){
