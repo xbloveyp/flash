@@ -85,6 +85,20 @@ window.onload=function(){
 
     function loadCanvas(){
         canvas.loadFromJSON(originalCanvas);
+        var objects = originalCanvas.objects;
+        var module  = document.getElementById("module");
+        module.innerHTML = "";
+        moduleList = new Array();
+        for(var i=0; i<objects.length;i++){
+            var html = objects[i].alias;
+            var a = document.createElement("a");
+            a.href="javascript:void(0);";
+            a.setAttribute("class","list-group-item list-group-item-info");
+            a.setAttribute("name","moduleList");
+            a.innerHTML = html;
+            module.appendChild(a);
+            moduleList.push(objects[i]);
+        }
     }
 
     $("#mouse").click(function(){
@@ -111,7 +125,7 @@ window.onload=function(){
 
     function updateModuleList() {
         var module = document.getElementById("module");
-        module.innerHTML = null;
+        module.innerHTML = "";
         for(var i=0;i<moduleList.length;i++) {
             innerhtml = moduleList[i].alias;
             var a = document.createElement("a");
@@ -437,15 +451,17 @@ window.onload=function(){
     })
     //删除图形
     $("#delete").click(function(){
-        canvas.remove(selected);
-        for (var i=0;i<moduleList.length;i++){
-            if (moduleList[i].alias==selected.alias){
-                moduleList.splice(i,1);
-                break;
+        if (canvas.getActiveObject()) {
+            canvas.remove(selected);
+            for (var i = 0; i < moduleList.length; i++) {
+                if (moduleList[i].alias == selected.alias) {
+                    moduleList.splice(i, 1);
+                    break;
+                }
             }
+            updateModuleList();
+            canvas.renderAll();
         }
-        updateModuleList();
-        canvas.renderAll();
     })
     //清空画布
     $("#deleteAll").click(function(){
@@ -456,13 +472,16 @@ window.onload=function(){
     })
     //复制图形
     $("#clone").click(function(){
-        var clone = fabric.util.object.clone(selected);
-        clone.set({left: 150,top: 150});
-        canvas.add(clone);
-        addToModule(clone,clone.type);
-        select(clone);
-        canvas.renderAll();
+        if(canvas.getActiveObject()) {
+            var clone = fabric.util.object.clone(selected);
+            clone.set({left: 150, top: 150});
+            canvas.add(clone);
+            addToModule(clone, clone.type);
+            select(clone);
+            canvas.renderAll();
+        }
     })
+    //刷新显示列表
     function refreshModule(){
         moduleList = new Array();
         var canvasJson = JSON.parse(JSON.stringify(canvas))
@@ -473,74 +492,82 @@ window.onload=function(){
     }
     //上移一层
     $("#upOne").click(function(){
-        canvas.bringForward(selected);
-        canvas.renderAll();
-        var length = moduleList.length;
-        for(var i=0; i<length;i++){
-            if ((i+1)==length){
-                break;
-            }
-            if(moduleList[i].alias==selected.alias){
-                if ((i+1)==length){
+        if(canvas.getActiveObject()) {
+            canvas.bringForward(selected);
+            canvas.renderAll();
+            var length = moduleList.length;
+            for (var i = 0; i < length; i++) {
+                if ((i + 1) == length) {
                     break;
                 }
-                var temp = moduleList[i];
-                moduleList[i]=moduleList[i+1];
-                moduleList[i+1] = temp;
-                break;
+                if (moduleList[i].alias == selected.alias) {
+                    if ((i + 1) == length) {
+                        break;
+                    }
+                    var temp = moduleList[i];
+                    moduleList[i] = moduleList[i + 1];
+                    moduleList[i + 1] = temp;
+                    break;
+                }
             }
         }
     })
     //置于顶层
     $("#upTop").click(function(){
-        canvas.bringToFront(selected);
-        canvas.renderAll();
-        var length = moduleList.length;
-        for(var i=0; i<length;i++){
-            if((i+1)==length){
-                break;
-            }
-            if(moduleList[i].alias==selected.alias){
-                var temp = moduleList[i];
-                moduleList[i]=moduleList[i+1];
-                moduleList[i+1] = temp;
+        if(canvas.getActiveObject()) {
+            canvas.bringToFront(selected);
+            canvas.renderAll();
+            var length = moduleList.length;
+            for (var i = 0; i < length; i++) {
+                if ((i + 1) == length) {
+                    break;
+                }
+                if (moduleList[i].alias == selected.alias) {
+                    var temp = moduleList[i];
+                    moduleList[i] = moduleList[i + 1];
+                    moduleList[i + 1] = temp;
+                }
             }
         }
     })
     //下移一层
     $("#downOne").click(function(){
-        canvas.sendBackwards(selected);
-        canvas.renderAll();
-        for(var i=0; i<moduleList.length;i++){
-            if ((i-1)==0){
-                break;
-            }
-            if(moduleList[i].alias==selected.alias){
-                if ((i-1)==0){
+        if (canvas.getActiveObject()) {
+            canvas.sendBackwards(selected);
+            canvas.renderAll();
+            for (var i = 0; i < moduleList.length; i++) {
+                if ((i - 1) == 0) {
                     break;
                 }
-                var temp = moduleList[i];
-                moduleList[i]=moduleList[i-1];
-                moduleList[i-1] = temp;
-                break;
+                if (moduleList[i].alias == selected.alias) {
+                    if ((i - 1) == 0) {
+                        break;
+                    }
+                    var temp = moduleList[i];
+                    moduleList[i] = moduleList[i - 1];
+                    moduleList[i - 1] = temp;
+                    break;
+                }
             }
         }
     })
     //置于底层
     $("#downBottom").click(function(){
-        canvas.sendToBack(selected);
-        canvas.renderAll();
-        for(var i=moduleList.length-1; i>0;i--){
-            if ((i-1)==0){
-                break;
-            }
-            if(moduleList[i].alias==selected.alias){
-                if ((i-1)==0){
+        if (canvas.getActiveObject()) {
+            canvas.sendToBack(selected);
+            canvas.renderAll();
+            for (var i = moduleList.length - 1; i > 0; i--) {
+                if ((i - 1) == 0) {
                     break;
                 }
-                var temp = moduleList[i];
-                moduleList[i]=moduleList[i-1];
-                moduleList[i-1] = temp;
+                if (moduleList[i].alias == selected.alias) {
+                    if ((i - 1) == 0) {
+                        break;
+                    }
+                    var temp = moduleList[i];
+                    moduleList[i] = moduleList[i - 1];
+                    moduleList[i - 1] = temp;
+                }
             }
         }
     })
@@ -715,6 +742,7 @@ window.onload=function(){
             easing: fabric.util.ease[animation.easing]
         });
     }
+    //加载初始状态
     $("#loadOriginal").click(function(){
         loadCanvas();
     });
