@@ -38,6 +38,8 @@ public class PostController {
             Page page = new Page(pageNum,total,count);
             httpSession.setAttribute("page", page);
         }else {
+            Page page = new Page(1,1,0);
+            httpSession.setAttribute("page", page);
             httpSession.setAttribute("posts", null);
             httpSession.setAttribute("error", "noEssence");
         }
@@ -58,6 +60,8 @@ public class PostController {
             httpSession.setAttribute("page", page);
             httpSession.setAttribute("posts", posts);
         }else {
+            Page page = new Page(1,1,0);
+            httpSession.setAttribute("page", page);
             httpSession.setAttribute("posts", null);
         }
         httpSession.setAttribute("postType","newest");
@@ -79,8 +83,16 @@ public class PostController {
                 Page page = new Page(pageNum,total,count);
                 httpSession.setAttribute("page", page);
                 httpSession.setAttribute("posts", posts);
+                httpSession.setAttribute("error", null);
+            }else {
+                Page page = new Page(1,1,0);
+                httpSession.setAttribute("page", page);
+                httpSession.setAttribute("posts", null);
+                httpSession.setAttribute("error", null);
             }
         }else {
+            Page page = new Page(1,1,0);
+            httpSession.setAttribute("page", page);
             httpSession.setAttribute("error", "noUser");
             httpSession.setAttribute("posts", null);
         }

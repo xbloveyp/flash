@@ -18,7 +18,7 @@ window.onload=function(){
     var lookForm = document.getElementById('look-and-transform');
     var createForm = document.getElementById('pan');
     //记录图形个数
-    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw= 0,num_Library=0;
+    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw= 0,num_Library= 0,num_Animation=0;
     var moduleList = new Array();
     var animationList = new Array();
     var timeNum = 0;
@@ -36,6 +36,7 @@ window.onload=function(){
                     var canvasJson = JSON.parse(result.data.content);
                     var objects = canvasJson.objects;
                     var flashContent = JSON.parse(result.data.flashContent);
+                    var animationJson = flashContent.animationList;
                     for(var i=0; i<objects.length;i++){
                         var html = objects[i].alias;
                         var module  = document.getElementById("module");
@@ -46,6 +47,17 @@ window.onload=function(){
                         a.innerHTML = html;
                         module.appendChild(a);
                         moduleList.push(objects[i]);
+                    }
+                    for(var i=0; i<animationJson.length;i++){
+                        var html = animationJson[i].shape+"/"+animationJson[i].startTime/1000+"s-"+animationJson[i].endTime/1000+"s";
+                        var animations  = document.getElementById("animationList");
+                        var a = document.createElement("a");
+                        a.href="javascript:void(0);";
+                        a.setAttribute("class","list-group-item list-group-item-info");
+                        a.setAttribute("name","animationList");
+                        a.innerHTML = html;
+                        animations.appendChild(a);
+                        animationList.push(animationJson[i]);
                     }
                     if (canvasJson.num_Rect) {
                         num_Rect = canvasJson.num_Rect;
@@ -192,7 +204,7 @@ window.onload=function(){
     };
     //点击图形面板，创建图形
     createForm.addEventListener('click', function(e) {
-        if (e.target.tagName.toLowerCase() == 'button') {
+        if (e.target.tagName.toLowerCase() == 'i') {
             create(e.target.getAttribute('create'));
         }
     });
@@ -257,28 +269,6 @@ window.onload=function(){
             canvas.isDrawingMode = true;
             canvas.freeDrawingBrush = Circle;
             addToModule(shape,"freedraw");
-        }else if (name=="polygon"){
-            canvas.isDrawingMode = false;
-            //shape = new fabric.Polygon(pp);
-            shape = new fabric.Polygon([
-                {x: 170, y: 210},
-                {x: 217.023, y: 234.721},
-                {x: 208.042, y: 182.361},
-                {x: 246.085, y: 145.279},
-                {x: 193.511, y: 137.639},
-                {x: 170, y: 90},
-                {x: 146.489, y: 137.639},
-                {x: 93.915, y: 145.279},
-                {x: 131.958, y: 182.361},
-                {x: 122.977, y: 234.721},
-                {x: 170, y: 210}], {
-                left: 250,
-                top: 160,
-                width: 200,
-                height: 200,
-                fill: 'green'
-            });
-            addToModule(shape,"polygon");
         }
         shape.name = name;
         shape.set(shapeInfo[shape.name]);
@@ -287,8 +277,6 @@ window.onload=function(){
                 stroke: '#00D5FF',
                 strokeWidth: 1})
         }
-        //else if (name="polygon"){
-        //}
         else {
             shape.set(defaultAttrs);
         }
@@ -466,6 +454,14 @@ window.onload=function(){
     //清空画布
     $("#deleteAll").click(function(){
         canvas.clear();
+        num_Rect=0;
+        num_Circle=0;
+        num_Triangle= 0;
+        num_Text= 0;
+        num_Line= 0;
+        num_Polygon= 0;
+        num_Freedraw= 0;
+        num_Library=0;
         moduleList = new Array();
         updateModuleList();
         canvas.renderAll();
@@ -586,7 +582,9 @@ window.onload=function(){
     //    select(canvas.getActiveObject())
     //});
     canvas.on('mouse:up', function() {
-        select(canvas.getActiveObject())
+        if (canvas.getActiveObject()) {
+            select(canvas.getActiveObject());
+        }
     });
     //canvas.on({
     //    'object:moving': select(canvas.getActiveObject()),
@@ -658,7 +656,7 @@ window.onload=function(){
         });
         $(this).attr("class","list-group-item list-group-item-info active");
         var name = $(this).html();
-        var shape = getShapeByName(moduleList,name);
+        var shape = getShapeByName(moduleList,name,canvas);
         canvas.setActiveObject(shape);
         canvas.renderAll();
         select(shape);
@@ -674,8 +672,8 @@ window.onload=function(){
                 alert("开始时间或结束时间不能小于0");
                 return;
             }
-            if (endTime<startTime){
-                alert("开始时间不能小于结束时间");
+            if (endTime<=startTime){
+                alert("开始时间不能小于等于结束时间");
                 return;
             }
             if (endTime>maxTime/1000){
@@ -688,7 +686,7 @@ window.onload=function(){
             animation.startTime = startTime*1000;
             animation.endTime = endTime*1000;
             animation.easing = $("#animation_easing").val();
-            animationList.push(animation);
+            addToanimationList(animation);
             var flashContent = {};
             flashContent.animationList = animationList;
             flashContent.maxTime = maxTime;
@@ -703,10 +701,25 @@ window.onload=function(){
             });
         }
     });
+    function addToanimationList(animation) {
+        innerhtml=animation.shape+"/"+animation.startTime/1000+"s-"+animation.endTime/1000+"s";
+        var animations = document.getElementById("animationList");
+        $('#animationList > a').each(function () {
+            $(this).attr("class","list-group-item list-group-item-info");
+        });
+        var a = document.createElement("a");
+        a.href = "javascript:void(0);";
+        a.setAttribute("class", "list-group-item list-group-item-info active");
+        a.setAttribute("name","animationList");
+        a.innerHTML = innerhtml;
+        animations.appendChild(a);
+        animationList.push(animation);
+        return a;
+    }
     //开始动画
     var startAnm;
     $("#animation_start").click(function(){
-        loadCanvas();
+        //loadCanvas();
         startAnm = setInterval(function(){startAnimation()},1000);
     });
     function startAnimation(){
@@ -718,7 +731,7 @@ window.onload=function(){
         for (var i=0;i<animationList.length;i++){
             var animation = animationList[i];
             if (timeNum==animation.startTime){
-                var shape = getShapeByName(moduleList,animation.shape);
+                var shape = getShapeByName(moduleList,animation.shape,canvas);
                 animations(shape,animation);
             }
         }

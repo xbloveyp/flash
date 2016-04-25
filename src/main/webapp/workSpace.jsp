@@ -10,7 +10,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="在线动画设计">
     <meta name="author" content="Cao Xiaobo">
-    <link rel="shortcut icon" href="static/img/1.jpg" type="image/x-icon" />
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/1.jpg" type="image/x-icon" />
     <title>益画</title>
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
     <style>

@@ -25,8 +25,12 @@ public class UrlFilter extends OncePerRequestFilter {
             String refererUrl = httpServletRequest.getHeader("referer");
             if (refererUrl!=null) {
                 if (refererUrl.endsWith(".jsp")) {
-                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                    httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                    if (refererUrl.endsWith("discuss.jsp")){
+                        httpServletRequest.getSession().setAttribute("loginRefererUrl", "flash/findAllEssencePosts/1");
+                    }else {
+                        refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                        httpServletRequest.getSession().setAttribute("loginRefererUrl", refererUrl);
+                    }
                 }
 //                else if (refererUrl.endsWith("findAllPosts")) {
 //                    refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
@@ -46,8 +50,12 @@ public class UrlFilter extends OncePerRequestFilter {
                     if (refererUrl.endsWith("edtior.jsp")){
                         httpServletRequest.getSession().setAttribute("logoutRefererUrl", "workSpace.jsp");
                     }else {
-                        refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
-                        httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
+                        if (refererUrl.endsWith("discuss.jsp")){
+                            httpServletRequest.getSession().setAttribute("logoutRefererUrl", "flash/findAllEssencePosts/1");
+                        }else {
+                            refererUrl = refererUrl.substring(refererUrl.lastIndexOf("/") + 1, refererUrl.length());
+                            httpServletRequest.getSession().setAttribute("logoutRefererUrl", refererUrl);
+                        }
                     }
                 }
 //                else if (refererUrl.endsWith("findAllPosts")) {

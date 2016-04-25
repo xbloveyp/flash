@@ -9,10 +9,10 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="在线动画设计">
     <meta name="author" content="Cao Xiaobo">
-    <link rel="shortcut icon" href="static/img/1.jpg" type="image/x-icon" />
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/1.jpg" type="image/x-icon" />
     <title>益画</title>
 
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
 <style>
     @font-face {
         font-family: 'iconfont';
@@ -39,8 +39,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp" style="margin: 0;padding: 5px">
-                <img src="static/img/1.jpg" class="img-circle img-responsive" style="height:40px;width: 40px;float: left ;margin: 0;vertical-align: top">
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp" style="margin: 0;padding: 5px">
+                <img src="${pageContext.request.contextPath}/static/img/1.jpg" class="img-circle img-responsive" style="height:40px;width: 40px;float: left ;margin: 0;vertical-align: top">
                 <p  style="float: left ;margin-top: 8px;margin-left: 15px">益画</p>
             </a>
         </div>

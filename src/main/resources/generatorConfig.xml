@@ -48,21 +48,21 @@
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
         <!--</table>-->
-        <table tableName="flash_project" domainObjectName="FlashProject"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
+        <!--<table tableName="flash_project" domainObjectName="FlashProject"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+        <!--</table>-->
         <!--<table tableName="library" domainObjectName="Library"-->
                 <!--enableCountByExample="true" enableUpdateByExample="true"-->
                 <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                 <!--selectByExampleQueryId="true">-->
         <!--</table>-->
-        <!--<table tableName="follow_post" domainObjectName="FollowPost"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-        <!--</table>-->
+        <table tableName="follow_post" domainObjectName="FollowPost"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
         <!--<table tableName="user_post_praise" domainObjectName="UserPostPraise"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->

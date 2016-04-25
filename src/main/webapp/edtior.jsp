@@ -9,10 +9,10 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="在线动画设计">
     <meta name="author" content="Cao Xiaobo">
-    <link rel="shortcut icon" href="static/img/1.jpg" type="image/x-icon" />
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/1.jpg" type="image/x-icon" />
     <title>益画</title>
-    <script type="text/javascript" src="static/js/util.js"></script>
-    <script type="text/javascript" src="static/js/edtior.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/util.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/edtior.js"></script>
     <!--<link href="css/edtior.css" rel="stylesheet">-->
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -41,8 +41,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp" style="margin: 0;padding: 5px">
-                <img src="static/img/1.jpg" class="img-circle img-responsive" style="height:40px;width: 40px;float: left ;margin: 0;vertical-align: top">
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp" style="margin: 0;padding: 5px">
+                <img src="${pageContext.request.contextPath}/static/img/1.jpg" class="img-circle img-responsive" style="height:40px;width: 40px;float: left ;margin: 0;vertical-align: top">
                 <p  style="float: left ;margin-top: 8px;margin-left: 15px">益画</p>
             </a>
         </div>
@@ -70,16 +70,19 @@
         </div><!--/.navbar-collapse -->
     </div>
 </nav>
-<div class="container col-lg-12" id="container" style="margin: 0; padding: 0;height: 92%;bottom: 0;position: absolute">
-    <div id="paint" class="col-lg-1 container" style="background-color: #1F1F1F ;margin: 0;padding: 0;border-top:1px solid #A3A3A3;float: left;height: 100%">
+<div class="container col-lg-12" id="container" style="margin: 0; padding: 0;height: 92%;bottom: 0;position: absolute;">
+    <div class=" col-lg-3" style="margin: 0; padding: 0;height: 100%;bottom: 0;display: inline-block">
+    <div id="paint" style="background-color: #D9D9D9 ;margin: 0;padding: 0;float:left;height: 100%;width: 18%;overflow-y: auto;">
         <div id="pan" style="text-align: center">
-            <button class="iconfont " type="button" id="mouse" create="mouse" style="margin-top: 2px;border-radius: 10px">&#xe600;</button>
-            <button class="iconfont " type="button" id="rect" create="rect" style="margin-top: 2px;border-radius: 10px">&#xe605;</button>
-            <button class="iconfont " type="button" id="circle" create="circle" style="margin-top: 2px;border-radius: 10px">&#xe607;</button>
-            <button class="iconfont " type="button" id="triangle" create="triangle" style="margin-top: 2px;border-radius: 10px">&#xe608;</button>
-            <button class="iconfont " type="button" id="line" create="line" style="margin-top: 2px;border-radius: 10px">&#xe60b;</button>
-            <button class="iconfont " type="button" id="text" create="text" style="margin-top: 2px;border-radius: 10px">&#xe604;</button>
-            <button  type="button"  data-toggle="modal" data-target="#library" style="margin-top: 2px;border-radius: 10px">加载图形</button>
+            <table >
+                <tr><td ><i class="iconfont btn" type="button" id="mouse" create="mouse" style="padding: 0;margin-top: 2px;border-radius: 10px">&#xe600;</i></td></tr>
+                <tr><td ><i class="iconfont btn" type="button" id="rect" create="rect" style="padding: 0;margin-top: 2px;border-radius: 10px">&#xe605;</i></td></tr>
+                <tr><td ><i class="iconfont btn" type="button" id="circle" create="circle" style="padding: 0;margin-top: 2px;border-radius: 10px">&#xe607;</i></td></tr>
+                <tr><td ><i class="iconfont btn" type="button" id="triangle" create="triangle" style="padding: 0;margin-top: 2px;border-radius: 10px">&#xe608;</i></td></tr>
+                <tr><td ><i class="iconfont btn" type="button" id="line" create="line" style="padding: 0;margin-top: 2px;border-radius: 10px">&#xe60b;</i></td></tr>
+                <tr><td ><i class="iconfont btn" type="button" id="text" create="text" style="padding: 0;margin-top: 2px;border-radius: 10px">&#xe604;</i></td></tr>
+                <tr><td ><i class="btn" type="button"  data-toggle="modal" data-target="#library" style="padding: 0;margin-top: 2px;border-radius: 10px">加载图形</i></td></tr>
+            </table>
             <div class="modal fade" id="library" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -109,7 +112,7 @@
     </div>
 
 
-    <div class="panel-group col-lg-2" id="accordion" role="tablist" aria-multiselectable="true" style="margin: 0;padding: 0;float: left;height: 100%">
+    <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true" style="margin: 0;padding: 0;float: left;height: 100%;width:82%;overflow-y: auto;">
         <div class="panel panel-default">
             <%--<div class="panel-heading" role="button" id="headingOne">--%>
                 <%--<h4 class="panel-title">--%>
@@ -166,13 +169,9 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <%--<div class="panel-heading" role="tab" id="headingTwo">--%>
-                <%--<h4 class="panel-title">--%>
                     <a id="headingTwo" class="collapsed panel-heading btn btn-default" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="width: 100%">
                         动画
                     </a>
-                <%--</h4>--%>
-            <%--</div>--%>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
                     <div class="input-group"  style="margin-top: 5px">
@@ -253,19 +252,115 @@
                     </select>
                     </div>
                     <button id="animation_add" class="btn btn-info" style="margin-top: 5px">添加动画</button>
+                    <div id="animationList" style="margin-top: 5px">
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <a class="collapsed panel-heading btn btn-default" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="width: 100%">
-                动画列表
-            </a>
-            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                <div class="panel-body">
-
-                </div>
-            </div>
-        </div>
+        <%--<div class="panel panel-default">--%>
+            <%--<div class="modal fade bs-example-modal-sm" id="createFlash" tabindex="-1" role="dialog" aria-labelledby="createFlash">--%>
+                <%--<div class="modal-dialog modal-sm" role="document">--%>
+                    <%--<div class="modal-content">--%>
+                        <%--<div class="modal-header">--%>
+                            <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--%>
+                            <%--<h4 class="modal-title" id="createFlashLabel">动画</h4>--%>
+                        <%--</div>--%>
+                        <%--<div class="modal-body">--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">left</span>--%>
+                                <%--<input  id="animation_left2" name="animation_left" class="form-control" type="number" value="0" step="1">--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">top</span>--%>
+                                <%--<input  id="animation_top2" name="animation_top" class="form-control" type="number" value="0" step="1">--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">填充</span>--%>
+                                <%--<input id="animation_fill2" name="animation_fill" type="color" class="form-control" value="#00D5FF" />--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">描边</span>--%>
+                                <%--<input id="animation_stroke2" name="animation_stroke" class="form-control" type="color" value="#FFFFFF" />--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">width</span>--%>
+                                <%--<input id="animation_width2" name="animation_width" class="form-control" type="number" value="0" step="1">--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">height</span>--%>
+                                <%--<input id="animation_height2" name="animation_height" class="form-control" type="number" value="0" step="1">--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">angle</span>--%>
+                                <%--<input  id="animation_angle2" name="animation_angle" class="form-control" type="number" value="0" step="1">--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">opacity</span>--%>
+                                <%--<input  id="animation_opacity2" name="animation_opacity" class="form-control" type="number" value="1" min="0" max="1" step="0.1">--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group"  style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">开始时间</span>--%>
+                                <%--<input id="animation_startTime" class="form-control" type="number" min="0" value="0" step="1">--%>
+                                <%--<span class="input-group-addon">秒</span>--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group" style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">结束时间</span>--%>
+                                <%--<input id="animation_endTime" class="form-control" type="number" min="0" value="0" step="1">--%>
+                                <%--<span class="input-group-addon">秒</span>--%>
+                            <%--</div>--%>
+                            <%--<div class="input-group" style="margin-top: 5px">--%>
+                                <%--<span class="input-group-addon">方式</span>--%>
+                                <%--<select id="animation_easing" class="form-control" >--%>
+                                    <%--<option>easeInQuad</option>--%>
+                                    <%--<option>easeOutQuad</option>--%>
+                                    <%--<option>easeInOutQuad</option>--%>
+                                    <%--<option>easeInCubic</option>--%>
+                                    <%--<option>easeOutCubic</option>--%>
+                                    <%--<option>easeInOutCubic</option>--%>
+                                    <%--<option>easeInQuart</option>--%>
+                                    <%--<option>easeOutQuart</option>--%>
+                                    <%--<option>easeInOutQuart</option>--%>
+                                    <%--<option>easeInQuint</option>--%>
+                                    <%--<option>easeOutQuint</option>--%>
+                                    <%--<option>easeInOutQuint</option>--%>
+                                    <%--<option>easeInSine</option>--%>
+                                    <%--<option>easeOutSine</option>--%>
+                                    <%--<option>easeInOutSine</option>--%>
+                                    <%--<option>easeInExpo</option>--%>
+                                    <%--<option>easeOutExpo</option>--%>
+                                    <%--<option>easeInOutExpo</option>--%>
+                                    <%--<option>easeInCirc</option>--%>
+                                    <%--<option>easeOutCirc</option>--%>
+                                    <%--<option>easeInOutCirc</option>--%>
+                                    <%--<option>easeInElastic</option>--%>
+                                    <%--<option>easeOutElastic</option>--%>
+                                    <%--<option>easeInOutElastic</option>--%>
+                                    <%--<option>easeInBack</option>--%>
+                                    <%--<option>easeOutBack</option>--%>
+                                    <%--<option>easeInOutBack</option>--%>
+                                    <%--<option>easeInBounce</option>--%>
+                                    <%--<option>easeOutBounce</option>--%>
+                                    <%--<option>easeInOutBounce</option>--%>
+                                <%--</select>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="modal-footer">--%>
+                            <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
+                            <%--<button id="animation_add" class="btn btn-info">添加动画</button>--%>
+                            <%--&lt;%&ndash;<button type="button" class="btn btn-primary" id="project_save">保存</button>&ndash;%&gt;--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+            <%--<a class="collapsed panel-heading btn btn-default" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="width: 100%">--%>
+                <%--动画列表--%>
+            <%--</a>--%>
+            <%--<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">--%>
+                <%--<div class="panel-body">--%>
+                    <%--<button class="btn btn-success " type="button" data-toggle="modal" data-target="#createFlash" style="margin-top: 2px;">添加动画</button>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <div class="panel panel-default">
             <a class="collapsed panel-heading btn btn-default" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="width: 100%">
                 操作
@@ -287,7 +382,7 @@
             </div>
         </div>
     </div>
-
+    </div>
 
     <div id="canvas" class="col-lg-7 col-lg-offset-3" style="margin: 0;padding: 0;float: left;border-top:1px solid #A3A3A3;height: 100%" >
         <div id="cParent" style="padding:0;margin: 0;height: 100%;width: 100%">
@@ -295,7 +390,7 @@
         </div>
     </div>
 
-    <div  class="col-lg-2 container col-lg-offset-10" style="margin: 0;padding: 0;background-color:#e7e7e7 ;float: left;border-top:1px solid #A3A3A3;height: 100%">
+    <div  class="col-lg-2 container col-lg-offset-10" style="margin: 0;padding: 0;background-color:#e7e7e7 ;float: left;border-top:1px solid #A3A3A3;height: 100%;overflow-y: auto">
         <h2 style="text-align: center">所有组件</h2>
         <div id="module" >
         </div>

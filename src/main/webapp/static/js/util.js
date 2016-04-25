@@ -12,10 +12,18 @@ function getRootPath() {
     }
 }
 
-function getShapeByName(moduleList,name){
+function getShapeByName(moduleList,name,canvas){
     for(var i=0;i<moduleList.length;i++){
         if (name == moduleList[i].alias){
-            return moduleList[i];
+            if ( moduleList[i].canvas){
+                return moduleList[i];
+            }else {
+                return getShapeFromCanvasByIndex(canvas,i);
+            }
         }
     }
+}
+
+function getShapeFromCanvasByIndex(canvas,index){
+    return canvas._objects[index];
 }
