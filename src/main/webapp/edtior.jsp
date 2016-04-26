@@ -18,16 +18,29 @@
     <style>
         @font-face {
             font-family: 'iconfont';
-            src: url('//at.alicdn.com/t/font_1456563258_2788763.eot'); /* IE9*/
-            src: url('//at.alicdn.com/t/font_1456563258_2788763.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('//at.alicdn.com/t/font_1456563258_2788763.woff') format('woff'), /* chrome、firefox */
-            url('//at.alicdn.com/t/font_1456563258_2788763.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-            url('//at.alicdn.com/t/font_1456563258_2788763.svg#iconfont') format('svg'); /* iOS 4.1- */
+            src: url('//at.alicdn.com/t/font_1461658337_9636898.eot'); /* IE9*/
+            src: url('//at.alicdn.com/t/font_1461658337_9636898.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('//at.alicdn.com/t/font_1461658337_9636898.woff') format('woff'), /* chrome、firefox */
+            url('//at.alicdn.com/t/font_1461658337_9636898.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('//at.alicdn.com/t/font_1461658337_9636898.svg#iconfont') format('svg'); /* iOS 4.1- */
         }
         .iconfont{
             font-family:"iconfont";
             font-size:50px;font-style:normal;
         }
+        a[name = "animationList"]{
+            width: 80%;
+            float: left;
+        }
+        i[name="deleteAnimation"]{
+            width: 20%;
+            color: #c9302c;
+            float: left;
+            padding: 0;
+            margin: 0;
+            font-size: 30px;
+        }
+
 
     </style>
 </head>

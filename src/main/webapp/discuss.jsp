@@ -13,6 +13,20 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/1.jpg" type="image/x-icon" />
     <title>益画</title>
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'iconfont';
+            src: url('//at.alicdn.com/t/font_1461658337_9636898.eot'); /* IE9*/
+            src: url('//at.alicdn.com/t/font_1461658337_9636898.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('//at.alicdn.com/t/font_1461658337_9636898.woff') format('woff'), /* chrome、firefox */
+            url('//at.alicdn.com/t/font_1461658337_9636898.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('//at.alicdn.com/t/font_1461658337_9636898.svg#iconfont') format('svg'); /* iOS 4.1- */
+        }
+        .iconfont{
+            font-family:"iconfont";
+            font-size:50px;font-style:normal;
+        }
+    </style>
 </head>
 <body style="height: 80%">
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -107,7 +121,14 @@
                         <small>${po.userName}</small>
                     </a>
                     <small style="color: #adadad;margin-left: 40px">${po.updateTime}</small>
-                    <span class="badge" style="margin-left: 10px">${po.followNum}</span>
+                    <span class="badge" style="margin-left: 10px">回复：${po.followNum}</span>
+                    <c:if test="${po.isPraised=='1'}">
+                        <i class="iconfont btn disabled" style="font-size: 25px;padding: 0;margin:0;margin-left: 20px">&#xe614;</i>
+                    </c:if>
+                    <c:if test="${po.isPraised=='0'}">
+                        <i class="iconfont btn" id="praise" postId="${po.id}" style="color: #5bc0de;font-size: 25px;padding: 0;margin:0;margin-left: 20px">&#xe614;</i>
+                    </c:if>
+                    <span class="badge">${po.praise}</span>
                 </div>
             </div>
         </div>
@@ -248,8 +269,22 @@
                 }
             });
         });
-        $("a[name='postType']").click(function(){
-
+        $("#praise").click(function(){
+            var postId =  $(this).attr("postId");
+            var url = getRootPath()+"/flash/praisePost/"+postId;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                contentType: "application/json",
+                data:{},
+                success: function (result) {
+                    if (result.code==500){
+                        alert(result.data);
+                    }else {
+                        window.location.href = getRootPath() + "/discuss.jsp";
+                    }
+                }
+            });
         });
     });
 </script>

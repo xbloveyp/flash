@@ -23,4 +23,17 @@ public class DateUtil {
             return null;
         }
     }
+
+    public static String formatShort(Date date) {
+        if (date==null){
+            return null;
+        }
+        try {
+            return DateFormatUtils.format(date,simpleDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

@@ -12,4 +12,6 @@ public class Const {
     public static int TYPE_ESSENCE = 1;
     //失效跟帖
     public static int TYPE_INVALID = 2;
+    //成为精华帖的点赞次数
+    public static int PRIASE_TO_ESSENCE_NUM = 10;
 }

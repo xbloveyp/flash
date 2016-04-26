@@ -25,7 +25,8 @@ window.onload=function(){
     var maxTime = 0;
     var originalCanvas;
 
-    //加载用户保存的flash
+
+
     var init = function(){
         var url = getRootPath()+"/flash/loadCanvas"
         $.ajax({
@@ -48,17 +49,7 @@ window.onload=function(){
                         module.appendChild(a);
                         moduleList.push(objects[i]);
                     }
-                    for(var i=0; i<animationJson.length;i++){
-                        var html = animationJson[i].shape+"/"+animationJson[i].startTime/1000+"s-"+animationJson[i].endTime/1000+"s";
-                        var animations  = document.getElementById("animationList");
-                        var a = document.createElement("a");
-                        a.href="javascript:void(0);";
-                        a.setAttribute("class","list-group-item list-group-item-info");
-                        a.setAttribute("name","animationList");
-                        a.innerHTML = html;
-                        animations.appendChild(a);
-                        animationList.push(animationJson[i]);
-                    }
+                    var a = reflashAnimationList(animationJson);
                     if (canvasJson.num_Rect) {
                         num_Rect = canvasJson.num_Rect;
                     }
@@ -94,6 +85,35 @@ window.onload=function(){
         });
     }
     init();
+
+    //加载用户保存的flash
+    function reflashAnimationList(animationJson) {
+        var animations = document.getElementById("animationList");
+        animations.innerHTML = "";
+        animationList = new Array();
+        for (var i = 0; i < animationJson.length; i++) {
+            var html = animationJson[i].shape + "/" + animationJson[i].startTime / 1000 + "s-" + animationJson[i].endTime / 1000 + "s";
+            var a = document.createElement("a");
+            a.href = "javascript:void(0);";
+            a.setAttribute("class", "list-group-item list-group-item-info");
+            a.setAttribute("name", "animationList");
+            a.innerHTML = html;
+            var iTag = document.createElement("i");
+            iTag.setAttribute("class", "iconfont btn");
+            iTag.setAttribute("index", animationList.length);
+            iTag.setAttribute("name", "deleteAnimation");
+            iTag.innerHTML = "&#xe615;";
+            animations.appendChild(a);
+            animations.appendChild(iTag);
+            maxTime = 0;
+            var endTime = animationJson[i].endTime;
+            if (endTime>maxTime){
+                maxTime = endTime;
+            }
+            animationList.push(animationJson[i]);
+        }
+        return a;
+    }
 
     function loadCanvas(){
         canvas.loadFromJSON(originalCanvas);
@@ -679,10 +699,12 @@ window.onload=function(){
             if (endTime>maxTime/1000){
                 maxTime = endTime*1000;
             }
-            var animation ={shape:null,left:0,top:0,startTime:0,endTime:0,easing:null};
+            var animation ={shape:null,left:0,top:0,startTime:0,endTime:0,angle:0,opacity:0,easing:null};
             animation.shape = selected.alias;
-            animation.left = $("input[name='animation_left']").val();
-            animation.top = $("input[name='animation_top']").val();
+            animation.left = $("#animation_left2").val();
+            animation.top = $("#animation_top2").val();
+            animation.angle = $("#animation_angle2").val();
+            animation.opacity = $("#animation_opacity2").val();
             animation.startTime = startTime*1000;
             animation.endTime = endTime*1000;
             animation.easing = $("#animation_easing").val();
@@ -696,10 +718,28 @@ window.onload=function(){
                 url: getRootPath()+"/flash/saveFlash",
                 data:{flashContent: flashContent},
                 success: function (result) {
-                    alert("添加成功");
+                    //alert("添加成功");
                 }
             });
         }
+    });
+    $("#animationList").on("click","i",function(){
+        var index = $(this).attr("index");
+        animationList.splice(index,1);
+        var animations = document.getElementById("animationList");
+        var flashContent = {};
+        flashContent.animationList = animationList;
+        flashContent.maxTime = maxTime;
+        flashContent = JSON.stringify(flashContent);
+        reflashAnimationList(animationList);
+        $.ajax({
+            type: 'POST',
+            url: getRootPath()+"/flash/saveFlash",
+            data:{flashContent: flashContent},
+            success: function (result) {
+                //alert("删除成功");
+            }
+        });
     });
     function addToanimationList(animation) {
         innerhtml=animation.shape+"/"+animation.startTime/1000+"s-"+animation.endTime/1000+"s";
@@ -712,14 +752,20 @@ window.onload=function(){
         a.setAttribute("class", "list-group-item list-group-item-info active");
         a.setAttribute("name","animationList");
         a.innerHTML = innerhtml;
+        var i = document.createElement("i");
+        i.setAttribute("class","iconfont btn");
+        i.setAttribute("index",animationList.length);
+        i.setAttribute("name","deleteAnimation");
+        i.innerHTML = "&#xe615;";
         animations.appendChild(a);
+        animations.appendChild(i);
         animationList.push(animation);
         return a;
     }
     //开始动画
     var startAnm;
     $("#animation_start").click(function(){
-        //loadCanvas();
+        loadCanvas();
         startAnm = setInterval(function(){startAnimation()},1000);
     });
     function startAnimation(){
@@ -728,14 +774,17 @@ window.onload=function(){
             timeNum=0;
             return;
         }
+        timeNum+=1000;
         for (var i=0;i<animationList.length;i++){
             var animation = animationList[i];
-            if (timeNum==animation.startTime){
+            if (timeNum-1000==animation.startTime){
                 var shape = getShapeByName(moduleList,animation.shape,canvas);
+                if (!shape){
+                    continue;
+                }
                 animations(shape,animation);
             }
         }
-        timeNum+=1000;
     }
     function animations(shape,animation){
         shape.animate('left', animation.left, {
@@ -747,6 +796,22 @@ window.onload=function(){
             easing: fabric.util.ease[animation.easing]
         });
         shape.animate('top', animation.top, {
+            duration: animation.endTime-animation.startTime,
+            onChange: canvas.renderAll.bind(canvas),
+            onComplete: function() {
+
+            },
+            easing: fabric.util.ease[animation.easing]
+        });
+        shape.animate('angle', animation.angle, {
+            duration: animation.endTime-animation.startTime,
+            onChange: canvas.renderAll.bind(canvas),
+            onComplete: function() {
+
+            },
+            easing: fabric.util.ease[animation.easing]
+        });
+        shape.animate('opacity', animation.opacity, {
             duration: animation.endTime-animation.startTime,
             onChange: canvas.renderAll.bind(canvas),
             onComplete: function() {
