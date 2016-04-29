@@ -18,7 +18,7 @@ window.onload=function(){
     var lookForm = document.getElementById('look-and-transform');
     var createForm = document.getElementById('pan');
     //记录图形个数
-    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw= 0,num_Library= 0,num_Animation=0;
+    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw= 0,num_Library= 0,num_Group=0;
     var moduleList = new Array();
     var animationList = new Array();
     var timeNum = 0;
@@ -37,7 +37,10 @@ window.onload=function(){
                     var canvasJson = JSON.parse(result.data.content);
                     var objects = canvasJson.objects;
                     var flashContent = JSON.parse(result.data.flashContent);
-                    var animationJson = flashContent.animationList;
+                    if (flashContent && flashContent.animationList) {
+                        var animationJson = flashContent.animationList;
+                        var a = reflashAnimationList(animationJson);
+                    }
                     for(var i=0; i<objects.length;i++){
                         var html = objects[i].alias;
                         var module  = document.getElementById("module");
@@ -47,20 +50,19 @@ window.onload=function(){
                         a.setAttribute("name","moduleList");
                         a.innerHTML = html;
                         module.appendChild(a);
+                        addObjectWhenInit(objects[i]);
                         moduleList.push(objects[i]);
                     }
-                    var a = reflashAnimationList(animationJson);
                     if (canvasJson.num_Rect) {
                         num_Rect = canvasJson.num_Rect;
                     }
                     if (canvasJson.num_Circle) {
                         num_Circle = canvasJson.num_Circle;
                     }
-                    if(canvasJson.num_Triangle
-                    ) {
+                    if(canvasJson.num_Triangle) {
                         num_Triangle = canvasJson.num_Triangle;
                     }
-                    if(canvasJson.num_Tex) {
+                    if(canvasJson.num_Text) {
                         num_Text = canvasJson.num_Text;
                     }
                     if(canvasJson.num_Line) {
@@ -75,6 +77,9 @@ window.onload=function(){
                     if(canvasJson.num_Library) {
                         num_Library = canvasJson.num_Library;
                     }
+                    if(canvasJson.num_Group) {
+                        num_Group = canvasJson.num_Group;
+                    }
                     var canvasJ = {};
                     canvasJ.objects = objects;
                     canvasJ.background = canvasJson.background;
@@ -85,6 +90,18 @@ window.onload=function(){
         });
     }
     init();
+
+    //加载数据时，如果是组合，那么加上_objects属性
+    function addObjectWhenInit(obj){
+        if (obj.objects){
+            for(var i=0;i<obj.objects.length;i++){
+                if (obj.objects[i].objects){
+                    addObjectWhenInit(obj.objects[i])
+                }
+            }
+            obj._objects = obj.objects;
+        }
+    }
 
     //加载用户保存的flash
     function reflashAnimationList(animationJson) {
@@ -188,12 +205,50 @@ window.onload=function(){
         }else if(name=="polygon"){
             num_Polygon++;
             addToModuleList(_shape,num_Polygon,name);
+        }else if(name=="group"){
+            addAliasToGroupWhenCopy(_shape);
+            num_Group++;
+            addToModuleList(_shape,num_Group,name);
         }else if (name = "freedraw"){
             num_Freedraw++;
             addToModuleList(_shape,num_Freedraw,name);
         }
-
-
+    }
+    //复制时把组合的每个成员的alias加下
+    function addAliasToGroupWhenCopy(_shape){
+        if (_shape._objects){
+            for(var i=0;i<_shape._objects.length;i++){
+                var object = _shape._objects[i];
+                var name = object.type;
+                if(name=="rect"){
+                    num_Rect++;
+                    object.alias = name+num_Rect;
+                }else if(name=="circle"){
+                    num_Circle++;
+                    object.alias = name+num_Circle;
+                }else if(name=="triangle"){
+                    num_Triangle++;
+                    object.alias = name+num_Triangle;
+                }else if(name=="text"){
+                    num_Text++;
+                    object.alias = name+num_Text;
+                } else if(name=="line"){
+                    num_Line++;
+                    object.alias = name+num_Line
+                }else if(name=="polygon"){
+                    num_Polygon++;
+                    object.alias = name + num_Polygon;
+                }else if(name=="group"){
+                    num_Group++;
+                    object.alias = name + num_Group
+                }
+                else if (name = "freedraw"){
+                    num_Freedraw++;
+                    object.alias = name + num_Freedraw;
+                }
+                addAliasToGroupWhenCopy(object)
+            }
+        }
     }
 
     //默认图形参数
@@ -429,6 +484,7 @@ window.onload=function(){
             }else {
                 ob = canvasObject;
             }
+            addAliasToGroup(ob, object);
             ob.alias = object.alias;
             objects.push(ob);
         }
@@ -439,6 +495,8 @@ window.onload=function(){
         canvasJson.num_Line = num_Line;
         canvasJson.num_Polygon = num_Polygon;
         canvasJson.num_Freedraw = num_Freedraw;
+        canvasJson.num_Library = num_Library;
+        canvasJson.num_Group = num_Group;
         canvasJson.objects = objects;
         canvasJson = JSON.stringify(canvasJson);
         var url = getRootPath()+"/flash/saveCanvas";
@@ -457,20 +515,33 @@ window.onload=function(){
             }
         });
     })
+    //给组合的每个元素添加alias
+    function addAliasToGroup(ob,object){
+        if (ob.objects){
+            for (var j=0;j<ob.objects.length;j++){
+                ob.objects[j].alias = object._objects[j].alias;
+                addAliasToGroup(ob.objects[j],object._objects[j]);
+            }
+        }
+    }
     //删除图形
     $("#delete").click(function(){
         if (canvas.getActiveObject()) {
-            canvas.remove(selected);
-            for (var i = 0; i < moduleList.length; i++) {
-                if (moduleList[i].alias == selected.alias) {
-                    moduleList.splice(i, 1);
-                    break;
-                }
-            }
-            updateModuleList();
-            canvas.renderAll();
+           deleteObject(selected);
         }
     })
+    //删除图形方法
+    function deleteObject(shape){
+        canvas.remove(shape);
+        for (var i = 0; i < moduleList.length; i++) {
+            if (moduleList[i].alias == shape.alias) {
+                moduleList.splice(i, 1);
+                break;
+            }
+        }
+        updateModuleList();
+        canvas.renderAll();
+    }
     //清空画布
     $("#deleteAll").click(function(){
         canvas.clear();
@@ -482,6 +553,7 @@ window.onload=function(){
         num_Polygon= 0;
         num_Freedraw= 0;
         num_Library=0;
+        num_Group = 0;
         moduleList = new Array();
         updateModuleList();
         canvas.renderAll();
@@ -628,22 +700,26 @@ window.onload=function(){
     //组合图形
     $("#groups").click(function(){
         var activeGroup = canvas.getActiveGroup()._objects;
-        //var fristObject = activeGroup[0];
-        //var group = new fabric.Group([fristObject],{left:fristObject.left,top:fristObject.top,originX:fristObject.originX,originY:fristObject.originY});
-        //canvas.remove(fristObject);
+        var objects = new Array();
+        var _left = activeGroup[0].originalLeft;
+        var _top = activeGroup[0].originalTop;
         for (var i= 0;i<activeGroup.length;i++){
-            console.log(activeGroup[i])
-            group.add(activeGroup[i]);
+            if (activeGroup[i].originalLeft<_left){
+                _left = activeGroup[i].originalLeft;
+            }
+            if (activeGroup[i].originalTop<_top){
+                _top = activeGroup[i].originalTop;
+            }
+            objects.push(activeGroup[i]);
             canvas.remove(activeGroup[i]);
-            //canvas.renderAll();
+            deleteObject(activeGroup[i]);
         }
+        var group = new fabric.Group(objects,{left:_left,top:_top});
         group.selectable = true;
         canvas.add(group);
+        num_Group++;
+        addToModuleList(group,num_Group,"group");
         canvas.renderAll();
-        //console.log(activeGroup);
-        //canvas.remove(activeGroup);
-        //console.log(group);
-        //canvas.add(group);
     })
 
     $(".importShape").click(function(){
