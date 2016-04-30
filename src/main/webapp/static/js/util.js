@@ -21,6 +21,23 @@ function getShapeByName(moduleList,name,canvas){
                 return getShapeFromCanvasByIndex(canvas,i);
             }
         }
+        return getShapeByGroup(moduleList[i],name,canvas,i);
+    }
+}
+
+function getShapeByGroup(moduleGroup,name,canvas,i){
+    canvas = getShapeFromCanvasByIndex(canvas,i)
+    if (moduleGroup._objects){
+        for(var j=0;j< moduleGroup._objects.length;j++){
+            if (name == moduleGroup._objects[j].alias){
+                if ( moduleGroup._objects[j].canvas){
+                    return moduleGroup._objects[j];
+                }else {
+                    return getShapeFromCanvasByIndex(canvas,j);
+                }
+            }
+            getShapeByGroup( moduleGroup._objects[j],name,canvas,j);
+        }
     }
 }
 

@@ -6,14 +6,14 @@ window.onload=function(){
     var height = $("#cParent").height();
     $("#c").attr("height",height);
     $("#c").attr("width",width);
+    var _cornerSize = 6;
     var canvas = new fabric.Canvas('c',{
         backgroundColor: '#ffffff',
         //selection:false,
-        cornerSize: 6,
+        cornerSize: _cornerSize,
         transparentCorners: false
     });
     var rect;
-    var _cornerSize = 6;
     var selected = null;
     var lookForm = document.getElementById('look-and-transform');
     var createForm = document.getElementById('pan');
@@ -133,7 +133,9 @@ window.onload=function(){
     }
 
     function loadCanvas(){
+        addObjectToGroupWhenLoad(originalCanvas);
         canvas.loadFromJSON(originalCanvas);
+        canvas.renderAll();
         var objects = originalCanvas.objects;
         var module  = document.getElementById("module");
         module.innerHTML = "";
@@ -147,6 +149,17 @@ window.onload=function(){
             a.innerHTML = html;
             module.appendChild(a);
             moduleList.push(objects[i]);
+        }
+    }
+    //加载时把所有有_objects属性的都加到objects上
+    function addObjectToGroupWhenLoad(originalCanvas){
+        if (originalCanvas.objects) {
+            for (var i = 0; i < originalCanvas.objects.length; i++) {
+                if (originalCanvas.objects[i]._objects) {
+                    addObjectToGroupWhenLoad(originalCanvas.objects[i])
+                }
+                originalCanvas.objects[i].objects = originalCanvas.objects[i]._objects;
+            }
         }
     }
 
@@ -253,24 +266,14 @@ window.onload=function(){
 
     //默认图形参数
     var shapeInfo = {
-        rect: {left:10,top:10,width:200,height:100,rx:0,ry:0},
-        circle: {left:20,top:20,radius:50},
-        triangle: {left:50,top:50,width:80,height:100,rx:0,ry:0},
-        line: {x1:10,y1:10,x2:100,y2:100},
-        text:{left:20,top:50,fontSize:20,text:'hello'},
+        rect: {left:100,top:100,width:200,height:100,rx:0,ry:0,originX: 'center', originY: 'center'},
+        circle: {left:100,top:100,radius:50,originX: 'center', originY: 'center'},
+        triangle: {left:100,top:100,width:80,height:100,rx:0,ry:0,originX: 'center', originY: 'center'},
+        line: {x1:100,y1:100,x2:200,y2:200,originX: 'center', originY: 'center'},
+        text:{left:100,top:100,fontSize:20,text:'hello',originX: 'center', originY: 'center'},
         //polygon:[{x: 170, y: 210},{x: 217.023, y: 234.721},{x: 208.042, y: 182.361},{x: 246.085, y: 145.279},{x: 193.511, y: 137.639},{x: 170, y: 90},{x: 146.489, y: 137.639},{x: 93.915, y: 145.279},{x: 131.958, y: 182.361},{x: 122.977, y: 234.721},{x: 170, y: 210}],{left: 250,top: 160,width: 200,height: 200}
     };
     //var pp = [{x: 170, y: 210},{x: 217.023, y: 234.721},{x: 208.042, y: 182.361},{x: 246.085, y: 145.279},{x: 193.511, y: 137.639},{x: 170, y: 90},{x: 146.489, y: 137.639},{x: 93.915, y: 145.279},{x: 131.958, y: 182.361},{x: 122.977, y: 234.721},{x: 170, y: 210}],{left: 250,top: 160,width: 200,height: 200};
-
-    //默认图形参数
-    var shapeAttribute = {
-        rect: "left:10,top:10,width:200,height:100",
-        circle: "left:20,top:20,radius:50",
-        triangle: "left:50,top:50,width:80,height:100",
-        line: "x1:10,y1:10,x2:100,y2:100",
-        text:"left:20,top:50,fontSize:20,text:hello",
-        polygon:"left: 250,top: 160,width: 200,height: 200"
-    };
     //默认属性参数
     var defaultAttrs = {
         fill: '#00D5FF',
@@ -314,6 +317,9 @@ window.onload=function(){
         }
         if (handle.name=="animation_opacity") {
             selected.setOpacity(parseFloat(handle.value)).setCoords();
+        }
+        if (handle.name=="animation_text") {
+            selected.setText(handle.value).setCoords();
         }
         defaultAttrs.fill = $("input[name='animation_fill']").attr("value" );
         canvas.renderAll();
@@ -382,7 +388,7 @@ window.onload=function(){
         //addAttr("left",shape);
         //addAttr("top",shape);
         if(shape) {
-            var name = shape.alias;
+            var name = shape.type;
             if (name == 'text') {
                 addTextAttr(text, shape);
             }
@@ -408,14 +414,21 @@ window.onload=function(){
     }
     //单独增加text属性
     function addTextAttr(name,shape){
-        var label = document.createElement('label');
-        label.textContent = name;
-        var handle = document.createElement('input');
-        handle.setAttribute('name', name);
-        handle.setAttribute('type', 'text');
-        handle.setAttribute('value', shape.text);
-        lookForm.appendChild(label);
-        lookForm.appendChild(handle);
+        var div = document.createElement("div");
+        div.setAttribute("class","input-group");
+        div.setAttribute("style","margin-top: 5px");
+        var span = document.createElement('span');
+        span.setAttribute("class","input-group-addon");
+        span.innerHTML="文本";
+        div.appendChild(span);
+        var input = document.createElement('input');
+        input.setAttribute("id", "animation_text1");
+        input.setAttribute("name", "animation_text");
+        input.setAttribute("class","form-control");
+        input.setAttribute('type', 'text');
+        input.setAttribute('value', shape.text);
+        div.appendChild(input);
+        lookForm.appendChild(div);
     }
 
     //更新属性参数 颜色，线条粗细，位置，旋转角度
@@ -429,6 +442,9 @@ window.onload=function(){
         $("#animation_height1").val(selected.getHeight());
         $("#animation_angle1").val(selected.getAngle());
         $("#animation_opacity1").val(selected.getOpacity());
+        if (selected.tyep=="text") {
+            $("#animation_text1").val(selected.getText());
+        }
         $("#animation_fill2").val(selected.getFill());
         $("#animation_stroke2").val(selected.getStroke());
         $("#animation_left2").val(selected.getLeft());
@@ -701,21 +717,32 @@ window.onload=function(){
     $("#groups").click(function(){
         var activeGroup = canvas.getActiveGroup()._objects;
         var objects = new Array();
-        var _left = activeGroup[0].originalLeft;
-        var _top = activeGroup[0].originalTop;
+        var _leftObject = activeGroup[0];
+        var _topObject = activeGroup[0];
+        var _rightObject = activeGroup[0];
+        var _bottomObject = activeGroup[0];
         for (var i= 0;i<activeGroup.length;i++){
-            if (activeGroup[i].originalLeft<_left){
-                _left = activeGroup[i].originalLeft;
+            if (activeGroup[i].originalLeft<_leftObject.originalLeft){
+                _leftObject = activeGroup[i];
             }
-            if (activeGroup[i].originalTop<_top){
-                _top = activeGroup[i].originalTop;
+            if (activeGroup[i].originalLeft>_rightObject.originalLeft){
+                _rightObject = activeGroup[i];
+            }
+            if (activeGroup[i].originalTop<_topObject.originalTop){
+                _topObject = activeGroup[i];
+            }
+            if (activeGroup[i].originalTop>_bottomObject.originalTop){
+                _bottomObject = activeGroup[i];
             }
             objects.push(activeGroup[i]);
             canvas.remove(activeGroup[i]);
             deleteObject(activeGroup[i]);
         }
-        var group = new fabric.Group(objects,{left:_left,top:_top});
+        var _left = _rightObject.originalLeft- _leftObject.originalLeft ;
+        var _top = _bottomObject.originalTop-_topObject.originalTop;
+        var group = new fabric.Group(objects,{left:_left,top:_top,originX: 'center', originY: 'center'});
         group.selectable = true;
+        canvas.setActiveObject(group);
         canvas.add(group);
         num_Group++;
         addToModuleList(group,num_Group,"group");
@@ -784,6 +811,8 @@ window.onload=function(){
             animation.startTime = startTime*1000;
             animation.endTime = endTime*1000;
             animation.easing = $("#animation_easing").val();
+            animation.width = $("#animation_width2").val();
+            animation.height = $("#animation_height2").val();
             addToanimationList(animation);
             var flashContent = {};
             flashContent.animationList = animationList;
@@ -888,6 +917,22 @@ window.onload=function(){
             easing: fabric.util.ease[animation.easing]
         });
         shape.animate('opacity', animation.opacity, {
+            duration: animation.endTime-animation.startTime,
+            onChange: canvas.renderAll.bind(canvas),
+            onComplete: function() {
+
+            },
+            easing: fabric.util.ease[animation.easing]
+        });
+        shape.animate('width', animation.width, {
+            duration: animation.endTime-animation.startTime,
+            onChange: canvas.renderAll.bind(canvas),
+            onComplete: function() {
+
+            },
+            easing: fabric.util.ease[animation.easing]
+        });
+        shape.animate('height', animation.height, {
             duration: animation.endTime-animation.startTime,
             onChange: canvas.renderAll.bind(canvas),
             onComplete: function() {
