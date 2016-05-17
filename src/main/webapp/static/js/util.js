@@ -21,7 +21,9 @@ function getShapeByName(moduleList,name,canvas){
                 return getShapeFromCanvasByIndex(canvas,i);
             }
         }
-        return getShapeByGroup(moduleList[i],name,canvas,i);
+        if(getShapeByGroup(moduleList[i],name,canvas,i)){
+            return getShapeByGroup(moduleList[i],name,canvas,i);
+        }
     }
 }
 

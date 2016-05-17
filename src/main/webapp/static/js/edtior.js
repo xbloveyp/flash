@@ -18,7 +18,7 @@ window.onload=function(){
     var lookForm = document.getElementById('look-and-transform');
     var createForm = document.getElementById('pan');
     //记录图形个数
-    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw= 0,num_Library= 0,num_Group=0;
+    var num_Rect=0,num_Circle=0,num_Triangle= 0,num_Text= 0,num_Line= 0,num_Polygon= 0,num_Freedraw= 0,num_Library= 0,num_Group= 0,num_Library=0;
     var moduleList = new Array();
     var animationList = new Array();
     var timeNum = 0;
@@ -79,6 +79,9 @@ window.onload=function(){
                     }
                     if(canvasJson.num_Group) {
                         num_Group = canvasJson.num_Group;
+                    }
+                    if(canvasJson.num_Library){
+                        num_Library = canvasJson.num_Library;
                     }
                     var canvasJ = {};
                     canvasJ.objects = objects;
@@ -169,14 +172,18 @@ window.onload=function(){
     })
 
     function addToModuleList(_shape,num,name) {
-        innerhtml=name + num;
+        innerhtml = name + num;
         var module = document.getElementById("module");
         $('#module > a').each(function () {
-            $(this).attr("class","list-group-item list-group-item-info");
+            $(this).attr("class", "list-group-item list-group-item-info");
         });
         var a = document.createElement("a");
         a.href = "javascript:void(0);";
-        a.setAttribute("class", "list-group-item list-group-item-info active");
+        if (name == "library") {
+            a.setAttribute("class", "list-group-item list-group-item-info");
+        } else {
+            a.setAttribute("class", "list-group-item list-group-item-info active");
+        }
         a.setAttribute("name","moduleList");
         a.innerHTML = innerhtml;
         module.appendChild(a);
@@ -225,6 +232,9 @@ window.onload=function(){
         }else if (name = "freedraw"){
             num_Freedraw++;
             addToModuleList(_shape,num_Freedraw,name);
+        }else if (name = "library"){
+            num_Library++;
+            addToModuleList(_shape,num_Library,name);
         }
     }
     //复制时把组合的每个成员的alias加下
@@ -254,10 +264,12 @@ window.onload=function(){
                 }else if(name=="group"){
                     num_Group++;
                     object.alias = name + num_Group
-                }
-                else if (name = "freedraw"){
+                }else if (name = "freedraw"){
                     num_Freedraw++;
                     object.alias = name + num_Freedraw;
+                }else if (name = "library"){
+                    num_Library++;
+                    object.alias = name + num_Library;
                 }
                 addAliasToGroupWhenCopy(object)
             }
@@ -269,7 +281,7 @@ window.onload=function(){
         rect: {left:100,top:100,width:200,height:100,rx:0,ry:0,originX: 'center', originY: 'center'},
         circle: {left:100,top:100,radius:50,originX: 'center', originY: 'center'},
         triangle: {left:100,top:100,width:80,height:100,rx:0,ry:0,originX: 'center', originY: 'center'},
-        line: {x1:100,y1:100,x2:200,y2:200,originX: 'center', originY: 'center'},
+        line: {x1:100,y1:100,x2:100,y2:200,originX: 'center', originY: 'center'},
         text:{left:100,top:100,fontSize:20,text:'hello',originX: 'center', originY: 'center'},
         //polygon:[{x: 170, y: 210},{x: 217.023, y: 234.721},{x: 208.042, y: 182.361},{x: 246.085, y: 145.279},{x: 193.511, y: 137.639},{x: 170, y: 90},{x: 146.489, y: 137.639},{x: 93.915, y: 145.279},{x: 131.958, y: 182.361},{x: 122.977, y: 234.721},{x: 170, y: 210}],{left: 250,top: 160,width: 200,height: 200}
     };
@@ -283,7 +295,9 @@ window.onload=function(){
     //点击图形面板，创建图形
     createForm.addEventListener('click', function(e) {
         if (e.target.tagName.toLowerCase() == 'i') {
-            create(e.target.getAttribute('create'));
+            if (e.target.getAttribute('create')) {
+                create(e.target.getAttribute('create'));
+            }
         }
     });
     //点击属性面板，更改属性
@@ -308,9 +322,11 @@ window.onload=function(){
         }
         if (handle.name=="animation_width") {
             selected.setWidth(parseFloat(handle.value)).setCoords();
+            selected.setScaleX(1);
         }
         if (handle.name=="animation_height") {
             selected.setHeight(parseFloat(handle.value)).setCoords();
+            selected.setScaleY(1);
         }
         if (handle.name=="animation_angle") {
             selected.setAngle(parseFloat(handle.value)).setCoords();
@@ -513,6 +529,7 @@ window.onload=function(){
         canvasJson.num_Freedraw = num_Freedraw;
         canvasJson.num_Library = num_Library;
         canvasJson.num_Group = num_Group;
+        canvasJson.num_Library = num_Library;
         canvasJson.objects = objects;
         canvasJson = JSON.stringify(canvasJson);
         var url = getRootPath()+"/flash/saveCanvas";
@@ -570,6 +587,7 @@ window.onload=function(){
         num_Freedraw= 0;
         num_Library=0;
         num_Group = 0;
+        num_Library=0;
         moduleList = new Array();
         updateModuleList();
         canvas.renderAll();
@@ -738,8 +756,8 @@ window.onload=function(){
             canvas.remove(activeGroup[i]);
             deleteObject(activeGroup[i]);
         }
-        var _left = _rightObject.originalLeft- _leftObject.originalLeft ;
-        var _top = _bottomObject.originalTop-_topObject.originalTop;
+        var _left = (_rightObject.originalLeft+_leftObject.originalLeft-_rightObject.width/2+_leftObject.width/2)/2 ;
+        var _top = (_bottomObject.originalTop+_topObject.originalTop-_topObject.height/2+_bottomObject.height/2)/2;
         var group = new fabric.Group(objects,{left:_left,top:_top,originX: 'center', originY: 'center'});
         group.selectable = true;
         canvas.setActiveObject(group);
@@ -762,11 +780,16 @@ window.onload=function(){
                     var ob = json.objects;
                     var library = result.data;
                     var shape = JSON.parse(library).objects;
+                    num_Library++;
+                    shape[0].alias = "library"+num_Library;
                     for(var i=0;i<shape.length;i++){
                         ob.push(shape[i]);
                     }
                     json.objects=ob;
                     canvas.loadFromJSON(JSON.stringify(json));
+                    
+                    canvas.renderAll();
+                    addToModuleList(shape,num_Library,"library");
                     $("#library").modal('toggle');
                 }
             }
@@ -924,7 +947,7 @@ window.onload=function(){
             },
             easing: fabric.util.ease[animation.easing]
         });
-        shape.animate('width', animation.width, {
+        shape.animate('width', animation.width/shape.scaleX, {
             duration: animation.endTime-animation.startTime,
             onChange: canvas.renderAll.bind(canvas),
             onComplete: function() {
@@ -932,7 +955,7 @@ window.onload=function(){
             },
             easing: fabric.util.ease[animation.easing]
         });
-        shape.animate('height', animation.height, {
+        shape.animate('height', animation.height/shape.scaleY, {
             duration: animation.endTime-animation.startTime,
             onChange: canvas.renderAll.bind(canvas),
             onComplete: function() {
